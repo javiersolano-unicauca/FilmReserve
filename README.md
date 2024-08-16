@@ -5,4 +5,4 @@ en las salas de cine.
 
 ***
 
-![](./Recursos/Cine.jpg)
+![](https://github.com/javiersolano-unicauca/FilmReserve/blob/main/Recursos/cine.jpg)
