@@ -1,0 +1,40 @@
+--DDL
+
+CREATE DATABASE filmreserve;
+
+CREATE TABLE user (
+	identification BIGINT NOT NULL,
+	firstName VARCHAR(50) NOT NULL,
+	secondName VARCHAR(50) NULL,
+	firstSurname VARCHAR(50) NOT NULL,
+	secondSurname VARCHAR(50) NULL,
+	password VARCHAR(255) NOT NULL,
+	administrator BOOLEAN NOT NULL DEFAULT false,
+	CONSTRAINT pk_identification PRIMARY KEY(identification),
+	CONSTRAINT ck_password CHECK(password >= 8)
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE customer (
+	identification BIGINT NOT NULL,
+	day INT(2) NOT NULL,
+	month INT(2) NOT NULL,
+	year INT(4) NOT NULL,
+	phone INT(10) NOT NULL,
+	CONSTRAINT pk_identification PRIMARY KEY(identification),
+	CONSTRAINT fk_user FOREIGN KEY(identification) REFERENCES user(identification) ON DELETE CASCADE,
+	CONSTRAINT ck_day CHECK(day >= 1 AND day <= 31),
+	CONSTRAINT ck_month CHECK(month >= 1 AND month <= 12),
+	CONSTRAINT ck_year CHECK(year >= 1924),
+	CONSTRAINT ck_phone CHECK(phone > 0)
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE ticket_seller (
+	identification BIGINT NOT NULL,
+	turn VARCHAR(5) NOT NULL,
+	CONSTRAINT pk_identification PRIMARY KEY(identification),
+	CONSTRAINT fk_user1 FOREIGN KEY(identification) REFERENCES user(identification) ON DELETE CASCADE,
+	CONSTRAINT ck_turn CHECK(turn in ('TARDE', 'NOCHE'))
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
