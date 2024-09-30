@@ -1,0 +1,174 @@
+/* Importación de las fuentes */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+
+/* Estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
+/* Estilos del cuerpo de la página */
+body {
+  background-color: #FFFFFF;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --colorBotonesHorizontal: #1c508d; /* Variable para el color de los botones */
+}
+
+/* Contenedor principal de la cabecera */
+.header-content {
+  width: 100%;
+  background-color: #000000;
+  color: white;
+  padding: 1.5rem 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---- Logo y menú lateral ---- */
+
+/* Contenedor del logo y el menú lateral */
+.menu {
+  display: flex;
+  align-items: center;
+  position: relative; /* Para que el submenú se posicione correctamente */
+}
+
+
+#menu-icon {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+  margin-right: 20px;
+  margin-left: 20px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#menu-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* Logo del sitio */
+#logo {
+  width: 50px; /* Tamaño ajustado del logo */
+  height: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/* ---- Título del sitio ---- */
+
+/* Contenedor para el texto del título */
+.text-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo del texto "CineCol" */
+.text-container h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px; /* Tamaño ajustado para mayor visibilidad */
+  font-weight: 500;
+  color: white;
+  letter-spacing: 1px; /* Espaciado entre letras */
+  padding: 10px 15px; /* Ajuste de padding */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ---- Menú de navegación horizontal ---- */
+
+/* Contenedor del menú horizontal */
+.menu-horizontal {
+  display: flex;
+  margin-left: 20px; /* Separación del logo */
+  margin-right: 50px;
+  max-height: 50px;
+}
+
+/* Botones del menú horizontal */
+.menu-horizontal a {
+  color: #FFFFFF;
+  background-color: var(--colorBotonesHorizontal);
+  border-radius: 30px; /* Bordes redondeados */
+  padding: 12px 25px; /* Tamaño del botón ajustado */
+  margin-right: 20px; /* Espaciado entre botones */
+  font-size: 15px; /* Tamaño del texto */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efecto hover en los botones del menú horizontal */
+.menu-horizontal a:hover {
+  background-color: #0076ff; /* Cambio de color en hover */
+  transform: scale(1.08); /* Animación de agrandado en hover */
+}
+
+/* ---- Submenú (opcional) ---- */
+.submenu {
+
+  position: absolute; /* Para que se despliegue sobre el contenido */
+  top: 100%; /* Justo debajo del encabezado */
+  left: 0; /* Alineado a la izquierda */
+  background-color: #000000; /* Fondo negro */
+  width: 25vw; /* Ancho de una cuarta parte de la página */
+  border-radius: 0px; /* Bordes redondeados (ajusta este valor según necesites) */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  display: flex; /* Para usar flexbox */
+  flex-direction: column; /* Disposición en columna */
+  overflow: hidden; /* Para que los bordes redondeados se mantengan */
+  padding: 10px 0px 10px 10px;
+  max-width: 25vw;
+  min-width: 20vw;
+  height: 100vw;/* Ocupar desde el encabezado hasta el final de la pantalla */
+
+}
+
+/* Enlaces del submenú */
+.submenu a {
+  display: block; /* Hacer que cada enlace ocupe toda la línea */
+  color: #FFFFFF; /* Texto blanco */
+  background-color: transparent; /* Fondo transparente por defecto */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px 15px; /* Ajusta el padding aquí */
+  margin: 10px 15px; /* Espaciado vertical y horizontal entre botones */
+  font-size: 15px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones */
+}
+
+
+/* Efecto hover en los enlaces del submenú */
+.submenu a:hover {
+  background-color: #0076ff; /* Fondo azul en hover */
+  transform: scale(1.05); /* Aumentar ligeramente el tamaño al hacer hover */
+}
+
+.submenu {
+  display: none; /* Oculto por defecto */
+}
+
+
+/* Estilo del icono de usuario */
+#login {
+  width: 40px;
+  height: auto;
+  margin-left: auto;
+  margin-right: 20px;
+  border-radius: 50%; /* Bordes completamente redondeados */
+  background-color: #FFFFFF;
+  border: 2px dashed #0076ff; /* Borde punteado */
+  padding: 5px; /* Ajuste de padding */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#login:hover{
+  transform: scale(1.10); 
+}
+
