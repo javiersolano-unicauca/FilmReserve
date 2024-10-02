@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and register</title>
+    <link rel="stylesheet" href="../assets/css/loginRegister.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="backBox">
+                <div class="backBox_login">
+                    <h3>¿Ya tienes una cuenta?</h3>
+                    <p>Inicia sesióm para entra a la pagina</p>
+                    <button id="btn_login">Iniciar sesión</button>
+                </div>
+                <div class="backBox_register">
+                    <h3>¿aun no tienes una cuenta?</h3>
+                    <p>Regístrate para entra a la pagina</p>
+                    <button id="btn_register">Registrarse</button>
+                </div>
+            </div>
+        <div class="container_login_register">
+            <form action="" class="form_login">
+                <h2>Iniciar sesión</h2>
+                <label for="">
+                    <input type="number" placeholder="Identificacion" id="loginId" name="userId" required>
+                </label>
+                <label for="">
+                    <input type="password" placeholder="Contraseña" id="loginPassWord" name ="userPassword" required>
+                </label>
+                <button>Entrar</button> 
+            </form>
+            <form action="" class="form_register">
+                <h2>Regístrarse</h2>
+                <label for="">
+                    <input type="text" placeholder=" (*) Primer Nombre" id="FRprimerNomber" name="userName" required>
+                </label>
+                <label for="">
+                    <input type="text" placeholder="Segundo nombre" id="FRsegundoNombre" >
+                </label>
+                <label for="">
+                    <input type="text" placeholder=" (*) Primer apellido" id="FRprimerApellido" name="userLName" required>
+                </label>
+                <label for="">
+                    <input type="text" placeholder="Segundo apellido" id="FRsegundoApellido" >
+                </label>
+                <label for="">
+                    <input type="number" placeholder=" (*) Identificacion" min="1" name="userId" required>
+                </label>
+                <label for="">
+                    <input type="password" placeholder=" (*) Contraseña" name="userPassword" required>
+                </label>
+                <button>Registrarse</button>
+            </form>
+        </div>
+        </div>
+    </main>
+    <script src="../assets/js/loginRegister.js"></script>
+    <script type="module" src="../assets/js/login_module.js" ></script>
+    <script type="module" src="../assets/js/register.js" ></script>
+</body>
+
+</html>
