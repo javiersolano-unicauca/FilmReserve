@@ -3,7 +3,7 @@ package com.filmreserve.api.Models;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

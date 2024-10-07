@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
-import com.filmreserve.Utilities.Exceptions.ServiceResponseException;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.Utilities.Validations.CustomerValidation;
 import com.filmreserve.api.Dao.iCustomerDao;
 import com.filmreserve.api.Models.CustomerModel;

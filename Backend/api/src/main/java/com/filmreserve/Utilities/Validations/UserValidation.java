@@ -1,8 +1,8 @@
 package com.filmreserve.Utilities.Validations;
 
-import com.filmreserve.Libraries.Arrays.ChainOfCharacter.ChainOfCharacter;
-import com.filmreserve.Libraries.Exceptions.ChainOfCharacterException;
-import com.filmreserve.Utilities.Exceptions.UserException;
+import com.filmreserve.Utilities.Arrays.ChainOfCharacter.ChainOfCharacter;
+import com.filmreserve.Utilities.Exceptions.ChainOfCharacterException;
+import com.filmreserve.Utilities.ModelsException.UserException;
 import com.filmreserve.api.Models.UserModel;
 
 /**

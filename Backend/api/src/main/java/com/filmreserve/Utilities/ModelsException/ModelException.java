@@ -1,4 +1,4 @@
-package com.filmreserve.Utilities.Exceptions;
+package com.filmreserve.Utilities.ModelsException;
 
 /**
  *  Clase para el manejo de excepciones en los modelos

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.UserModel;
 import com.filmreserve.api.Services.iAdministratorService;
 

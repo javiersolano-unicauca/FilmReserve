@@ -2,9 +2,7 @@ package com.filmreserve.api.Models;
 
 import java.io.Serializable;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
-import com.filmreserve.Libraries.Exceptions.JSONException;
-import com.filmreserve.Libraries.Exceptions.ListException;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Services.iUserService;
 
 /**

@@ -1,6 +1,6 @@
-package com.filmreserve.Utilities.Exceptions;
+package com.filmreserve.Utilities.ModelsException;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
 
 /**
  *  Clase para el manejo de las respuestas de los servicios

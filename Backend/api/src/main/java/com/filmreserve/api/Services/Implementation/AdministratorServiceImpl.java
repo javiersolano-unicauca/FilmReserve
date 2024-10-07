@@ -2,8 +2,8 @@ package com.filmreserve.api.Services.Implementation;
 
 import org.springframework.stereotype.Service;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
-import com.filmreserve.Utilities.Exceptions.ServiceResponseException;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.api.Models.UserModel;
 import com.filmreserve.api.Services.iAdministratorService;
 

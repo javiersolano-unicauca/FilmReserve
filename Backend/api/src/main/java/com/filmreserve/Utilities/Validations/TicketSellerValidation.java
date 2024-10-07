@@ -1,7 +1,7 @@
 package com.filmreserve.Utilities.Validations;
 
-import com.filmreserve.Utilities.Exceptions.TicketSellerException;
-import com.filmreserve.Utilities.Exceptions.UserException;
+import com.filmreserve.Utilities.ModelsException.TicketSellerException;
+import com.filmreserve.Utilities.ModelsException.UserException;
 import com.filmreserve.api.Models.TicketSellerModel;
 import com.filmreserve.api.Models.UserModel;
 

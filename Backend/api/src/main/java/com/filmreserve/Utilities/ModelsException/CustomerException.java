@@ -1,4 +1,4 @@
-package com.filmreserve.Utilities.Exceptions;
+package com.filmreserve.Utilities.ModelsException;
 
 import com.filmreserve.api.Models.CustomerModel;
 

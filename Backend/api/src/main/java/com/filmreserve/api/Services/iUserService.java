@@ -1,6 +1,6 @@
 package com.filmreserve.api.Services;
 
-import com.filmreserve.Libraries.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.UserModel;
 
 /** 
