@@ -4,14 +4,13 @@ CREATE DATABASE filmreserve;
 
 CREATE TABLE user (
 	identification BIGINT NOT NULL,
-	firstName VARCHAR(50) NOT NULL,
-	secondName VARCHAR(50) NULL,
-	firstSurname VARCHAR(50) NOT NULL,
-	secondSurname VARCHAR(50) NULL,
+	first_name VARCHAR(50) NOT NULL,
+	second_name VARCHAR(50) NULL,
+	first_surname VARCHAR(50) NOT NULL,
+	second_surname VARCHAR(50) NULL,
 	password VARCHAR(255) NOT NULL,
 	administrator BOOLEAN NOT NULL DEFAULT false,
-	CONSTRAINT pk_identification PRIMARY KEY(identification),
-	CONSTRAINT ck_password CHECK(password >= 8)
+	CONSTRAINT pk_identification PRIMARY KEY(identification)
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -20,7 +19,7 @@ CREATE TABLE customer (
 	day INT(2) NOT NULL,
 	month INT(2) NOT NULL,
 	year INT(4) NOT NULL,
-	phone INT(10) NOT NULL,
+	phone BIGINT(10) NOT NULL,
 	CONSTRAINT pk_identification PRIMARY KEY(identification),
 	CONSTRAINT fk_user FOREIGN KEY(identification) REFERENCES user(identification) ON DELETE CASCADE,
 	CONSTRAINT ck_day CHECK(day >= 1 AND day <= 31),
