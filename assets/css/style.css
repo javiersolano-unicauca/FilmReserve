@@ -171,9 +171,36 @@ body {
 #login:hover{
   transform: scale(1.10); 
 }
-iframe {
-  position: fixed;
-  height: -webkit-fill-available;
-  width: 100%;
+.userBox {
+  visibility: hidden;
+  position:absolute;
+    /* Para que se despliegue sobre el contenido */
+    top: 80px;
+    /* Justo debajo del encabezado */
+    right: 0;
+    /* Alineado a la derecha */
+    background-color: #000000;
+    /* Fondo negro */
+    width: 20vw;
+    /* Ancho de una cuarta parte de la página */
+    border-radius: 0px;
+    /* Bordes redondeados (ajusta este valor según necesites) */
+    z-index: 1000;
+    /* Asegura que esté por encima de otros elementos */
+    display: flex;
+    /* Para usar flexbox */
+    flex-direction: column;
+    /* Disposición en columna */
+    overflow: hidden;
+    /* Para que los bordes redondeados se mantengan */
+    padding: 10px 0px 10px 10px;
+    max-width: 25vw;
+    min-width: 20vw;
+    height: 40vh;
+    /* Ocupar desde el encabezado hasta el final de la pantalla */
+  /* height: 100px;
+    width: 30px; */
 }
-
+.main_loginRegister{
+  visibility: hidden;
+}

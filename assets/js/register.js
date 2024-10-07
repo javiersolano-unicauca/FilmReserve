@@ -1,6 +1,6 @@
 
-const userNameRegex = /^[a-zA-Z0-9\_\-]{2,16}$/;
-export const idRegex = /^\d+$/;
+const userNameRegex = /^[A-Za-z]+$/;
+export const idRegex = /^(?!0$)[0-9]+$/;
 export const passwordRegex = /^.{4,12}$/;
 
 export const apiUrl = "https://freetestapi.com/api/v1/users";
