@@ -1,13 +1,11 @@
 package com.filmreserve.Utilities.Validations;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.filmreserve.Utilities.ModelsException.CustomerException;
 import com.filmreserve.Utilities.ModelsException.TicketSellerException;
 import com.filmreserve.Utilities.ModelsException.UserException;
 import com.filmreserve.api.Models.CustomerModel;
-import com.filmreserve.api.Models.TicketSellerModel;
 import com.filmreserve.api.Models.UserModel;
 
 /**  Clase para las validaciones de los clientes

@@ -35,7 +35,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v1/administrator`
+      - Endpoint: `/api/v1/administrator/save`
       - Method: `POST`
       - Body:
       ```
@@ -60,7 +60,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v1/customer`
+      - Endpoint: `/api/v1/customer/save`
       - Method: `POST`
       - Body:
       ```
@@ -89,7 +89,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v1/ticket-seller`
+      - Endpoint: `/api/v1/ticket-seller/save`
       - Method: `POST`
       - Body:
       ```
