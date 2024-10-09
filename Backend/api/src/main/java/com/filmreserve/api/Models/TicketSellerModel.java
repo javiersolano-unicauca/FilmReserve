@@ -46,6 +46,7 @@ public class TicketSellerModel extends UserModel implements Serializable {
         objJson.add("firstSurname", getFirstSurname());
         objJson.add("secondSurname", (getSecondSurname() != null) ? getSecondSurname() : "null");
         objJson.add("turn", atrTurn);
+        objJson.add("role", "Taquillero");
         return objJson;
     }
 }

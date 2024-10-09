@@ -126,7 +126,7 @@ public class UserModel implements Serializable {
         objJson.add("secondName", (atrSecondName != null) ? atrSecondName : "null");
         objJson.add("firstSurname", atrFirstSurname);
         objJson.add("secondSurname", (atrSecondSurname != null) ? atrSecondSurname : "null");
-        objJson.add("administrator", atrAdministrator);
+        objJson.add("role", "Administrador");
         return objJson;
     }
 }

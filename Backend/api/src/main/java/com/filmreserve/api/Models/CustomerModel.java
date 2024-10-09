@@ -101,6 +101,7 @@ public class CustomerModel extends UserModel implements Serializable{
         objJson.add("month", atrMonth);
         objJson.add("year", atrYear);
         objJson.add("age", getAge());
+        objJson.add("role", "Cliente");
         return objJson;
     }
 }

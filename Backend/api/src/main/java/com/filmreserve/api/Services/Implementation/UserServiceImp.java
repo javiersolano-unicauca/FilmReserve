@@ -36,6 +36,7 @@ public class UserServiceImp implements iUserService {
 
         JSON objResponse = new JSON();
         objResponse.add("login", true);
+        objResponse.add("user", objUser.toJSON());
         return objResponse;
     }
 
