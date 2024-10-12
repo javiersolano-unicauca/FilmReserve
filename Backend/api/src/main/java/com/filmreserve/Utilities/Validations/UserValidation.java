@@ -41,7 +41,7 @@ public class UserValidation {
     protected static void validateEmpty(Object prmField, int prmFieldType) throws UserException
     {
         UserException.throwException(
-            (prmField == null), 
+            prmField == null, 
             prmFieldType,
             new Exception("No debe estar vacio")
         );
