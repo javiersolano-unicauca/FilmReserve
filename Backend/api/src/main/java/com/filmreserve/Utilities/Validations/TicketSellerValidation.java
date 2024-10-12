@@ -33,12 +33,21 @@ public class TicketSellerValidation extends UserValidation {
         validateTurn((TicketSellerModel) prmUser);
     }
 
-    protected static void validateEmpty(Object prmField, int prmFieldType) throws TicketSellerException
+    protected static void validateNull(Object prmField, int prmFieldType) throws TicketSellerException
     {
         TicketSellerException.throwException(
             (prmField == null), 
             prmFieldType,
-            new Exception("No debe estar vacio")
+            new Exception("No debe estar nulo")
+        );
+    }
+
+    protected static void validateEmpty(String prmField, int prmFieldType) throws TicketSellerException
+    {
+        TicketSellerException.throwException(
+            prmField.isEmpty(), 
+            prmFieldType,
+            new Exception("No debe estar nulo")
         );
     }
 
@@ -49,7 +58,7 @@ public class TicketSellerValidation extends UserValidation {
      */
     public static void validateTurn(TicketSellerModel prmTicketSeller) throws TicketSellerException
     {
-        validateEmpty(prmTicketSeller.getTurn(), TicketSellerException.TURN);
+        validateNull(prmTicketSeller.getTurn(), TicketSellerException.TURN);
         Boolean varThrow = true;
 
         for(TurnEnum varTurn: TurnEnum.values())

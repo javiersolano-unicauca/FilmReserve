@@ -31,6 +31,23 @@ public class UserValidation {
     }
 
     /**
+     *  Metodo para validar si un campo esta nulo
+     * 
+     *  @param prmField Recibe la referencia al campo
+     *  @param prmFieldType Recibe el tipo de campo
+     * 
+     *  @throws UserException Si el campo esta vacio
+     */
+    protected static void validateNull(Object prmField, int prmFieldType) throws UserException
+    {
+        UserException.throwException(
+            prmField == null, 
+            prmFieldType,
+            new Exception("No debe estar nulo")
+        );
+    }
+    
+    /**
      *  Metodo para validar si un campo esta vacio
      * 
      *  @param prmField Recibe la referencia al campo
@@ -38,10 +55,10 @@ public class UserValidation {
      * 
      *  @throws UserException Si el campo esta vacio
      */
-    protected static void validateEmpty(Object prmField, int prmFieldType) throws UserException
+    protected static void validateEmpty(String prmField, int prmFieldType) throws UserException
     {
         UserException.throwException(
-            prmField == null, 
+            prmField.isEmpty(), 
             prmFieldType,
             new Exception("No debe estar vacio")
         );
@@ -54,7 +71,7 @@ public class UserValidation {
      */
     public static void validateId(UserModel prmUser) throws UserException 
     {
-        validateEmpty(prmUser.getIdentification(), UserException.IDENTIFICATION);
+        validateNull(prmUser.getIdentification(), UserException.IDENTIFICATION);
 
         UserException.throwException(
             (prmUser.getIdentification() <= 0), 
@@ -70,6 +87,7 @@ public class UserValidation {
      */
     public static void validateFirstName(UserModel prmUser) throws UserException
     {
+        validateNull(prmUser.getFirstName(), UserException.FIRST_NAME);
         validateEmpty(prmUser.getFirstName(), UserException.FIRST_NAME);
 
         try{
@@ -102,7 +120,8 @@ public class UserValidation {
      */
     public static void validateFirstSurname(UserModel prmUser) throws UserException
     {
-        validateEmpty(prmUser.getFirstSurname(), UserException.FIRST_SURNAME);
+        validateNull(prmUser.getFirstSurname(), UserException.FIRST_SURNAME);
+        validateEmpty(prmUser.getFirstName(), UserException.FIRST_NAME);
 
         try{
             ChainOfCharacter.containsLettersWithException(prmUser.getFirstSurname());
@@ -134,7 +153,7 @@ public class UserValidation {
      */
     public static void validatePassword(UserModel prmUser) throws UserException
     {
-        validateEmpty(prmUser.getPassword(), UserException.PASSWORD);
+        validateNull(prmUser.getPassword(), UserException.PASSWORD);
 
         UserException.throwException(
             (prmUser.getPassword().length() < 8),

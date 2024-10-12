@@ -38,12 +38,12 @@ public class CustomerValidation extends UserValidation {
         validatePhone((CustomerModel) prmUser);
     }
 
-    protected static void validateEmpty(Object prmField, int prmFieldType) throws CustomerException
+    protected static void validateNull(Object prmField, int prmFieldType) throws CustomerException
     {
         CustomerException.throwException(
             (prmField == null), 
             prmFieldType,
-            new Exception("No debe estar vacio")
+            new Exception("No debe estar nulo")
         );
     }
 
@@ -60,7 +60,7 @@ public class CustomerValidation extends UserValidation {
 
     public static void validateDay(CustomerModel prmUser) throws CustomerException
     {
-        validateEmpty(prmUser.getDay(), CustomerException.DAY);
+        validateNull(prmUser.getDay(), CustomerException.DAY);
 
         int varDay = prmUser.getDay(),
             varMonth = prmUser.getMonth();
@@ -94,7 +94,7 @@ public class CustomerValidation extends UserValidation {
 
     public static void validateMonth(CustomerModel prmUser) throws CustomerException
     {
-        validateEmpty(prmUser.getMonth(), CustomerException.MONTH);
+        validateNull(prmUser.getMonth(), CustomerException.MONTH);
         int varMonth = prmUser.getMonth();
 
         CustomerException.throwException(
@@ -107,7 +107,7 @@ public class CustomerValidation extends UserValidation {
 
     public static void validateYear(CustomerModel prmUser) throws CustomerException
     {
-        validateEmpty(prmUser.getYear(), CustomerException.YEAR);
+        validateNull(prmUser.getYear(), CustomerException.YEAR);
 
         int varYear = prmUser.getYear(),
             varYearCurrent = LocalDate.now().getYear();
@@ -122,7 +122,7 @@ public class CustomerValidation extends UserValidation {
 
     public static void validatePhone(CustomerModel prmUser) throws CustomerException
     {
-        validateEmpty(prmUser.getPhone(), CustomerException.PHONE);
+        validateNull(prmUser.getPhone(), CustomerException.PHONE);
         Long varPhone = prmUser.getPhone();
 
         CustomerException.throwException(

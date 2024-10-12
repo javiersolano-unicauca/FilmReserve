@@ -48,7 +48,7 @@ public class TicketSellerImp extends UserServiceImp implements iTicketSellerServ
         );
 
         ServiceResponseException.throwException(
-            ticketSellerDao.existsById(prmUser.getIdentification()),
+            userDao.existsById(prmUser.getIdentification()),
             "save", 
             "Ya existe ese usuario en el sistema"
         );

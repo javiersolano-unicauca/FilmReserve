@@ -48,7 +48,7 @@ public class CustomerServiceImp extends UserServiceImp implements iCustomerServi
         );
 
         ServiceResponseException.throwException(
-            customerDao.existsById(prmUser.getIdentification()),
+            userDao.existsById(prmUser.getIdentification()),
             "save", 
             "Ya existe ese usuario en el sistema"
         );
