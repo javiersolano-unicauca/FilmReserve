@@ -121,7 +121,7 @@ public class UserValidation {
     public static void validateFirstSurname(UserModel prmUser) throws UserException
     {
         validateNull(prmUser.getFirstSurname(), UserException.FIRST_SURNAME);
-        validateEmpty(prmUser.getFirstSurname(), UserException.FIRST_NAME);
+        validateEmpty(prmUser.getFirstSurname(), UserException.FIRST_SURNAME);
 
         try{
             ChainOfCharacter.containsLettersWithException(prmUser.getFirstSurname());
