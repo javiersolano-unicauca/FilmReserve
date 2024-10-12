@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/loginRegister.css">
+    <!-- Incluir el CSS de Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Cinecol</title>
@@ -94,14 +96,81 @@
                 </div>
             </div>
         </div>
+        
     </header>
     <main>
+        <!-- Slider de películas-->
+        <div class="swiper mySwiper-1">
+            <div class="swiper-wrapper">
+
+                <!-- Pelicula 1 -->
+                <div class="swiper-slide">
+                    <div class="slider">
+                        <div class="slider-txt">
+                            <h1>Joker</h1>
+                            <p>falta poner desc</p>
+                        </div>
+                        <div class="slider-img">
+                            <img src="../assets/img/pelicula1.png" alt="Joker">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pelicula 2 -->
+                <div class="swiper-slide">
+                    <div class="slider">
+                        <div class="slider-txt">
+                            <h1>Transformers</h1>
+                            <p>falta poner descripcion</p>
+                        </div>
+                        <div class="slider-img">
+                            <img src="../assets/img/pelicula2.png" alt="Transformers">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pelicula 3 -->
+                <div class="swiper-slide">
+                    <div class="slider">
+                        <div class="slider-txt">
+                            <h1>Rápidos y Furiosos</h1>
+                            <p>falta poner descripcion</p>
+                        </div>
+                        <div class="slider-img">
+                            <img src="../assets/img/pelicula3.png" alt="Rapidos y Furiosos">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pelicula 4 -->
+                <div class="swiper-slide">
+                    <div class="slider">
+                        <div class="slider-txt">
+                            <h1>Mi Villano Favorito 4</h1>
+                            <p>falta poner descripcion</p>
+                        </div>
+                        <div class="slider-img">
+                            <img src="../assets/img/pelicula4.png" alt="Mi Villano Favorito 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de navegación -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+            <!-- Paginación -->
+            <div class="swiper-pagination"></div>
+        </div>
         
-        <h1>PAGINA EN CONSTRUCCION</h1>
     </main>
     <script src="../assets/js/loginRegister.js"></script>
-    <script type="module" src="./assets/js/login_module.js" ></script>
+    <script type="module" src="./assets/js/login_module.js"></script>
     <script type="module" src="../assets/js/register.js"></script>
-    <script type="module"  src="./assets/js/menuDesplegable.js"></script>
+    <script type="module" src="./assets/js/menuDesplegable.js"></script>
+    <script src="./assets/js/slider.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 </body>
 </html>

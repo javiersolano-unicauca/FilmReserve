@@ -201,6 +201,76 @@ body {
   /* height: 100px;
     width: 30px; */
 }
-.main_loginRegister{
+.main_loginRegister {
+  z-index: 100;
   visibility: hidden;
+}
+/* Ajusta el tamaño del slider */
+.swiper {
+  width: 80%;
+  height: auto;
+  margin: 50px auto;
+  z-index: 1;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  height: 400px;
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+/* Contenido textual */
+.slider-txt {
+  color: white;
+  font-size: 1.2rem;
+  max-width: 30%;
+  text-align: center; /* Centra el texto */
+}
+
+.slider-txt h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.slider-txt p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Imágenes en el slider */
+.slider-img img {
+  max-height: 350px;
+  border-radius: 10px;
+  width: auto;
+  transition: all 0.5s ease; /* Transición suave para el efecto hover */
+}
+
+.slider:hover .slider-img img {
+  transform: scale(1.05); /* Efecto de agrandar la imagen al hacer hover */
+}
+
+/* Personalizar las flechas de navegación */
+.swiper-button-next, .swiper-button-prev {
+  color: white;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  transform: scale(1.2); /* Efecto de agrandar al pasar el mouse */
+}
+
+/* Paginación personalizada */
+.swiper-pagination-bullet {
+  background-color: white;
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white;
+  opacity: 1;
 }
