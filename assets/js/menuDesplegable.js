@@ -1,55 +1,67 @@
-
+// Seleccion de los elementos del DOM que se utilizarán en el código
 const login = document.querySelector(".main_loginRegister");
-var menuIcon = document.querySelector('#menu-icon');
-var submenu = document.querySelector('.submenu');
-const menuHorizontal= document.querySelector(".menu-horizontal");
+var menuIcon = document.querySelector("#menu-icon");
+var submenu = document.querySelector(".submenu");
+const menuHorizontal = document.querySelector(".menu-horizontal");
 const userBox = document.querySelector(".userBox");
-const loginIcon=document.querySelector("#login");
-var sesionActiva;
-
-    
- showLoginUser();
-
+const loginIcon = document.querySelector("#login");
+// Variable que almacena el estado de la sesión
+var sesionActiva; //no borrar
+// Llama a la función showLoginUser  para inicializar la interfaz
+showLoginUser();
+// Agrega un evento de clic al icono de login para mostrar la interfaz de login
 loginIcon?.addEventListener("click", showLoginUser);
-
-export function showLoginUser(){
-if (localStorage.getItem("sesionActiva") == "inactiva") {
-  alert
+export function showLoginUser() {
+  if (localStorage.getItem("sesionActiva") == "inactiva") {
+    alert;
     showLogin();
-} else if(localStorage.getItem("sesionActiva") == "activa"){
-  showUserBox(userBox);
-  const btnCerrarSesion=document.querySelector("#btn_cerrarSesion");
-  btnCerrarSesion.addEventListener("click", prueba);
-  //codigo seccion activa
-}else{
-  showLogin();
-}
-
-}
-function prueba(){
+  } else if (localStorage.getItem("sesionActiva") == "activa") {
+    var name = localStorage.getItem("sesionActiva");
     showUserBox(userBox);
-    localStorage.setItem("sesionActiva","inactiva");
-    alert("ha salido con exito");
-    showLoginUser();
+    // Obtiene el botón de cerrar sesión
+    const logoutButton = document.querySelector("#btn_cerrarSesion");
+    logoutButton.addEventListener("click", prueba);
+    //codigo seccion activa
+    document.querySelector(".userBox h1").innerText =
+      localStorage.getItem("nameUser");
+    document.querySelector(".userBox h2").innerText =
+      localStorage.getItem("roleUser");
+    if (localStorage.getItem("roleUser") == "Administrador") {
+      document.querySelector(".userBox a").style.display = "block";
+    } else {
+      document.querySelector(".userBox a").style.display = "none";
+    }
+  } else {
+    showLogin();
+  }
 }
+function prueba() {
+  alert("fin de sesión");
+  showUserBox(userBox);
+  localStorage.setItem("sesionActiva", "inactiva");
+  if (localStorage.getItem("roleUser") == "Administrador") {
+    window.location.href = "/index.html";
+  }
+  localStorage.removeItem("roleUser");
 
-menuIcon?.addEventListener('click',mostrarMenuDesplegable);
+  showLoginUser();
+}
+menuIcon?.addEventListener("click", mostrarMenuDesplegable);
 
 function mostrarMenuDesplegable() {
-    // Comprobar si el submenú está visible
-    if (submenu.style.display == "block") {
-      submenu.style.display = "none"; // Ocultar el submenú
-    } else {
-      submenu.style.display = "block"; // Mostrar el submenú
-    }
+  // Comprobar si el submenú está visible
+  if (submenu.style.display == "block") {
+    submenu.style.display = "none"; // Ocultar el submenú
+  } else {
+    submenu.style.display = "block"; // Mostrar el submenú
+  }
 }
 // funcion para mostrar el login y registro
 export function showLogin() {
-  if (login.style.visibility == "hidden" ) {
-    login.style.visibility = "visible";
+  if (login.style.display == "none") {
+    login.style.display = "block"; // Mostrar la interfaz de inicio de sesión
   } else {
-    login.style.visibility = "hidden";
-    
+    login.style.display = "none"; // Ocultar la interfaz de inicio de sesión
   }
 }
 
@@ -60,5 +72,3 @@ function showUserBox(variable) {
     variable.style.visibility = "hidden";
   }
 }
-
-

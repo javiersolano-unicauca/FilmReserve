@@ -201,9 +201,16 @@ body {
   /* height: 100px;
     width: 30px; */
 }
+.userBox a {
+  color: #FFFFFF;
+  background-color: var(--colorBotonesHorizontal);
+  text-align: center;
+  border-radius: 20px;
+margin: 10px;
+}
 .main_loginRegister {
   z-index: 100;
-  visibility: hidden;
+  display: none;
 }
 /* Ajusta el tamaño del slider */
 .swiper {

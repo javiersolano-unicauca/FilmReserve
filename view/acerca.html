@@ -40,7 +40,8 @@
                 <img id="login" src="../assets/img/logoInicioSesion.png" alt="Login">
             </a>
             <div class="userBox">
-                <p>nombre : </p>
+                <h1></h1>
+                <h2></h2>
                 <button id="btn_cerrarSesion">cerrar sesion</button>
             </div>
         </div>
@@ -62,38 +63,42 @@
                     <form action="" class="form_login">
                         <h2>Iniciar sesión</h2>
                         <label for="">
-                            <input type="number" placeholder="Identificacion" id="loginId" name="userId" required>
+                            <input type="number" placeholder="Identificacion" id="loginId" name="identification" required>
                         </label>
                         <label for="">
-                            <input type="password" placeholder="Contraseña" id="loginPassWord" name="userPassword" required>
+                            <input type="password" placeholder="Contraseña" id="loginPassWord" name="password" required>
                         </label>
                         <button id="boton_registro">Entrar</button>
                     </form>
                     <form action="" class="form_register">
                         <h2>Regístrarse</h2>
                         <label for="">
-                            <input type="text" placeholder=" (*) Primer Nombre" id="FRprimerNomber" name="userName" required>
+                            <input type="number" placeholder=" (*) Identificacion" min="1" name="identification" required>
                         </label>
                         <label for="">
-                            <input type="text" placeholder="Segundo nombre" id="FRsegundoNombre">
+                            <input type="text" placeholder=" (*) Primer Nombre" id="FRprimerNomber" name="firstName" required>
                         </label>
                         <label for="">
-                            <input type="text" placeholder=" (*) Primer apellido" id="FRprimerApellido" name="userLName"
+                            <input type="text" placeholder="Segundo nombre" id="secondName" name="secondName">
+                        </label>
+                        <label for="">
+                            <input type="text" placeholder=" (*) Primer apellido" id="FRprimerApellido" name="firstSurname"
                                 required>
                         </label>
                         <label for="">
-                            <input type="text" placeholder="Segundo apellido" id="FRsegundoApellido">
+                            <input type="text" placeholder="Segundo apellido" id="FRsegundoApellido" name="secondSurname">
                         </label>
                         <label for="">
-                            <input type="number" placeholder=" (*) Identificacion" min="1" name="userId" required>
+                            <input type="password" placeholder=" (*) Contraseña" name="password" required>
                         </label>
                         <label for="">
-                            <input type="password" placeholder=" (*) Contraseña" name="userPassword" required>
+                            <input type="tel" placeholder=" (*) Celular" name="phone" required>
                         </label>
                         <button>Registrarse</button>
                     </form>
                 </div>
             </div>
+        </div>
     </header>
     <main>
         <img src="" alt="">

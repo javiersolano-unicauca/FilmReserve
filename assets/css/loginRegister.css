@@ -70,7 +70,15 @@
     background: white;
     color: var(--colorBotonesHorizontal);
 }
-
+.container_form_register_seller {
+    display: flex;
+        align-items: center;
+        width: 50vw;
+        max-width: 380px;
+        top: -200px;
+        left: 10px;
+        transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
 
 /*Formularios*/
 .container_login_register {
@@ -84,7 +92,7 @@
     transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
 }
 
-.container_login_register form {
+.container_login_register form{
     width: 100%;
     padding: 20px 20px;
     background: #fff;
@@ -92,7 +100,7 @@
     border-radius: 20px;
 }
 
-.container_login_register form h2 {
+.container_login_register form h2 ,.container_form_register_seller form h2{
     font-size: 26px;
     text-align: center;
     margin-bottom: 20px;
@@ -107,8 +115,16 @@
     background: #f2f2f2;
     font-size: 14px;
 }
+.container_form_register_seller form input{
+    width: 100%;
+        margin-top: 10px;
+        padding: 8px;
+        border: none;
+        background: #f2f2f2;
+        font-size: 12px;
+}
 
-.container_login_register form button {
+.container_login_register form button,.container_form_register_seller form button {
     padding: 10px 40px;
     margin-top: 40px;
     border: none;

@@ -1,54 +1,36 @@
 import objClient from "../api/ClientAPI.js";
-
+import {
+  idRegex,
+  passwordRegex,
+} from "./register.js";
 const userNameRegex = /^[A-Za-z]+$/;
-export const idRegex = /^(?!0$)[0-9]+$/;
-export const passwordRegex = /^.{8,12}$/;
-const phoneRegex = /^(?!0+$)[0-9]{10,}$/;
-const dateRegex = /^\d{4}[-\/](0[1-9]|1[0-2])[-\/](0[1-9]|[12][0-9]|3[01])$/;
+const turnRegex = /^(TARDE|NOCHE)$/;
 
-var formRegister = document.querySelector(".form_register");
-var inputUserFirstName = document.getElementById("FRprimerNomber");
-var inputUserSecondName = document.getElementById("FRsegundoNombre");
-var inputUserFirstLName = document.getElementById("FRprimerApellido");
-var inputUserSecondLName = document.getElementById("FRsegundoApellido");
-var inputUserId = document.querySelector(".form_register input[type='number']");
+
+var formRegister = document.querySelector(".form_register_seller");
+var inputUserFirstName = document.getElementById("TprimerNomber");
+var inputUserSecondName = document.getElementById("TsegundoNombre");
+var inputUserFirstLName = document.getElementById("TprimerApellido");
+var inputUserSecondLName = document.getElementById("TsegundoApellido");
+var inputUserId = document.querySelector(".form_register_seller input[type='number']");
 var inputUserPassword = document.querySelector(
-  ".form_register input[type='password']"
+  ".form_register_seller input[type='password']"
 );
-var inputUserPhone = document.querySelector(".form_register input[type='tel']");
-var inputUserDate = document.querySelector(".form_register input[type='date']");
+var inputUserTurn = document.getElementById("turno");
 
-export const validationStatus = {
+
+ const validationStatus = {
   firstName: false,
   firstSurname: false,
   identification: false,
   password: false,
-  phone: false,
+  turn: false,
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   formRegister.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = new FormData(e.target);
-    const date1 = inputUserDate.value;
-    if (date1) {
-      // Verifica si hay un valor en el input
-      const date = new Date(date1); // Crea un objeto Date a partir de la cadena
-
-      const day = date.getDate(); // Obtiene el día
-      const month = date.getMonth() + 1; // Obtiene el mes (0-11, así que sumamos 1)
-      const year = date.getFullYear(); // Obtiene el año
-      datos.append("year", year);
-      datos.append("month", month);
-      datos.append("day", day);
-    } else {
-      console.log("No se ha ingresado una fecha válida.");
-    }
-    for (let [key, value] of datos.entries()) {
-      console.log(key + ": " + value);
-    }
-
-    // customerRegistration(datos);
     sendForm(formRegister, datos);
   });
 
@@ -80,16 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
       "ingrese una contraseña, debe ser de 8 a 12 digitos"
     );
   });
-  inputUserPhone.addEventListener("input", () => {
+  inputUserTurn.addEventListener("input", () => {
     validarCampo(
-      phoneRegex,
-      inputUserPhone,
-      "ingrese un numero de telefono, debe ser de 10 digitos"
+      turnRegex,
+      inputUserTurn,
+      "ingrese un turno valido 'TARDE O NOCHE'"
     );
   });
-  inputUserDate.addEventListener("input", () => {
-    validarCampo(dateRegex, inputUserDate, "fecha");
-  });
+
 });
 
 export function validarCampo(regularExpresion, campo, message) {
@@ -116,13 +96,14 @@ function clearAlert(referencia) {
   }
 }
 function sendForm(form, datos) {
+    console.log(validationStatus.turn)
   //validamos el envio del formulario
   if (
     validationStatus.firstName &&
     validationStatus.firstSurname &&
     validationStatus.identification &&
     validationStatus.password &&
-    validationStatus.phone
+    validationStatus.turn
   ) {
     customerRegistration(form, datos);
   } else {
@@ -135,7 +116,7 @@ function sendForm(form, datos) {
 }
 
 function customerRegistration(form, variable) {
-  objClient.post("/api/v1/customer/save", variable, (prmResponse) => {
+  objClient.post("/api/v1/ticket-seller/save", variable, (prmResponse) => {
     console.log(prmResponse);
     validateCustomerRegitration(form, prmResponse);
   });
@@ -146,7 +127,7 @@ function validateCustomerRegitration(form, prmResponse) {
     Swal.fire({
       position: "top-end",
       icon: "success",
-      title: "Usuario registrado con exito",
+      title: "formulario enviado",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -154,7 +135,7 @@ function validateCustomerRegitration(form, prmResponse) {
     validationStatus["firstSurname"] = false;
     validationStatus["identification"] = false;
     validationStatus["password"] = false;
-    validationStatus["phone"] = false;
+    validationStatus["turn"] = false;
   } else {
     Swal.fire({
       icon: "error",
