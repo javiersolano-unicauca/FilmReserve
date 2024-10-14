@@ -20,7 +20,7 @@ import com.filmreserve.api.Services.iCustomerService;
  * @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v1/customer")
+@RequestMapping(path = "/api/v2/customer")
 public class CustomerController{
 
     @Autowired
@@ -40,7 +40,7 @@ public class CustomerController{
         }
         catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -76,7 +76,7 @@ public class CustomerController{
         }
         catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     } 
 }

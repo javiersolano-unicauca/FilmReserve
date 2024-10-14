@@ -1,6 +1,5 @@
 package com.filmreserve.api.Models;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
@@ -16,7 +15,7 @@ import jakarta.persistence.Table;
 @Table
 @Entity(name = "customer")
 @PrimaryKeyJoinColumn(name = "identification")
-public class CustomerModel extends UserModel implements Serializable{
+public class CustomerModel extends UserModel {
 
     @Column(name = "day")
     private Integer atrDay;

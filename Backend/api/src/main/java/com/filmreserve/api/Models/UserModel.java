@@ -3,6 +3,7 @@ package com.filmreserve.api.Models;
 import java.io.Serializable;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.JSON.iJSON;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import jakarta.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table
 @Entity(name = "user")
-public class UserModel implements Serializable {
+public class UserModel implements Serializable, iJSON {
 
     @Id
     @Column(name = "identification")
@@ -118,6 +119,7 @@ public class UserModel implements Serializable {
      *  informacion del usuario
      *  @see JSON
      */
+    @Override
     public JSON toJSON() throws Exception
     {
         JSON objJson = new JSON();
@@ -128,5 +130,10 @@ public class UserModel implements Serializable {
         objJson.add("secondSurname", (atrSecondSurname != null) ? atrSecondSurname : "null");
         objJson.add("role", "Administrador");
         return objJson;
+    }
+
+    @Override
+    public boolean equals(JSON prmJson) throws Exception {
+        return this.toJSON().equals(prmJson);
     }
 }

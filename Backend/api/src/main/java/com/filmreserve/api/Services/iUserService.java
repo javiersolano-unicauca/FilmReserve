@@ -27,7 +27,6 @@ public interface iUserService {
      *  
      *  @return Una instancia del modelo con la informacion del usuario si existe.
      *          De lo contrario null
-     *  @see JSON
      */
     public UserModel getUserModel(Long prmIdentification) throws Exception;
 

@@ -3,6 +3,7 @@ package com.filmreserve.Utilities.Arrays.JSON;
 import com.filmreserve.Utilities.Arrays.ChainOfCharacter.ChainOfCharacter;
 import com.filmreserve.Utilities.Arrays.Lists.ElementContent;
 import com.filmreserve.Utilities.Arrays.Lists.LinkedList;
+import com.filmreserve.Utilities.Arrays.Lists.LinkedListJSON;
 import com.filmreserve.Utilities.Arrays.Lists.SuperLinkedList;
 import com.filmreserve.Utilities.Exceptions.ChainOfCharacterException;
 import com.filmreserve.Utilities.Exceptions.JSONException;
@@ -184,6 +185,19 @@ public class JSON  {
     }
 
     /**
+     *  Metodo para validar si el objeto tiene exactamente
+     *  el mismo contenido que otro
+     * 
+     *  @param prmJson Recibe el objeto a validar
+     * 
+     *  @return 'true' si tienen el mismo contenido. 'false' si no
+     */
+    public boolean equals(JSON prmJson)
+    {
+        return atrJSON.equals(prmJson.atrJSON);
+    }
+
+    /**
      *  Metodo para eliminar todas las claves.
      */
     public void clear()
@@ -272,7 +286,7 @@ public class JSON  {
      * 
      *  @throws Libraries.Exceptions.ListException Si hay un error en la lista de claves
      */
-    public static String[] toJSON(LinkedList<JSON> prmJsons) throws ListException
+    public static String[] toStringJSON(LinkedList<JSON> prmJsons) throws Exception
     {   
         String[] arrJson = {};
                 
@@ -299,6 +313,47 @@ public class JSON  {
             }    
             else
                 arrJson[0] = "["+prmJsons.getFirst().toString();
+
+            arrJson[varSize - 1] += "]";
+        }
+        return arrJson;
+    }
+
+    /**
+     *  Metodo para convertir el arreglo de objetos a de String de 'JSON'
+     * 
+     *  @param prmJsons Recibe el arreglo de objetos
+     *  @return  El arreglo de String de 'JSON'
+     * 
+     *  @throws Libraries.Exceptions.ListException Si hay un error en la lista de claves
+     */
+    public static String[] toStringJSON(LinkedListJSON prmJsons) throws Exception
+    {   
+        String[] arrJson = {};
+                
+        if(!prmJsons.isEmpty())
+        {
+            int varSize = prmJsons.size(), 
+            varIterador = varSize - 1;
+
+            arrJson = new String[varSize];
+
+            if(varSize > 1)
+            {
+                for (iJSON objJson : prmJsons) {
+
+                    if(varIterador == 0)
+                        arrJson[varIterador] = "["+objJson.toJSON().toString();
+                    else
+                        arrJson[varIterador] = objJson.toJSON().toString();
+
+                    if(varIterador < (varSize - 1))
+                        arrJson[varIterador] += ",";
+                    varIterador--;
+                }
+            }    
+            else
+                arrJson[0] = "["+prmJsons.getFirst().toJSON().toString();
 
             arrJson[varSize - 1] += "]";
         }

@@ -7,7 +7,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
 - INICIAR SESION
 
     - Inicio de sesion de cualquier usuario
-        - Enpoint: `/api/v1/login`
+        - Enpoint: `/api/v2/login`
         - Method: `POST`
         - Body:
         ```
@@ -18,7 +18,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
         ```
 
     - Actualizar contraseña
-        - Endpoint: `/api/v1/login`
+        - Endpoint: `/api/v2/login`
         - Method: `PUT`
         - Body:
         ```
@@ -31,11 +31,11 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
 - ADMINISTRADOR
 
     - Obtener por identificacion
-        - Endpoint: `/api/v1/administrator/{identification}`
+        - Endpoint: `/api/v2/administrator/{identification}`
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v1/administrator/save`
+      - Endpoint: `/api/v2/administrator/save`
       - Method: `POST`
       - Body:
       ```
@@ -50,17 +50,17 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
       ```
     
     - Eliminar por identificacion
-        - Endpoint: `/api/v1/administrator/{identification}`
+        - Endpoint: `/api/v2/administrator/{identification}`
         - Method: `DELETE`
 
 - CLIENTE
 
     - Obtener por identificacion
-        - Endpoint: `/api/v1/customer/{identification}`
+        - Endpoint: `/api/v2/customer/{identification}`
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v1/customer/save`
+      - Endpoint: `/api/v2/customer/save`
       - Method: `POST`
       - Body:
       ```
@@ -79,17 +79,17 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
       ```
     
     - Eliminar por identificacion
-        - Endpoint: `/api/v1/customer/{identification}`
+        - Endpoint: `/api/v2/customer/{identification}`
         - Method: `DELETE`
 
 - TAQUILLERO    
 
     - Obtener por identificacion
-        - Endpoint: `/api/v1/ticket-seller/{identification}`
+        - Endpoint: `/api/v2/ticket-seller/{identification}`
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v1/ticket-seller/save`
+      - Endpoint: `/api/v2/ticket-seller/save`
       - Method: `POST`
       - Body:
       ```
@@ -105,11 +105,11 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
       ```
     
     - Eliminar por identificacion
-        - Endpoint: `/api/v1/ticket-seller/{identification}`
+        - Endpoint: `/api/v2/ticket-seller/{identification}`
         - Method: `DELETE`
 
     - Actualizar turno
-        - Endpoint: `/api/v1/ticket-seller`
+        - Endpoint: `/api/v2/ticket-seller`
         - Method: `PUT`
         - Body:
         ```
@@ -118,3 +118,74 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
                 "turn": String
             }
         ```
+
+## CARTELERA
+En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
+
+- PELICULAS
+
+    - Obtener por identificacion
+        - Enpoint: `/api/v2/movie/{idMovie}`
+        - Method: `GET`
+
+    - Obtener todo
+        - Enpoint: `/api/v2/movie/all`
+        - Method: `GET`
+
+    - Registro
+        - Endpoint: `/api/v2/movie/save`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "idMovie": Long,
+                "name": String,
+                "sypnosis": String,
+                "poster": File,
+                "listGenders": String -> [gender1, gender2, gender3, ..., gender10]
+            }
+        ```
+    - Eliminar por identificacion
+        - Endpoint: `/api/v2/movie/{idMovie}`
+        - Method: `DELETE`
+
+- SALAS DE CINE
+
+    - Registro
+        - Endpoint: `/api/v2/cinema-room/save`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "idCinemaRoom": Long
+            }
+        ```
+
+- FUNCIONES DE CINE
+
+    - Obtener por identificacion
+        - Enpoint: `/api/v2/movie-function/{idMovie}/{idCinemaRoom}/{startDate}`
+        - Method: `GET`
+
+    - Obtener todo
+        - Enpoint: `/api/v2/movie-function/all`
+        - Method: `GET`
+
+    - Registro
+        - Endpoint: `/api/v2/movie-function/save`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "idMovie": Long,
+                "idCinemaRoom": Long,
+                "startDate": Date [yyyy-mm-dd],
+                "endDate": Date [yyyy-mm-dd],
+                "startTime": Time [hh:mm],
+                "endTime": Time [hh:mm]
+            }
+        ```
+
+    - Eliminar por identificacion
+        - Endpoint: `/api/v2/movie-function/{idMovie}/{idCinemaRoom}/{startDate}`
+        - Method: `DELETE`

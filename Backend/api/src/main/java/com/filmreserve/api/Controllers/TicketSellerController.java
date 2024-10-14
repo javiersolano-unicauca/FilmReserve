@@ -21,7 +21,7 @@ import com.filmreserve.api.Services.iTicketSellerService;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v1/ticket-seller")
+@RequestMapping(path = "/api/v2/ticket-seller")
 public class TicketSellerController {
 
     @Autowired
@@ -41,7 +41,7 @@ public class TicketSellerController {
         }
         catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -77,7 +77,7 @@ public class TicketSellerController {
         }
         catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     } 
 

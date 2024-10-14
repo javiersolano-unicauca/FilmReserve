@@ -303,6 +303,34 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
         return (atrLast.getKey() == prmKey);
     }
 
+    /**
+     *  Metodo para validar si la lista tiene exactamente el mismo contenido 
+     *  que otra
+     * 
+     *  @param prmSuperList Recibe la lista a validar
+     * 
+     *  @return 'true' si tienen el mismo contenido. 'false' si no
+     */
+    public boolean equals(SuperLinkedList<K, V> prmSuperList)
+    {
+        if(atrSize != prmSuperList.atrSize) return false;
+
+        Element<K, V> ptrElement = atrFirst;
+        Element<K, V> ptrElement2 = prmSuperList.atrFirst;
+
+        while(
+            (ptrElement != null) && 
+            ((ptrElement.getKey() == ptrElement2.getKey()) && (ptrElement.getValue() == ptrElement2.getValue()))
+        ){
+            ptrElement = ptrElement.getRight();
+            ptrElement2 = ptrElement2.getRight();
+        }
+
+        if(ptrElement == null) 
+            return true;
+        return false;
+    }
+
     @Override
     public Iterator iterator() {
         return new SuperListIterator(atrFirst);

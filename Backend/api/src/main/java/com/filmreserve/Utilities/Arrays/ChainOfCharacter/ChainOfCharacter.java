@@ -8,6 +8,68 @@ import com.filmreserve.Utilities.Exceptions.ChainOfCharacterException;
 public class ChainOfCharacter {
 
     /**
+     *  Metodo para convertir una cadena de caracteres en arreglo.
+     * 
+     *  Ejemplo del patron permitido:
+     *  <blockquote>
+     *      <pre> [apple, pear, strawberry] </pre>
+     *  </blockquote>
+     * 
+     *  @param prmChain Recibe la cadena
+     * 
+     *  @return El arreglo o null si la cadena esta vacia
+     * 
+     *  @throws ChainOfCharacterException Si no tiene el patron permitido
+     */
+    public static String[] toArray(String prmChain) throws ChainOfCharacterException
+    {
+        if(prmChain.isEmpty()) return null;
+
+        int varEnd = prmChain.length() - 1;
+
+        ChainOfCharacterException.throwException(
+            ((prmChain.charAt(0) != '[') || (prmChain.charAt(varEnd) != ']')),
+            ChainOfCharacterException.NOT_PATTERN
+        );
+
+        try{
+            return prmChain.substring(1, varEnd)
+                            .replaceAll(" ", "")
+                            .split(",");
+        }catch(Exception e)
+        {
+            ChainOfCharacterException.throwException(true, ChainOfCharacterException.NOT_PATTERN);
+        }
+        return null;
+    }
+
+    /**
+     *  Metodo para extraer una subcadena de caracteres
+     * 
+     *  @param prmChain Recibe la cadena
+     *  @param prmLimit Recibe el caracter que finaliza la extraccion
+     * 
+     *  @return La subcadena o null si la cadena es nula
+     */
+    public static String substring(String prmChain, Character prmLimit)
+    {
+        if(prmChain == null) return null;
+
+        int varLenght = prmChain.length();
+        String varSustring = "";
+
+
+        for(int i = 0; i < varLenght; i++)
+        {
+            if(prmChain.charAt(i) != prmLimit) 
+                varSustring += prmChain.charAt(i);
+            else break;
+        }
+
+        return varSustring;
+    }
+
+    /**
      *  Metodo para validar si la candena contiene solamente letras
      * 
      *  @param prmChain Recibe la cadena

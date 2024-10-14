@@ -7,22 +7,21 @@ import com.filmreserve.Utilities.Arrays.JSON.iJSON;
 import com.filmreserve.Utilities.Exceptions.ListException;
 
 /**
- *  Clase para listas enlazadas
- * 
- *  @param <T> Tipo de dato a almacenar
+ *  Clase para listas enlazadas de objetos 'JSON'
+ *  @see JSON
  * 
  *  @author javiersolanop
 */
-public class LinkedList<T> implements Iterable<T> {
-    
-    private Node<T> atrFirst;
-    private Node<T> atrLast;
+public class LinkedListJSON implements Iterable<iJSON> {
+
+    private Node<iJSON> atrFirst;
+    private Node<iJSON> atrLast;
     private int atrSize;
     
     /**
      *  Constructor
      */
-    public LinkedList()
+    public LinkedListJSON()
     {
         atrFirst = null;
         atrLast = null;
@@ -34,11 +33,11 @@ public class LinkedList<T> implements Iterable<T> {
     * 
     *  @param prmValue Recibe la copia del valor
     */
-    public void addFirst(T prmValue)
+    public void addFirst(iJSON prmValue)
     {
         if(atrLast != null)
         {
-            Node<T> ptrNewNode = new Node(prmValue);
+            Node<iJSON> ptrNewNode = new Node(prmValue);
             ptrNewNode.setRight(atrFirst);
             atrFirst.setLeft(ptrNewNode);
             atrFirst = ptrNewNode;
@@ -55,11 +54,11 @@ public class LinkedList<T> implements Iterable<T> {
     * 
     *  @param prmValue Recibe la copia del valor
     */
-    public void add(T prmValue)
+    public void add(iJSON prmValue)
     {
         if(atrFirst != null)
         {
-            Node<T> ptrNewNode = new Node(prmValue);
+            Node<iJSON> ptrNewNode = new Node(prmValue);
             ptrNewNode.setLeft(atrLast);
             atrLast.setRight(ptrNewNode);
             atrLast = ptrNewNode;
@@ -79,11 +78,11 @@ public class LinkedList<T> implements Iterable<T> {
     *  @return 'true' si contiene el valor.
     *          'false' si no
     */
-    public boolean contains(T prmValue)
+    public boolean contains(iJSON prmValue) throws Exception
     {
-        Node<T> ptrNode = atrFirst;
+        Node<iJSON> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (ptrNode.getValue() != prmValue))
+        while((ptrNode != null) && (!ptrNode.getValue().equals(prmValue)))
             ptrNode = ptrNode.getRight();
 
         return (ptrNode != null);
@@ -100,14 +99,14 @@ public class LinkedList<T> implements Iterable<T> {
     *                                             la posicion es negativa 
     *                                             o posicion fuera de rango.
     */
-    public T get(int prmPosition) throws ListException
+    public iJSON get(int prmPosition) throws ListException
     {
         ListException.throwException((atrFirst == null), ListException.EMPTY);
         ListException.throwException((prmPosition < 0), ListException.POSITION_NEGATIVE);
         ListException.throwException(((prmPosition == 0) || (prmPosition > atrSize)), 
                                         ListException.POSITION_OUT_OF_RANGE);
 
-        Node<T> ptrNode = atrFirst;        
+        Node<iJSON> ptrNode = atrFirst;        
 
         for(int i = 1; i < prmPosition; i++)
             ptrNode = ptrNode.getRight();
@@ -145,11 +144,11 @@ public class LinkedList<T> implements Iterable<T> {
     *  @return 'true' si se actualiza el valor.
     *          'false' si no
     */
-    public boolean update(T prmFind, T prmValue)
+    public boolean update(iJSON prmFind, iJSON prmValue) throws Exception
     {
-        Node<T> ptrNode = atrFirst;
+        Node<iJSON> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (ptrNode.getValue() != prmFind))
+        while((ptrNode != null) && (!ptrNode.getValue().equals(prmFind)))
             ptrNode = ptrNode.getRight();
 
         if(ptrNode == null)
@@ -168,7 +167,7 @@ public class LinkedList<T> implements Iterable<T> {
     {
         ListException.throwException((atrFirst == null), ListException.EMPTY);
 
-        Node<T> ptrNode = null;
+        Node<iJSON> ptrNode = null;
 
         if(atrFirst.getRight() != null)
         {
@@ -191,7 +190,7 @@ public class LinkedList<T> implements Iterable<T> {
     {
         ListException.throwException((atrLast == null), ListException.EMPTY);
 
-        Node<T> ptrNode = null;
+        Node<iJSON> ptrNode = null;
 
         if(atrLast.getLeft() != null)
         {
@@ -214,14 +213,16 @@ public class LinkedList<T> implements Iterable<T> {
     *  @return 'true' si se elimina el valor.
     *          'false' si no
     */
-    public boolean remove(T prmValue)
+    public boolean remove(iJSON prmValue) throws Exception
     {
-        if((atrFirst.getValue() == prmValue) || (atrLast.getValue() == prmValue))
+        iJSON varValue = prmValue;
+
+        if((atrFirst.getValue().equals(varValue)) || (atrLast.getValue().equals(varValue)))
             return false;
 
-        Node<T> ptrNode = atrFirst;
+        Node<iJSON> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (ptrNode.getValue() != prmValue))
+        while((ptrNode != null) && (!ptrNode.getValue().equals(varValue)))
             ptrNode = ptrNode.getRight();
 
         if(ptrNode == null)
@@ -239,7 +240,7 @@ public class LinkedList<T> implements Iterable<T> {
     */
     public void clear()
     {
-        Node<T> ptrLeft;
+        Node<iJSON> ptrLeft;
 
         while(atrLast != null)
         {
@@ -256,7 +257,7 @@ public class LinkedList<T> implements Iterable<T> {
     * 
     *  @throws Libraries.Exceptions.ListException Si la lista esta vacia
     */
-    public T getFirst() throws ListException
+    public iJSON getFirst() throws ListException
     {
         ListException.throwException((atrFirst == null), ListException.EMPTY);
         return atrFirst.getValue();
@@ -269,7 +270,7 @@ public class LinkedList<T> implements Iterable<T> {
     * 
     *  @throws Libraries.Exceptions.ListException Si la lista esta vacia
     */
-    public T getLast() throws ListException
+    public iJSON getLast() throws ListException
     {
         ListException.throwException((atrLast == null), ListException.EMPTY);
         return atrLast.getValue();
@@ -280,46 +281,15 @@ public class LinkedList<T> implements Iterable<T> {
      * 
      *  @return La lista de strings o null si esta vacia
      */
-    // public String[] toStrings() throws Exception
-    // {
-    //     if(isEmpty()) return null; 
-        
-    //     String[] arrJson = {};
-                
-    //     int varSize = atrSize, 
-    //     varIterador = varSize - 1;
-
-    //     arrJson = new String[varSize];
-
-    //     if(varSize > 1)
-    //     {
-    //         Node<T> ptrNode = atrFirst;
-
-    //         while((ptrNode != null) && (!ptrNode.getValue().equals(prmValue.toJSON())))
-    //         {
-
-    //         }
-    //         // for (iJSON objJson : prmJsons) {
-
-    //         //     if(varIterador == 0)
-    //         //         arrJson[varIterador] = "["+objJson.toJSON().toString();
-    //         //     else
-    //         //         arrJson[varIterador] = objJson.toJSON().toString();
-
-    //         //     if(varIterador < (varSize - 1))
-    //         //         arrJson[varIterador] += ",";
-    //         //     varIterador--;
-    //         // }
-    //     }    
-    //     else
-    //         arrJson[0] = "["+prmJsons.getFirst().toJSON().toString();
-
-    //     arrJson[varSize - 1] += "]";
-    //     return arrJson;
-    // }
+    public String[] toStrings() throws Exception
+    {
+        if(isEmpty()) 
+            return null; 
+        return JSON.toStringJSON(this);
+    }
 
     @Override
     public Iterator iterator() {
-        return new ListIterator(atrFirst);
+        return new ListIteratorJSON(atrFirst);
     }
 }

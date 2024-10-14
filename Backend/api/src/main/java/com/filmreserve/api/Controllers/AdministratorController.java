@@ -20,7 +20,7 @@ import com.filmreserve.api.Services.iAdministratorService;
  * @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v1/administrator")
+@RequestMapping(path = "/api/v2/administrator")
 public class AdministratorController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class AdministratorController {
         }
         catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -76,7 +76,7 @@ public class AdministratorController {
         }
         catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     } 
 }

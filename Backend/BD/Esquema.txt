@@ -37,3 +37,42 @@ CREATE TABLE ticket_seller (
 	CONSTRAINT ck_turn CHECK(turn in ('TARDE', 'NOCHE'))
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE movie (
+	id_movie BIGINT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	sypnosis VARCHAR(300) NOT NULL,
+	poster_image VARCHAR(100) NOT NULL,
+	CONSTRAINT pk_id_movie PRIMARY KEY(id_movie)
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE gender(
+	id_movie BIGINT NOT NULL,
+	name VARCHAR(20) NOT NULL,
+	CONSTRAINT pk_gender PRIMARY KEY(id_movie, name),
+	CONSTRAINT fk_movie FOREIGN KEY(id_movie) REFERENCES movie(id_movie) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE cinema_room(
+	id_cinema_room BIGINT NOT NULL,
+	CONSTRAINT pk_gender PRIMARY KEY(id_cinema_room)
+	
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE cin_presents_mov(
+	id_movie BIGINT NOT NULL,
+	id_cinema_room BIGINT NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+	active BOOLEAN NOT NULL DEFAULT true,
+	CONSTRAINT pk_cin_presents_mov PRIMARY KEY(id_movie, id_cinema_room, start_date),
+	CONSTRAINT fk_movie1 FOREIGN KEY(id_movie) REFERENCES movie(id_movie) ON DELETE CASCADE,
+	CONSTRAINT fk_cinema_room FOREIGN KEY(id_cinema_room) REFERENCES cinema_room(id_cinema_room) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+	
+ 

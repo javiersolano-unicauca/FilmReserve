@@ -1,7 +1,5 @@
 package com.filmreserve.api.Models;
 
-import java.io.Serializable;
-
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
 
 import jakarta.persistence.Column;
@@ -15,7 +13,7 @@ import jakarta.persistence.Table;
 @Table
 @Entity(name = "ticket_seller")
 @PrimaryKeyJoinColumn(name = "identification")
-public class TicketSellerModel extends UserModel implements Serializable {
+public class TicketSellerModel extends UserModel {
 
     @Column(name = "turn")
     private String atrTurn;

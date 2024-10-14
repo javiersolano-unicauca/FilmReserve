@@ -28,7 +28,7 @@ public class ApiApplication {
 				registry.addMapping("/api/**")
 				.allowedOrigins("*")
 				.allowedMethods("*")
-				.allowedHeaders("Authorization");
+				.allowedHeaders("*");
 			}
 		};
 	}

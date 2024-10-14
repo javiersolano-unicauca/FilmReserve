@@ -19,7 +19,7 @@ import com.filmreserve.api.Services.iUserService;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v1/login")
+@RequestMapping(path = "/api/v2/login")
 public class LoginController {
 
     @Autowired

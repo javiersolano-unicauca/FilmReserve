@@ -39,6 +39,7 @@ public class ServiceResponseException extends Exception {
     }
 
     /**
+     *  @param prmCondition Recibe la condicion de lanzamiento
      *  @param prmResponse Recibe el tipo de respuesta
      *  @param prmCause Recibe la causa de la excepcion
      */
