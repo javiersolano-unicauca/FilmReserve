@@ -9,7 +9,7 @@ const loginIcon = document.querySelector("#login");
 var sesionActiva; //no borrar
 // Llama a la función showLoginUser  para inicializar la interfaz
 showLoginUser();
-// Agrega un evento de clic al icono de login para mostrar la interfaz de login
+// Agrega un evento de click al icono de login para mostrar la interfaz de login
 loginIcon?.addEventListener("click", showLoginUser);
 export function showLoginUser() {
   if (localStorage.getItem("sesionActiva") == "inactiva") {
@@ -49,13 +49,14 @@ function prueba() {
 menuIcon?.addEventListener("click", mostrarMenuDesplegable);
 
 function mostrarMenuDesplegable() {
-  // Comprobar si el submenú está visible
+  const submenu = document.querySelector('.submenu');
   if (submenu.style.display == "block") {
-    submenu.style.display = "none"; // Ocultar el submenú
+      submenu.style.display = "none";
   } else {
-    submenu.style.display = "block"; // Mostrar el submenú
+      submenu.style.display = "block";
   }
 }
+
 // funcion para mostrar el login y registro
 export function showLogin() {
   if (login.style.display == "none") {

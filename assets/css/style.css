@@ -281,3 +281,231 @@ margin: 10px;
   background-color: white;
   opacity: 1;
 }
+
+/*menu cuando ya inicio sesion
+*/
+
+.userBox {
+  background-color: #005daa; /* Color de fondo similar */
+  color: white; /* Color del texto */
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 300px; /* Ajusta según necesites */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
+
+/* Triángulo en la parte superior */
+.userBox::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 15px; /* Ajusta la posición del triángulo */
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #005daa transparent;
+}
+
+/* Estilo del nombre del usuario */
+.userBox h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Estilo del email */
+.userBox h2 {
+  font-size: 14px;
+  margin: 5px 0;
+  font-weight: normal;
+}
+
+/* Barra de progreso */
+.progress-bar {
+  height: 5px;
+  background-color: #000;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+/* Texto para visitas o estado del usuario */
+.visitas-text {
+  font-size: 12px;
+  margin: 5px 0;
+  color: #d1e3f8;
+}
+
+/* Estilo de las opciones (Mis compras, etc.) */
+.userBox {
+  background-color: #005daa;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  position: absolute; /* Aseguramos que sea absoluto */
+  top: 70px; /* Ajusta según tu diseño */
+  right: 0;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Para asegurarnos que esté delante de otros elementos */
+}
+
+/* Triángulo en la parte superior */
+.userBox::before {
+  content: '';
+  position: absolute;
+  top: -10px; /* Posición para que quede justo sobre el cuadro */
+  right: 30px; /* Ajusta la ubicación para centrar con el icono */
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #005daa transparent;
+  z-index: 1001; /* Aseguramos que esté delante del cuadro */
+}
+
+/* Estilo del nombre del usuario */
+.userBox h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Estilo del rol del usuario (Cliente) */
+.userBox h2 {
+  font-size: 14px;
+  margin: 5px 0;
+  font-weight: normal;
+  color: #d1e3f8;
+}
+
+/* Estilo del botón */
+.userBox button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px; /* Aumenta el tamaño de la letra */
+  cursor: pointer;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 100px; /* Ajusta este valor según lo que necesites */
+}
+
+.userBox button:hover {
+  color: #000000;
+}
+
+/* Estilos generales para el footer */
+footer {
+  background-color: #f9f9f9;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #5a5a5a;
+  text-align: right;
+  position: relative;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  clear: both; /* Esto asegura que el footer no se superponga con otro contenido */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+.footer-container-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; /* Alinea el texto de "Síguenos en redes sociales" en la misma altura que los enlaces */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas más pequeñas */
+  width: 100%;
+}
+/* Ajuste en la sección del logo */
+.logo-section {
+  display: flex;
+  align-items: center; /* Mantén la alineación vertical del logo */
+}
+
+.logo-section img {
+  vertical-align: middle; /* Asegura que el logo esté alineado al centro verticalmente */
+  height: 40px;
+}
+
+.links-section {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Asegura la alineación vertical con el texto de redes sociales */
+  gap: 10px;
+}
+.links-section a {
+  color: #5a5a5a;
+  text-decoration: none;
+  padding: 0 10px;
+}
+
+.links-section span {
+  color: #5a5a5a;
+}
+
+.social-section {
+  display: flex;
+  flex-direction: column; /* Organiza el texto y los íconos de redes sociales en columnas */
+  justify-content: flex-start; /* Asegura que el texto esté alineado con los enlaces */
+  align-items: center; /* Alinea los íconos de redes sociales al centro */
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center; /* Alinea los íconos al centro */
+  gap: 10px;
+  margin-top: 5px; /* Añade un poco de separación entre el texto y los íconos */
+}
+
+.social-section p {
+  margin: 0;
+  color: #5a5a5a;
+  text-align: center; /* Centra el texto si es necesario */
+}
+
+.social-section img {
+  height: 20px;
+  flex-direction: row;
+}
+
+
+/* Estilos para los íconos de redes sociales */
+.social-icons img {
+  height: 20px;
+}
+
+
+.copyright-section {
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 30px;
+  color: #5a5a5a;
+  text-align: center;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .footer-container {
+      flex-direction: column;
+      text-align: center;
+  }
+  
+  .links-section {
+      margin: 10px 0;
+  }
+  
+  .social-section {
+      margin-top: 10px;
+  }
+}
+
+
+
