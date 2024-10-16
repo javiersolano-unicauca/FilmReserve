@@ -22,8 +22,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity prmHttp) throws Exception
     {
         prmHttp.authorizeHttpRequests(request -> {
-            request.anyRequest()
+            request.requestMatchers("/api/**")
                    .authenticated();
+            request.requestMatchers("/posters/**")
+                   .permitAll();
         })
         .httpBasic(Customizer.withDefaults())
         .csrf(csrf -> csrf.disable());

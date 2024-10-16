@@ -147,6 +147,33 @@ public class File {
     }
 
     /**
+     *  Metodo para importar  un archivo en formato 'jpeg'
+     * 
+     *  @param prmFileName El nombre del archivo
+     *  @return El arreglo de bytes del archivo o null si esta vacio
+     * 
+     *  @throws FileException Si no se puede importar
+     */
+    public byte[] importJpeg(String prmFileName) throws FileException
+    {
+        try{
+
+            atrFileInput = new FileInputStream(atrPath+"\\"+prmFileName+".jpeg");
+
+            byte[] arrBytes = new byte[atrFileInput.available()];
+            DataInputStream objDataInputStream = new DataInputStream(atrFileInput);
+
+            objDataInputStream.readFully(arrBytes);
+            atrFileInput.close();
+            return arrBytes;
+
+        }catch(Exception e){
+            FileException.throwException(FileException.CANNOT_IMPORT);
+        }
+        return null;
+    }
+
+    /**
      *  Metodo para remover un archivo en formato 'jpeg'
      * 
      *  @param prmFileName El nombre del archivo

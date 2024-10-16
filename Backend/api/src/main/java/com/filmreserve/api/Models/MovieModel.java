@@ -80,7 +80,7 @@ public class MovieModel implements Serializable, iJSON  {
 
     public String getPoster()
     {
-        return System.getProperty("user.dir") + "\\posters\\" + atrPosterImage + ".jpeg";
+        return "http://localhost:8001/posters/" + atrPosterImage;
     }
 
     public List<GenderModel> getGenders()
@@ -107,7 +107,7 @@ public class MovieModel implements Serializable, iJSON  {
         objJson.add("sypnosis", atrSypnosis);
         objJson.add(
             "poster", 
-            System.getProperty("user.dir") + "\\posters\\" + atrPosterImage + ".jpeg"
+            "http://localhost:8001/posters/" + atrPosterImage
         );
         return objJson;
     }

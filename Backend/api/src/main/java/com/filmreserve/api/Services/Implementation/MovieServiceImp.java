@@ -112,21 +112,25 @@ public class MovieServiceImp  implements iMovieService{
             "Ya existe esa pelicula en el sistema"
         );
 
-        try{ MovieValidation.validate(prmMovie, prmGenders, prmPosterImage); }
+        String varFilename = "";
+
+        try{ 
+            MovieValidation.validate(prmMovie, prmGenders, prmPosterImage); 
+        
+            varFilename = ChainOfCharacter.substring(
+                prmPosterImage.getOriginalFilename(),'.'
+            );
+
+            new File("posters").exportJpeg(
+                varFilename,
+                prmPosterImage.getBytes()
+            );
+        }
         catch(Exception e) { 
             ServiceResponseException.throwException(
                 "save", 
                 e.getMessage()
         ); }
-
-        String varFilename = ChainOfCharacter.substring(
-            prmPosterImage.getOriginalFilename(),'.'
-        );
-
-        new File("posters").exportJpeg(
-            varFilename,
-            prmPosterImage.getBytes()
-        );
         
         prmMovie.setPosterImage(varFilename);
         movieDao.save(prmMovie);
