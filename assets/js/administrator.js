@@ -1,7 +1,7 @@
 import objClient from "../api/ClientAPI.js";
 import {
   idRegex,
-  passwordRegex,
+  passwordRegex,version,
 } from "./register.js";
 const userNameRegex = /^[A-Za-z]+$/;
 const turnRegex = /^(TARDE|NOCHE)$/;
@@ -116,7 +116,7 @@ function sendForm(form, datos) {
 }
 
 function customerRegistration(form, variable) {
-  objClient.post("/api/v1/ticket-seller/save", variable, (prmResponse) => {
+  objClient.post(`/api/${version}/ticket-seller/save`, variable, (prmResponse) => {
     console.log(prmResponse);
     validateCustomerRegitration(form, prmResponse);
   });

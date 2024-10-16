@@ -5,7 +5,7 @@ import {
   idRegex,
   passwordRegex,
   validarCampo,
-  validationStatus,
+  validationStatus,version,
 } from "./register.js";
 import { showLoginUser, showLogin } from "./menuDesplegable.js";
 
@@ -58,7 +58,7 @@ function validateUser (id,password,form) {
   varData.append("identification", id);
   varData.append("password", password);
 
-  objClient.post("/api/v1/login", varData, (prmResponse) =>
+  objClient.post(`/api/${version}/login`, varData, (prmResponse) =>
     {console.log(prmResponse)
   validarlogin(prmResponse,form)}
   );

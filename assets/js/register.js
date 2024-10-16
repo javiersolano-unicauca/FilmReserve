@@ -1,5 +1,5 @@
 import objClient from "../api/ClientAPI.js";
-
+export const version="v2";
 const userNameRegex = /^[A-Za-z]+$/;
 export const idRegex = /^(?!0$)[0-9]+$/;
 export const passwordRegex = /^.{8,12}$/;
@@ -135,7 +135,7 @@ function sendForm(form, datos) {
 }
 
 function customerRegistration(form, variable) {
-  objClient.post("/api/v1/customer/save", variable, (prmResponse) => {
+  objClient.post(`/api/${version}/customer/save`, variable, (prmResponse) => {
     console.log(prmResponse);
     validateCustomerRegitration(form, prmResponse);
   });
