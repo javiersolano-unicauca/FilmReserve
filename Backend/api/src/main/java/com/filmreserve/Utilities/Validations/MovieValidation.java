@@ -99,12 +99,11 @@ public class MovieValidation {
         validateNull(prmMovie.getName(), MovieException.NAME);
         validateEmpty(prmMovie.getName(), MovieException.NAME);
 
-        try{
-            ChainOfCharacter.containsLettersWithException(prmMovie.getName());
-        }
-        catch(ChainOfCharacterException e){
-            MovieException.throwException(MovieException.NAME, e);
-        } 
+        MovieException.throwException(
+            prmMovie.getSypnosis().contains("<script>"),
+            MovieException.SYPNOSIS,
+            new Exception("No debe ingresar instrucciones!")
+        );
     }
 
     /**
