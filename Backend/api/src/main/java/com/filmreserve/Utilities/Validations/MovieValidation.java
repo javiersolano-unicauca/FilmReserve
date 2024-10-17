@@ -101,7 +101,7 @@ public class MovieValidation {
 
         MovieException.throwException(
             prmMovie.getSypnosis().contains("<script>"),
-            MovieException.SYPNOSIS,
+            MovieException.NAME,
             new Exception("No debe ingresar instrucciones!")
         );
     }
