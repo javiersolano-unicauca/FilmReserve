@@ -3,13 +3,19 @@ package com.filmreserve.api.Services.Implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.filmreserve.Utilities.Arrays.ChainOfCharacter.ChainOfCharacter;
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Exceptions.FileException;
+import com.filmreserve.Utilities.Files.File;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.Utilities.Validations.UserValidation;
 import com.filmreserve.api.Dao.iUserDao;
 import com.filmreserve.api.Models.UserModel;
 import com.filmreserve.api.Services.iUserService;
+
+import java.util.Random;
 
 @Service("UserServiceImp")
 public class UserServiceImp implements iUserService {
@@ -63,8 +69,37 @@ public class UserServiceImp implements iUserService {
         return objResponse;
     }
 
+    /**
+     *  Metodo para guardar la imagen del avatar de un usuario
+     * 
+     *  @param prmAvatar Recibe la referencia a la imagen
+     * 
+     *  @return El nombre del avatar asignado
+     * 
+     *  @throws Exception Si no se puede guardar
+     */
+    protected String saveAvatar(MultipartFile prmAvatar) throws Exception
+    {
+        String varAvatar = "";
+
+        if(prmAvatar != null)
+        {
+            varAvatar = ChainOfCharacter.substring(
+                prmAvatar.getOriginalFilename(),'.'
+            );
+
+            new File("avatars").exportJpeg(
+                varAvatar,
+                prmAvatar.getBytes()
+            );
+        }
+        else varAvatar = "avatar-" + (new Random().nextInt(4) + 1);
+
+        return varAvatar;
+    }
+
     @Override
-    public JSON save(UserModel prmUser) throws Exception
+    public JSON save(UserModel prmUser, MultipartFile prmAvatar) throws Exception
     {
         ServiceResponseException.throwException(
             userDao.existsById(prmUser.getIdentification()),
@@ -72,8 +107,12 @@ public class UserServiceImp implements iUserService {
             "Ya existe ese usuario en el sistema"
         );
 
-        try{ UserValidation.validate(prmUser); }
-        catch(Exception e) { 
+        try{ 
+
+            UserValidation.validate(prmUser, prmAvatar); 
+            prmUser.setAvatar(saveAvatar(prmAvatar));
+
+        }catch(Exception e) { 
             ServiceResponseException.throwException(
                 "save", 
                 e.getMessage()
@@ -116,14 +155,36 @@ public class UserServiceImp implements iUserService {
         return objJson;
     }
 
+    /**
+     *  Metodo para remover la imagen del avatar de un usuario
+     * 
+     *  @param prmAvatar Recibe el nombre del avatar
+     * 
+     *  @throws FileException Si no se puede remover
+     */
+    protected void removeAvatar(String prmAvatar) throws FileException
+    {
+        if(!prmAvatar.contains("avatar")) 
+            new File("avatars").removeJpeg(prmAvatar);
+    }
+
     @Override
     public JSON delete(Long prmIdentification) throws Exception
     {
+        UserModel objUser = userDao.findById(prmIdentification).orElse(null);
+
         ServiceResponseException.throwException(
-            !userDao.existsById(prmIdentification),
+            (objUser == null),
             "delete",
             "No existe el usuario con identificacion " + prmIdentification
         );
+
+        try{ removeAvatar(objUser.getAvatar()); }
+        catch(Exception e){ 
+            ServiceResponseException.throwException(
+                "delete",
+                e.getMessage()
+        ); }
 
         userDao.deleteById(prmIdentification);
 

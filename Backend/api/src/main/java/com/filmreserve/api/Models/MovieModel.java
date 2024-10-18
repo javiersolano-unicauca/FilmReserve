@@ -80,7 +80,7 @@ public class MovieModel implements Serializable, iJSON  {
 
     public String getPoster()
     {
-        return "http://localhost:8001/posters/" + atrPosterImage;
+        return "http://localhost:8001/api/posters/" + atrPosterImage;
     }
 
     public List<GenderModel> getGenders()
@@ -107,7 +107,7 @@ public class MovieModel implements Serializable, iJSON  {
         objJson.add("sypnosis", atrSypnosis);
         objJson.add(
             "poster", 
-            "http://localhost:8001/posters/" + atrPosterImage
+            "http://localhost:8001/api/posters/" + atrPosterImage
         );
         return objJson;
     }

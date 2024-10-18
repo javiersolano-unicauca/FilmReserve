@@ -1,5 +1,7 @@
 package com.filmreserve.api.Services;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.UserModel;
 
@@ -46,6 +48,7 @@ public interface iUserService {
      *  Metodo para guardar un usuario
      * 
      *  @param prmUser Recibe los datos del usuario
+     *  @param prmAvatar Recibe la imagen del avatar
      * 
      *  @return Una instancia JSON con la clave 'save' en 'true'. De lo contrario en 'false'
      *          con su respectiva causa
@@ -53,7 +56,7 @@ public interface iUserService {
      *  @see JSON
      *  @throws Exception Si no se puede guardar el usuario
      */
-    public JSON save(UserModel prmUser) throws Exception;
+    public JSON save(UserModel prmUser, MultipartFile prmAvatar) throws Exception;
 
     /**
      *  Metodo para actualizar la contrasenia del usuario

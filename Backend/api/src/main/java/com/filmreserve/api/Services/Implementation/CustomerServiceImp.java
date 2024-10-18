@@ -3,8 +3,11 @@ package com.filmreserve.api.Services.Implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.filmreserve.Utilities.Arrays.ChainOfCharacter.ChainOfCharacter;
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Files.File;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.Utilities.Validations.CustomerValidation;
 import com.filmreserve.api.Dao.iCustomerDao;
@@ -39,7 +42,7 @@ public class CustomerServiceImp extends UserServiceImp implements iCustomerServi
     }
 
     @Override
-    public JSON save(UserModel prmUser) throws Exception
+    public JSON save(UserModel prmUser, MultipartFile prmAvatar) throws Exception
     {
         ServiceResponseException.throwException(
             !(prmUser instanceof CustomerModel),
@@ -53,8 +56,12 @@ public class CustomerServiceImp extends UserServiceImp implements iCustomerServi
             "Ya existe ese usuario en el sistema"
         );
 
-        try{ CustomerValidation.validate(prmUser); }
-        catch(Exception e) { 
+        try{ 
+
+            CustomerValidation.validate(prmUser, prmAvatar); 
+            prmUser.setAvatar(saveAvatar(prmAvatar));
+
+        }catch(Exception e) { 
             ServiceResponseException.throwException(
                 "save", 
                 e.getMessage()
@@ -73,11 +80,20 @@ public class CustomerServiceImp extends UserServiceImp implements iCustomerServi
     @Override
     public JSON delete(Long prmIdentification) throws Exception
     {
+        CustomerModel objCustomer = customerDao.findById(prmIdentification).orElse(null);
+
         ServiceResponseException.throwException(
-            !userDao.existsById(prmIdentification),
+            (objCustomer == null),
             "delete",
             "No existe el usuario cliente con identificacion " + prmIdentification
         );
+
+        try{ removeAvatar(objCustomer.getAvatar()); }
+        catch(Exception e){ 
+            ServiceResponseException.throwException(
+                "delete",
+                e.getMessage()
+        ); }
 
         customerDao.deleteById(prmIdentification);
 

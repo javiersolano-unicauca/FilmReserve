@@ -1,6 +1,7 @@
 package com.filmreserve.api.Services.Implementation;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
@@ -28,10 +29,10 @@ public class AdministratorServiceImpl extends UserServiceImp implements iAdminis
     }
 
     @Override
-    public JSON save(UserModel prmUser) throws Exception
+    public JSON save(UserModel prmUser, MultipartFile prmAvatar) throws Exception
     {
         prmUser.setAdministrator(true);
-        return super.save(prmUser);
+        return super.save(prmUser, prmAvatar);
     }
 
     @Override
@@ -44,6 +45,13 @@ public class AdministratorServiceImpl extends UserServiceImp implements iAdminis
             "delete",
             "No existe el usuario administrador con identificacion " + prmIdentification
         );
+
+        try{ removeAvatar(objUser.getAvatar()); }
+        catch(Exception e){ 
+            ServiceResponseException.throwException(
+                "delete",
+                e.getMessage()
+        ); }
 
         userDao.deleteById(prmIdentification);
 

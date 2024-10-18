@@ -100,7 +100,7 @@ public class MovieValidation {
         validateEmpty(prmMovie.getName(), MovieException.NAME);
 
         MovieException.throwException(
-            prmMovie.getSypnosis().contains("<script>"),
+            prmMovie.getName().contains("<script>"),
             MovieException.NAME,
             new Exception("No debe ingresar instrucciones!")
         );
@@ -169,9 +169,10 @@ public class MovieValidation {
             String[] arrGenders = ChainOfCharacter.toArray(prmGenders);
 
             MovieException.throwException(
-                (arrGenders.length > 10),
+                ((arrGenders == null)
+                || (arrGenders.length > 10)),
                 MovieException.GENDERS,
-                new Exception("No debe ser superior a 10 generos")
+                new Exception("No debe estar vacio y tampoco ser superior a 10 generos")
             );  
 
         }catch(ChainOfCharacterException e)

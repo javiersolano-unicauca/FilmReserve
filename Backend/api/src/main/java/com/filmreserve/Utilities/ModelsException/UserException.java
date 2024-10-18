@@ -17,6 +17,7 @@ public class UserException extends ModelException {
     public static final int FIRST_SURNAME = 4;
     public static final int SECOND_SURNAME = 5;
     public static final int PASSWORD = 6;
+    public static final int AVATAR = 7;
     
     // Constructors:
     
@@ -43,6 +44,7 @@ public class UserException extends ModelException {
             case FIRST_SURNAME: varField = "firstSurname"; break;
             case SECOND_SURNAME: varField = "secondSurname"; break;
             case PASSWORD: varField = "password"; break;
+            case AVATAR: varField = "avatar"; break;
         }
         return varField;
     }

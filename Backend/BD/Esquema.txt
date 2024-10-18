@@ -10,6 +10,7 @@ CREATE TABLE user (
 	second_surname VARCHAR(50) NULL,
 	password VARCHAR(255) NOT NULL,
 	administrator BOOLEAN NOT NULL DEFAULT false,
+	avatar VARCHAR(50) NOT NULL,
 	CONSTRAINT pk_identification PRIMARY KEY(identification)
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;

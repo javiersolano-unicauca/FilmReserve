@@ -45,7 +45,8 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
             "secondName": String [Optional],
             "firstSurname": String,
             "secondSurname": String [Optional],
-            "password": String
+            "password": String,
+            "avatarImage": File [Optional]
         }
       ```
     
@@ -74,7 +75,8 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
             "day": Integer,
             "month": Integer,
             "year": Integer,
-            "phone": Long
+            "phone": Long,
+            "avatarImage": File [Optional]
         }
       ```
     
@@ -100,7 +102,8 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
             "firstSurname": String,
             "secondSurname": String [Optional],
             "password": String,
-            "turn": String
+            "turn": String,
+            "avatarImage": File [Optional]
         }
       ```
     

@@ -2,6 +2,8 @@ package com.filmreserve.Utilities.Validations;
 
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.filmreserve.Utilities.ModelsException.CustomerException;
 import com.filmreserve.Utilities.ModelsException.TicketSellerException;
 import com.filmreserve.Utilities.ModelsException.UserException;
@@ -21,10 +23,11 @@ public class CustomerValidation extends UserValidation {
      *  Metodo para validar todos los campos
      * 
      *  @param prmTicketSeller Recibe la referencia del taquillero
+     *  @param prmAvatar Recibe la imagen del avatar
      * 
      *  @throws TicketSellerException Cuando los campos no son validos en su totalidad
      */
-    public static void validate(UserModel prmUser) throws UserException
+    public static void validate(UserModel prmUser, MultipartFile prmAvatar) throws UserException
     {
         validateId(prmUser);
         validateFirstName(prmUser);
@@ -32,6 +35,7 @@ public class CustomerValidation extends UserValidation {
         validateFirstSurname(prmUser);
         validateSecondSurname(prmUser);
         validatePassword(prmUser);
+        validateAvatar(prmUser, prmAvatar);
         validateYear((CustomerModel) prmUser);
         validateMonth((CustomerModel) prmUser);
         validateDay((CustomerModel) prmUser);

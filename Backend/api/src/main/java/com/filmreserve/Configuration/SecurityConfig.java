@@ -22,9 +22,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity prmHttp) throws Exception
     {
         prmHttp.authorizeHttpRequests(request -> {
-            request.requestMatchers("/api/**")
+            request.requestMatchers("/api/v2/**")
                    .authenticated();
-            request.requestMatchers("/posters/**")
+            request.requestMatchers("/api/posters/**")
+                   .permitAll();
+            request.requestMatchers("/api/avatars/**")
                    .permitAll();
         })
         .httpBasic(Customizer.withDefaults())

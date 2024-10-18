@@ -42,6 +42,9 @@ public class UserModel implements Serializable, iJSON {
     @Column(name = "administrator")
     private Boolean atrAdministrator;
 
+    @Column(name = "avatar")
+    private String atrAvatar;
+
     public UserModel(){}
 
     public Long getIdentification()
@@ -114,6 +117,16 @@ public class UserModel implements Serializable, iJSON {
         atrAdministrator = prmAdministrator;
     }
 
+    public String getAvatar()
+    {
+        return atrAvatar;
+    }
+
+    public void setAvatar(String prmAvatar)
+    {
+        atrAvatar = prmAvatar;
+    }
+
     /**
      *  Metodo para obtener una instancia de 'JSON' con la 
      *  informacion del usuario
@@ -129,6 +142,7 @@ public class UserModel implements Serializable, iJSON {
         objJson.add("firstSurname", atrFirstSurname);
         objJson.add("secondSurname", (atrSecondSurname != null) ? atrSecondSurname : "null");
         objJson.add("role", "Administrador");
+        objJson.add("avatar", "http://localhost:8001/api/avatars/" + atrAvatar);
         return objJson;
     }
 

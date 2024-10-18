@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.CustomerModel;
@@ -47,13 +48,14 @@ public class CustomerController{
     /**
      *  Metodo para guardar un taquillero en el sistema
      * 
-     *  @param prmUser Recibe la informacion del taquillero
+     *  @param prmCustomer Recibe la informacion del cliente
+     *  @param avatarImage Recibe la imagen del avatar
      */
     @PostMapping(path = "/save")
-    public ResponseEntity<String> save(CustomerModel prmCustomer)
+    public ResponseEntity<String> save(CustomerModel prmCustomer, MultipartFile avatarImage)
     {
         try{
-            JSON objResponse = customerService.save(prmCustomer);
+            JSON objResponse = customerService.save(prmCustomer, avatarImage);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
         }
         catch(Exception e)

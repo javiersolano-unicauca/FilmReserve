@@ -155,25 +155,27 @@ public class MovieServiceImp  implements iMovieService{
         String varFilename = objMovie.getPosterImage();
         objMovie.setPosterImage(null);
 
-        try{ MovieValidation.validatePosterImage(objMovie, prmPosterImage); }
+        try{ 
+            MovieValidation.validatePosterImage(objMovie, prmPosterImage); 
+
+            File objFile = new File("posters");
+            objFile.removeJpeg(varFilename);
+
+            varFilename = ChainOfCharacter.substring(
+                prmPosterImage.getOriginalFilename(),'.'
+            );
+    
+            objFile.exportJpeg(
+                varFilename,
+                prmPosterImage.getBytes()
+            );
+        }
         catch(Exception e) { 
             ServiceResponseException.throwException(
                 "update", 
                 e.getMessage()
         ); }
 
-        File objFile = new File("posters");
-        objFile.removeJpeg(varFilename);
-
-        varFilename = ChainOfCharacter.substring(
-            prmPosterImage.getOriginalFilename(),'.'
-        );
-
-        objFile.exportJpeg(
-            varFilename,
-            prmPosterImage.getBytes()
-        );
-        
         objMovie.setPosterImage(varFilename);
         movieDao.save(objMovie);
 
@@ -193,7 +195,13 @@ public class MovieServiceImp  implements iMovieService{
             "No existe la pelicula con identificacion " + prmIdMovie
         );
 
-        new File("posters").removeJpeg(objMovie.getPosterImage());
+        try{ new File("posters").removeJpeg(objMovie.getPosterImage()); }
+        catch(Exception e){ 
+            ServiceResponseException.throwException(
+                "delete",
+                e.getMessage()
+        ); }
+
         movieDao.deleteById(prmIdMovie);
 
         JSON objResponse = new JSON();

@@ -23,7 +23,7 @@ public class ChainOfCharacter {
      */
     public static String[] toArray(String prmChain) throws ChainOfCharacterException
     {
-        if(prmChain.isEmpty()) return null;
+        if(prmChain.isEmpty() || prmChain.endsWith("[]")) return null;
 
         int varEnd = prmChain.length() - 1;
 

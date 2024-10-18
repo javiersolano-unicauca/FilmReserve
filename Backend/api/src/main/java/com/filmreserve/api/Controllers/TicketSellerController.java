@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.TicketSellerModel;
@@ -48,13 +49,14 @@ public class TicketSellerController {
     /**
      *  Metodo para guardar un taquillero en el sistema
      * 
-     *  @param prmUser Recibe la informacion del taquillero
+     *  @param prmTicketSeller Recibe la informacion del taquillero
+     *  @param avatarImage Recibe la imagen del avatar 
      */
     @PostMapping(path = "/save")
-    public ResponseEntity<String> save(TicketSellerModel prmTicketSeller)
+    public ResponseEntity<String> save(TicketSellerModel prmTicketSeller, MultipartFile avatarImage)
     {
         try{
-            JSON objResponse = ticketSellerService.save(prmTicketSeller);
+            JSON objResponse = ticketSellerService.save(prmTicketSeller, avatarImage);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
         }
         catch(Exception e)
