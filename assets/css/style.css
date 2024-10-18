@@ -23,7 +23,7 @@ body {
 
 /* Contenedor principal de la cabecera */
 .header-content {
-  width: 100%;
+  width: 100vw;
   background-color: #000000;
   color: white;
   padding: 1.5rem 0;
@@ -32,9 +32,6 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-
-/* ---- Logo y menú lateral ---- */
-
 /* Contenedor del logo y el menú lateral */
 .menu {
   display: flex;
@@ -206,17 +203,18 @@ body {
   background-color: var(--colorBotonesHorizontal);
   text-align: center;
   border-radius: 20px;
-margin: 10px;
+  margin: 10px;
 }
 .main_loginRegister {
   z-index: 100;
   display: none;
 }
+
 /* Ajusta el tamaño del slider */
 .swiper {
-  width: 80%;
-  height: auto;
-  margin: 50px auto;
+  width: 100vw;
+  height: 90vh;
+  margin: 0px 0px;
   z-index: 1;
 }
 
@@ -224,10 +222,10 @@ margin: 10px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 20px;
-  height: 400px;
+  padding: 5px;
+  width: 100vw;
+  height: 70vh;
   background-color: #000000;
-  border-radius: 10px;
 }
 
 /* Contenido textual */
@@ -244,14 +242,16 @@ margin: 10px;
 }
 
 .slider-txt p {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 1rem; /* Tamaño de fuente adecuado */
+  line-height: 1.5; /* Espaciado entre líneas */
+  text-align: justify; /* Justifica el texto para que esté alineado a ambos lados */
+  word-wrap: break-word; /* Asegura que las palabras largas no se desborden */
+  overflow-wrap: break-word; /* Controla el comportamiento de las palabras largas */
 }
-
 /* Imágenes en el slider */
 .slider-img img {
   max-height: 350px;
-  border-radius: 10px;
+  border-radius: 20px;
   width: auto;
   transition: all 0.5s ease; /* Transición suave para el efecto hover */
 }
@@ -259,17 +259,43 @@ margin: 10px;
 .slider:hover .slider-img img {
   transform: scale(1.05); /* Efecto de agrandar la imagen al hacer hover */
 }
-
 /* Personalizar las flechas de navegación */
 .swiper-button-next, .swiper-button-prev {
-  color: white;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
+  display: flex; /* Mostrar y centrar las flechas */
+  color: #fafafa; /* Color de las flechas */
+  font-size: 18px; /* Tamaño reducido para las flechas */
+  z-index: 10; /* Capa superior */
+  width: 60px; /* Aumenta el tamaño del botón para acomodar el padding */
+  height: 60px; /* Aumenta el tamaño del botón para acomodar el padding */
+  background-color: transparent; /* Fondo transparente */
+  border-radius: 100%; /* Hacer los botones redondos */
+  justify-content: center; /* Centrar el icono horizontalmente */
+  align-items: center; /* Centrar el icono verticalmente */
+  border: 2px solid black; /* Borde negro */
+  transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
+  position: absolute; /* Posicionamiento personalizado */
+  top: 35%; /* Posición en la mitad vertical */
+  transform: translateY(-50%); /* Centrado vertical */
+  overflow: hidden; /* Recorta contenido fuera del botón */
+  padding: 10px; /* Añade padding alrededor del contenido del botón */
 }
 
+/* Cambio de color de fondo y borde al pasar el mouse */
 .swiper-button-next:hover, .swiper-button-prev:hover {
-  transform: scale(1.2); /* Efecto de agrandar al pasar el mouse */
+  background-color: rgba(128, 128, 128, 0.4); /* Gris con 50% de opacidad */
+  color: white; /* Cambia el color de la flecha al pasar el mouse */
 }
+
+/* Espaciado para los botones de navegación */
+.swiper-button-next {
+  right: 30px; /* Ajusta la distancia del botón derecho al borde */
+
+}
+
+.swiper-button-prev {
+  left: 20px; /* Ajusta la distancia del botón izquierdo al borde */
+}
+
 
 /* Paginación personalizada */
 .swiper-pagination-bullet {
