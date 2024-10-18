@@ -44,9 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
       datos.append("month", month);
       datos.append("day", day);
 
-      console.log(day);
-      console.log(month);
-      console.log(year);
     } else {
       console.log("No se ha ingresado una fecha válida.");
     }

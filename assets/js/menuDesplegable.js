@@ -26,6 +26,7 @@ export function showLoginUser() {
       localStorage.getItem("nameUser");
     document.querySelector(".userBox h2").innerText =
       localStorage.getItem("roleUser");
+      loginIcon.setAttribute("src",localStorage.getItem("AvatarImg"))
     if (localStorage.getItem("roleUser") == "Administrador") {
       document.querySelector(".userBox a").style.display = "block";
     } else {

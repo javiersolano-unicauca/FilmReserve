@@ -88,6 +88,7 @@ function validarlogin(prmResponse, form) {
       "nameUser",
       prmResponse.user.firstName + " " + prmResponse.user.firstSurname
     );
+    localStorage.setItem("AvatarImg",prmResponse.user.avatar);
     showLogin();
     showLoginUser();
     console.log(prmResponse.login);
