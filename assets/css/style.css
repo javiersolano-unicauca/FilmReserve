@@ -213,7 +213,7 @@ body {
 /* Ajusta el tamaño del slider */
 .swiper {
   width: 100vw;
-  height: 90vh;
+  height: 60vh;
   margin: 0px 0px;
   z-index: 1;
 }
@@ -224,7 +224,7 @@ body {
   justify-content: space-around;
   padding: 5px;
   width: 100vw;
-  height: 70vh;
+  height: 60vh;
   background-color: #000000;
 }
 
