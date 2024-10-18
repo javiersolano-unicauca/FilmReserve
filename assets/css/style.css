@@ -490,7 +490,21 @@ footer {
   color: #5a5a5a;
   text-align: center;
 }
+#myForm{
 
+  width: auto;
+}
+.checkbox-group {
+  display: flex;
+  justify-content: space-between;
+}
+.checkbox-group label {
+  border:1px solid var(--colorBotonesHorizontal);
+  min-width: 100px;
+  padding: 0 5px;
+  display: block;
+  font-size: small;
+}
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
   .footer-container {

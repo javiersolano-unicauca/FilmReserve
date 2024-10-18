@@ -86,6 +86,7 @@ export default class ClientAPI {
     prmAction(JSON.parse(await varResponse.text()));
   }
 }
+export const objClient = new ClientAPI("filmreserve", "123", "http://localhost:8001");
 
 // objClient.get("/api/v1/customer", 14, (prmResponse) =>
 //   console.log(prmResponse)
