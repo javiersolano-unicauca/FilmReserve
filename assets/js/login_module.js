@@ -1,11 +1,11 @@
-import objClient from "../api/ClientAPI.js";
-
+import ClientAPI from "../api/ClientAPI.js";
 
 import {
   idRegex,
   passwordRegex,
   validarCampo,
-  validationStatus,version,
+  validationStatus,
+  version,
 } from "./register.js";
 import { showLoginUser, showLogin } from "./menuDesplegable.js";
 
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
- function sendForm(form) {
+function sendForm(form) {
   //validamos el envio del formulario
   if (validationStatus.identification && validationStatus.password) {
     validateUser(inputUserId.value, inputUserPassword.value, form);
@@ -52,21 +52,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
-
-function validateUser (id,password,form) {
+function validateUser(id, password, form) {
   var varData = new FormData();
   varData.append("identification", id);
   varData.append("password", password);
 
-  objClient.post(`/api/${version}/login`, varData, (prmResponse) =>
-    {console.log(prmResponse)
-  validarlogin(prmResponse,form)}
+  const objClient = new ClientAPI(
+    "filmreserve",
+    "123",
+    "http://localhost:8001"
   );
+
+  objClient.post(`/api/${version}/login`, varData, (prmResponse) => {
+    console.log(prmResponse);
+    validarlogin(prmResponse, form);
+  });
   return localStorage.getItem("sesionActiva");
 }
 
-function validarlogin(prmResponse,form){
-  if ((prmResponse.login == true)) {
+function validarlogin(prmResponse, form) {
+  if (prmResponse.login == true) {
     form.reset();
     Swal.fire({
       position: "top-end",
@@ -90,11 +95,9 @@ function validarlogin(prmResponse,form){
     localStorage.setItem("sesionActiva", "inactiva");
     console.log(prmResponse.login);
     Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: prmResponse.cause,
-      });
+      icon: "error",
+      title: "Oops...",
+      text: prmResponse.cause,
+    });
   }
 }
-
-

@@ -1,110 +1,91 @@
 /**
  *  Clase para consumir API's
- * 
+ *
  *  @author javiersolanop
  */
-class ClientAPI {
+export default class ClientAPI {
+  /**
+   *  @param {string} prmUsername Recibe el nombre de usuario para la autenticacion
+   *  @param {string} prmPassword Recibe la contrasenia para la autenticacion
+   *  @param {string} prmAddres Recibe la url de la API, ejemplo ('https://www.api.com')
+   */
+  constructor(prmUsername, prmPassword, prmAddres) {
+    this.atrUsername = prmUsername;
+    this.atrPassword = prmPassword;
+    this.atrHeaders = {
+      Accept: "*",
+      Authorization: `Basic ${btoa(`${prmUsername}:${prmPassword}`)}`,
+    };
+    this.atrAddres = prmAddres;
+  }
 
-    /**
-     *  @param {string} prmUsername Recibe el nombre de usuario para la autenticacion
-     *  @param {string} prmPassword Recibe la contrasenia para la autenticacion
-     *  @param {string} prmAddres Recibe la url de la API, ejemplo ('https://www.api.com')
-     */
-    constructor(prmUsername, prmPassword, prmAddres)
-    {
-        this.atrUsername = prmUsername;
-        this.atrPassword = prmPassword;
-        this.atrHeaders = {
-            'Accept': '*',
-            'Authorization': `Basic ${btoa(`${prmUsername}:${prmPassword}`)}`,
-        };
-        this.atrAddres = prmAddres;
-    }
+  /**
+   *  Metodo para realizar peticion con el metodo 'GET'
+   *
+   *  @param {string} prmEndpoint Recibe el endpoint a consumir
+   *  @param {number} prmPathVariable Recibe el valor de path variable si se requiere
+   *  @param {()} prmAction Recibe lambda para la respuesta
+   */
+  async get(prmEndpoint, prmPathVariable = "", prmAction) {
+    let varResponse = await fetch(
+      this.atrAddres + prmEndpoint + prmPathVariable,
+      {
+        headers: this.atrHeaders,
+      }
+    );
+    prmAction(JSON.parse(await varResponse.text()));
+  }
 
-    /**
-     *  Metodo para realizar peticion con el metodo 'GET'
-     * 
-     *  @param {string} prmEndpoint Recibe el endpoint a consumir
-     *  @param {number} prmPathVariable Recibe el valor de path variable si se requiere
-     *  @param {()} prmAction Recibe lambda para la respuesta
-     */
-    async get(prmEndpoint, prmPathVariable = '', prmAction)
-    {
-        let varResponse = await fetch(
-            this.atrAddres + prmEndpoint + '/' + prmPathVariable,
-            {
-                headers: this.atrHeaders
-            }
-        );
-        prmAction(JSON.parse(await varResponse.text()))
-    }   
+  /**
+   *  Metodo para realizar peticion con el metodo 'POST'
+   *
+   *  @param {string} prmEndpoint Recibe el endpoint a consumir
+   *  @param {FormData} prmBody Recibe los datos a enviar
+   *  @param {()} prmAction Recibe lambda para la respuesta
+   */
+  async post(prmEndpoint, prmBody, prmAction) {
+    let varResponse = await fetch(this.atrAddres + prmEndpoint, {
+      headers: this.atrHeaders,
+      method: "POST",
+      body: prmBody,
+    });
+    prmAction(JSON.parse(await varResponse.text()));
+  }
 
-    /**
-     *  Metodo para realizar peticion con el metodo 'POST'
-     * 
-     *  @param {string} prmEndpoint Recibe el endpoint a consumir
-     *  @param {FormData} prmBody Recibe los datos a enviar
-     *  @param {()} prmAction Recibe lambda para la respuesta
-     */
-    async post(prmEndpoint, prmBody, prmAction)
-    {
-        let varResponse = await fetch(
-            this.atrAddres + prmEndpoint,
-            {
-                headers: this.atrHeaders,
-                method: 'POST',
-                body: prmBody
-            }
-        );
-        prmAction(JSON.parse(await varResponse.text()))
-    }
+  /**
+   *  Metodo para realizar peticion con el metodo 'PUT'
+   *
+   *  @param {string} prmEndpoint Recibe el endpoint a consumir
+   *  @param {FormData} prmBody Recibe los datos a enviar
+   *  @param {()} prmAction Recibe lambda para la respuesta
+   */
+  async put(prmEndpoint, prmBody, prmAction) {
+    let varResponse = await fetch(this.atrAddres + prmEndpoint, {
+      headers: this.atrHeaders,
+      method: "PUT",
+      body: prmBody,
+    });
+    prmAction(JSON.parse(await varResponse.text()));
+  }
 
-    /**
-     *  Metodo para realizar peticion con el metodo 'PUT'
-     * 
-     *  @param {string} prmEndpoint Recibe el endpoint a consumir
-     *  @param {FormData} prmBody Recibe los datos a enviar
-     *  @param {()} prmAction Recibe lambda para la respuesta
-     */
-    async put(prmEndpoint, prmBody, prmAction)
-    {
-        let varResponse = await fetch(
-            this.atrAddres + prmEndpoint,
-            {
-                headers: this.atrHeaders,
-                method: 'PUT',
-                body: prmBody
-            }
-        );
-        prmAction(JSON.parse(await varResponse.text()))
-    }
-
-    /**
-     *  Metodo para realizar peticion con el metodo 'DELETE'
-     * 
-     *  @param {string} prmEndpoint Recibe el endpoint a consumir
-     *  @param {number} prmPathVariable Recibe el valor de path variable si se requiere
-     *  @param {()} prmAction Recibe lambda para la respuesta
-     */
-    async delete(prmEndpoint, prmPathVariable = '', prmAction)
-    {
-        let varResponse = await fetch(
-            this.atrAddres + prmEndpoint + '/' + prmPathVariable,
-            {
-                headers: this.atrHeaders,
-                method: 'DELETE'
-            }
-        );
-        prmAction(JSON.parse(await varResponse.text()))
-    }  
+  /**
+   *  Metodo para realizar peticion con el metodo 'DELETE'
+   *
+   *  @param {string} prmEndpoint Recibe el endpoint a consumir
+   *  @param {number} prmPathVariable Recibe el valor de path variable si se requiere
+   *  @param {()} prmAction Recibe lambda para la respuesta
+   */
+  async delete(prmEndpoint, prmPathVariable = "", prmAction) {
+    let varResponse = await fetch(
+      this.atrAddres + prmEndpoint + prmPathVariable,
+      {
+        headers: this.atrHeaders,
+        method: "DELETE",
+      }
+    );
+    prmAction(JSON.parse(await varResponse.text()));
+  }
 }
-
-  const objClient = new ClientAPI( 
-    'filmreserve',
-    '123',
-    'http://localhost:8001'
-);
-export default objClient;
 
 // objClient.get("/api/v1/customer", 14, (prmResponse) =>
 //   console.log(prmResponse)
@@ -119,11 +100,10 @@ export default objClient;
 // GET:
 
 // objClient.get(
-//     '/api/v1/customer', 
+//     '/api/v1/customer',
 //     123456,
 //     (prmResponse) => console.log(prmResponse)
 // );
-
 
 // POST:
 
@@ -139,8 +119,6 @@ export default objClient;
 //     (prmResponse) => console.log(prmResponse)
 // );
 
-
-
 // var varData = new FormData();
 // varData.append('identification', 1231212);
 // varData.append('password', '12345');
@@ -150,8 +128,6 @@ export default objClient;
 //     varData,
 //     (prmResponse) => console.log(prmResponse)
 // );
-
-
 
 // PUT:
 
@@ -168,7 +144,7 @@ export default objClient;
 // DELETE:
 
 // objClient.delete(
-//     '/api/v1/customer', 
+//     '/api/v1/customer',
 //     123456,
 //     (prmResponse) => console.log(prmResponse)
 // );

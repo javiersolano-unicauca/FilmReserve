@@ -127,7 +127,7 @@ body {
   padding: 10px 0px 10px 10px;
   max-width: 25vw;
   min-width: 20vw;
-  height: 100vw;/* Ocupar desde el encabezado hasta el final de la pantalla */
+  height: 92.8vh;/* Ocupar desde el encabezado hasta el final de la pantalla */
 
 }
 
@@ -505,6 +505,14 @@ footer {
   .social-section {
       margin-top: 10px;
   }
+    .slider-txt p{
+      display: none;
+    }
+}
+@media (max-width: 1050px){
+.menu-horizontal{
+  display: none;
+}
 }
 
 

@@ -1,5 +1,5 @@
-import objClient from "../api/ClientAPI.js";
-export const version="v2";
+import ClientAPI from "../api/ClientAPI.js";
+export const version = "v2";
 const userNameRegex = /^[A-Za-z]+$/;
 export const idRegex = /^(?!0$)[0-9]+$/;
 export const passwordRegex = /^.{8,12}$/;
@@ -31,22 +31,28 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const datos = new FormData(e.target);
     const date1 = inputUserDate.value;
+
     if (date1) {
       // Verifica si hay un valor en el input
-      const date = new Date(date1); // Crea un objeto Date a partir de la cadena
+      let varDate = date1.split("-");
 
-      const day = date.getDate(); // Obtiene el día
-      const month = date.getMonth() + 1; // Obtiene el mes (0-11, así que sumamos 1)
-      const year = date.getFullYear(); // Obtiene el año
+      const day = varDate[2]; // Obtiene el día
+      const month = varDate[1]; // Obtiene el mes (0-11, así que sumamos 1)
+      const year = varDate[0]; // Obtiene el año
+
       datos.append("year", year);
       datos.append("month", month);
       datos.append("day", day);
+
+      console.log(day);
+      console.log(month);
+      console.log(year);
     } else {
       console.log("No se ha ingresado una fecha válida.");
     }
-    for (let [key, value] of datos.entries()) {
-      console.log(key + ": " + value);
-    }
+    // for (let [key, value] of datos.entries()) {
+    //   console.log(key + ": " + value);
+    // }
 
     // customerRegistration(datos);
     sendForm(formRegister, datos);
@@ -135,8 +141,13 @@ function sendForm(form, datos) {
 }
 
 function customerRegistration(form, variable) {
+  const objClient = new ClientAPI(
+    "filmreserve",
+    "123",
+    "http://localhost:8001"
+  );
+
   objClient.post(`/api/${version}/customer/save`, variable, (prmResponse) => {
-    console.log(prmResponse);
     validateCustomerRegitration(form, prmResponse);
   });
 }

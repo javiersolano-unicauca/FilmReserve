@@ -49,11 +49,11 @@ function prueba() {
 menuIcon?.addEventListener("click", mostrarMenuDesplegable);
 
 function mostrarMenuDesplegable() {
-  const submenu = document.querySelector('.submenu');
+  const submenu = document.querySelector(".submenu");
   if (submenu.style.display == "block") {
-      submenu.style.display = "none";
+    submenu.style.display = "none";
   } else {
-      submenu.style.display = "block";
+    submenu.style.display = "block";
   }
 }
 

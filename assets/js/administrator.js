@@ -1,25 +1,22 @@
 import objClient from "../api/ClientAPI.js";
-import {
-  idRegex,
-  passwordRegex,version,
-} from "./register.js";
+import { idRegex, passwordRegex, version } from "./register.js";
 const userNameRegex = /^[A-Za-z]+$/;
 const turnRegex = /^(TARDE|NOCHE)$/;
-
 
 var formRegister = document.querySelector(".form_register_seller");
 var inputUserFirstName = document.getElementById("TprimerNomber");
 var inputUserSecondName = document.getElementById("TsegundoNombre");
 var inputUserFirstLName = document.getElementById("TprimerApellido");
 var inputUserSecondLName = document.getElementById("TsegundoApellido");
-var inputUserId = document.querySelector(".form_register_seller input[type='number']");
+var inputUserId = document.querySelector(
+  ".form_register_seller input[type='number']"
+);
 var inputUserPassword = document.querySelector(
   ".form_register_seller input[type='password']"
 );
 var inputUserTurn = document.getElementById("turno");
 
-
- const validationStatus = {
+const validationStatus = {
   firstName: false,
   firstSurname: false,
   identification: false,
@@ -69,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "ingrese un turno valido 'TARDE O NOCHE'"
     );
   });
-
 });
 
 export function validarCampo(regularExpresion, campo, message) {
@@ -96,7 +92,7 @@ function clearAlert(referencia) {
   }
 }
 function sendForm(form, datos) {
-    console.log(validationStatus.turn)
+  console.log(validationStatus.turn);
   //validamos el envio del formulario
   if (
     validationStatus.firstName &&
@@ -116,10 +112,14 @@ function sendForm(form, datos) {
 }
 
 function customerRegistration(form, variable) {
-  objClient.post(`/api/${version}/ticket-seller/save`, variable, (prmResponse) => {
-    console.log(prmResponse);
-    validateCustomerRegitration(form, prmResponse);
-  });
+  objClient.post(
+    `/api/${version}/ticket-seller/save`,
+    variable,
+    (prmResponse) => {
+      console.log(prmResponse);
+      validateCustomerRegitration(form, prmResponse);
+    }
+  );
 }
 function validateCustomerRegitration(form, prmResponse) {
   if (prmResponse.save == true) {
