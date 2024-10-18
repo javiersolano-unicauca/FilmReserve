@@ -1,0 +1,22 @@
+/* Estilo del texto "CineCol" con fondo y efecto de hover */
+:root {
+    --colorBotonesHorizontal: #1c508d; /* Variable para el color de los botones */
+  }
+  
+.text-container h1 {
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    
+  }
+  
+  /* Efecto hover en el texto "CineCol" */
+  .text-container h1:hover {
+   
+    transform: scale(1.05); /* Aumentar ligeramente el tamaño al hacer hover */
+  }
+  

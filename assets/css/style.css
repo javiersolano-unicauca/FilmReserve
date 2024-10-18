@@ -1,0 +1,519 @@
+/* Importación de las fuentes */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+
+/* Estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
+/* Estilos del cuerpo de la página */
+body {
+  background-color: #FFFFFF;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --colorBotonesHorizontal: #1c508d; /* Variable para el color de los botones */
+}
+
+/* Contenedor principal de la cabecera */
+.header-content {
+  width: 100%;
+  background-color: #000000;
+  color: white;
+  padding: 1.5rem 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---- Logo y menú lateral ---- */
+
+/* Contenedor del logo y el menú lateral */
+.menu {
+  display: flex;
+  align-items: center;
+  position: relative; /* Para que el submenú se posicione correctamente */
+}
+
+
+#menu-icon {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+  margin-right: 20px;
+  margin-left: 20px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#menu-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* Logo del sitio */
+#logo {
+  width: 50px; /* Tamaño ajustado del logo */
+  height: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/* ---- Título del sitio ---- */
+
+/* Contenedor para el texto del título */
+.text-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo del texto "CineCol" */
+.text-container h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px; /* Tamaño ajustado para mayor visibilidad */
+  font-weight: 500;
+  color: white;
+  letter-spacing: 1px; /* Espaciado entre letras */
+  padding: 10px 15px; /* Ajuste de padding */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ---- Menú de navegación horizontal ---- */
+
+/* Contenedor del menú horizontal */
+.menu-horizontal {
+  display: flex;
+  margin-left: 20px; /* Separación del logo */
+  margin-right: 50px;
+  max-height: 50px;
+}
+
+/* Botones del menú horizontal */
+.menu-horizontal a {
+  color: #FFFFFF;
+  background-color: var(--colorBotonesHorizontal);
+  border-radius: 30px; /* Bordes redondeados */
+  padding: 12px 25px; /* Tamaño del botón ajustado */
+  margin-right: 20px; /* Espaciado entre botones */
+  font-size: 15px; /* Tamaño del texto */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efecto hover en los botones del menú horizontal */
+.menu-horizontal a:hover {
+  background-color: #0076ff; /* Cambio de color en hover */
+  transform: scale(1.08); /* Animación de agrandado en hover */
+}
+
+/* ---- Submenú (opcional) ---- */
+.submenu {
+
+  position: absolute; /* Para que se despliegue sobre el contenido */
+  top: 100%; /* Justo debajo del encabezado */
+  left: 0; /* Alineado a la izquierda */
+  background-color: #000000; /* Fondo negro */
+  width: 25vw; /* Ancho de una cuarta parte de la página */
+  border-radius: 0px; /* Bordes redondeados (ajusta este valor según necesites) */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  display: flex; /* Para usar flexbox */
+  flex-direction: column; /* Disposición en columna */
+  overflow: hidden; /* Para que los bordes redondeados se mantengan */
+  padding: 10px 0px 10px 10px;
+  max-width: 25vw;
+  min-width: 20vw;
+  height: 92.8vh;/* Ocupar desde el encabezado hasta el final de la pantalla */
+
+}
+
+/* Enlaces del submenú */
+.submenu a {
+  display: block; /* Hacer que cada enlace ocupe toda la línea */
+  color: #FFFFFF; /* Texto blanco */
+  background-color: transparent; /* Fondo transparente por defecto */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px 15px; /* Ajusta el padding aquí */
+  margin: 10px 15px; /* Espaciado vertical y horizontal entre botones */
+  font-size: 15px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones */
+}
+
+
+/* Efecto hover en los enlaces del submenú */
+.submenu a:hover {
+  background-color: #0076ff; /* Fondo azul en hover */
+  transform: scale(1.05); /* Aumentar ligeramente el tamaño al hacer hover */
+}
+
+.submenu {
+  display: none; /* Oculto por defecto */
+}
+
+
+/* Estilo del icono de usuario */
+#login {
+  width: 40px;
+  height: auto;
+  margin-left: auto;
+  margin-right: 20px;
+  border-radius: 50%; /* Bordes completamente redondeados */
+  background-color: #FFFFFF;
+  border: 2px dashed #0076ff; /* Borde punteado */
+  padding: 5px; /* Ajuste de padding */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#login:hover{
+  transform: scale(1.10); 
+}
+.userBox {
+  visibility: hidden;
+  position:absolute;
+    /* Para que se despliegue sobre el contenido */
+    top: 80px;
+    /* Justo debajo del encabezado */
+    right: 0;
+    /* Alineado a la derecha */
+    background-color: #000000;
+    /* Fondo negro */
+    width: 20vw;
+    /* Ancho de una cuarta parte de la página */
+    border-radius: 0px;
+    /* Bordes redondeados (ajusta este valor según necesites) */
+    z-index: 1000;
+    /* Asegura que esté por encima de otros elementos */
+    display: flex;
+    /* Para usar flexbox */
+    flex-direction: column;
+    /* Disposición en columna */
+    overflow: hidden;
+    /* Para que los bordes redondeados se mantengan */
+    padding: 10px 0px 10px 10px;
+    max-width: 25vw;
+    min-width: 20vw;
+    height: 40vh;
+    /* Ocupar desde el encabezado hasta el final de la pantalla */
+  /* height: 100px;
+    width: 30px; */
+}
+.userBox a {
+  color: #FFFFFF;
+  background-color: var(--colorBotonesHorizontal);
+  text-align: center;
+  border-radius: 20px;
+margin: 10px;
+}
+.main_loginRegister {
+  z-index: 100;
+  display: none;
+}
+/* Ajusta el tamaño del slider */
+.swiper {
+  width: 80%;
+  height: auto;
+  margin: 50px auto;
+  z-index: 1;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  height: 400px;
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+/* Contenido textual */
+.slider-txt {
+  color: white;
+  font-size: 1.2rem;
+  max-width: 30%;
+  text-align: center; /* Centra el texto */
+}
+
+.slider-txt h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.slider-txt p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Imágenes en el slider */
+.slider-img img {
+  max-height: 350px;
+  border-radius: 10px;
+  width: auto;
+  transition: all 0.5s ease; /* Transición suave para el efecto hover */
+}
+
+.slider:hover .slider-img img {
+  transform: scale(1.05); /* Efecto de agrandar la imagen al hacer hover */
+}
+
+/* Personalizar las flechas de navegación */
+.swiper-button-next, .swiper-button-prev {
+  color: white;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  transform: scale(1.2); /* Efecto de agrandar al pasar el mouse */
+}
+
+/* Paginación personalizada */
+.swiper-pagination-bullet {
+  background-color: white;
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white;
+  opacity: 1;
+}
+
+/*menu cuando ya inicio sesion
+*/
+
+.userBox {
+  background-color: #005daa; /* Color de fondo similar */
+  color: white; /* Color del texto */
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 300px; /* Ajusta según necesites */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
+
+/* Triángulo en la parte superior */
+.userBox::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 15px; /* Ajusta la posición del triángulo */
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #005daa transparent;
+}
+
+/* Estilo del nombre del usuario */
+.userBox h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Estilo del email */
+.userBox h2 {
+  font-size: 14px;
+  margin: 5px 0;
+  font-weight: normal;
+}
+
+/* Barra de progreso */
+.progress-bar {
+  height: 5px;
+  background-color: #000;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+/* Texto para visitas o estado del usuario */
+.visitas-text {
+  font-size: 12px;
+  margin: 5px 0;
+  color: #d1e3f8;
+}
+
+/* Estilo de las opciones (Mis compras, etc.) */
+.userBox {
+  background-color: #005daa;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  position: absolute; /* Aseguramos que sea absoluto */
+  top: 70px; /* Ajusta según tu diseño */
+  right: 0;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Para asegurarnos que esté delante de otros elementos */
+}
+
+/* Triángulo en la parte superior */
+.userBox::before {
+  content: '';
+  position: absolute;
+  top: -10px; /* Posición para que quede justo sobre el cuadro */
+  right: 30px; /* Ajusta la ubicación para centrar con el icono */
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #005daa transparent;
+  z-index: 1001; /* Aseguramos que esté delante del cuadro */
+}
+
+/* Estilo del nombre del usuario */
+.userBox h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Estilo del rol del usuario (Cliente) */
+.userBox h2 {
+  font-size: 14px;
+  margin: 5px 0;
+  font-weight: normal;
+  color: #d1e3f8;
+}
+
+/* Estilo del botón */
+.userBox button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px; /* Aumenta el tamaño de la letra */
+  cursor: pointer;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 100px; /* Ajusta este valor según lo que necesites */
+}
+
+.userBox button:hover {
+  color: #000000;
+}
+
+/* Estilos generales para el footer */
+footer {
+  background-color: #f9f9f9;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #5a5a5a;
+  text-align: right;
+  position: relative;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  clear: both; /* Esto asegura que el footer no se superponga con otro contenido */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+.footer-container-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; /* Alinea el texto de "Síguenos en redes sociales" en la misma altura que los enlaces */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas más pequeñas */
+  width: 100%;
+}
+/* Ajuste en la sección del logo */
+.logo-section {
+  display: flex;
+  align-items: center; /* Mantén la alineación vertical del logo */
+}
+
+.logo-section img {
+  vertical-align: middle; /* Asegura que el logo esté alineado al centro verticalmente */
+  height: 40px;
+}
+
+.links-section {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Asegura la alineación vertical con el texto de redes sociales */
+  gap: 10px;
+}
+.links-section a {
+  color: #5a5a5a;
+  text-decoration: none;
+  padding: 0 10px;
+}
+
+.links-section span {
+  color: #5a5a5a;
+}
+
+.social-section {
+  display: flex;
+  flex-direction: column; /* Organiza el texto y los íconos de redes sociales en columnas */
+  justify-content: flex-start; /* Asegura que el texto esté alineado con los enlaces */
+  align-items: center; /* Alinea los íconos de redes sociales al centro */
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center; /* Alinea los íconos al centro */
+  gap: 10px;
+  margin-top: 5px; /* Añade un poco de separación entre el texto y los íconos */
+}
+
+.social-section p {
+  margin: 0;
+  color: #5a5a5a;
+  text-align: center; /* Centra el texto si es necesario */
+}
+
+.social-section img {
+  height: 20px;
+  flex-direction: row;
+}
+
+
+/* Estilos para los íconos de redes sociales */
+.social-icons img {
+  height: 20px;
+}
+
+
+.copyright-section {
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 30px;
+  color: #5a5a5a;
+  text-align: center;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .footer-container {
+      flex-direction: column;
+      text-align: center;
+  }
+  
+  .links-section {
+      margin: 10px 0;
+  }
+  
+  .social-section {
+      margin-top: 10px;
+  }
+    .slider-txt p{
+      display: none;
+    }
+}
+@media (max-width: 1050px){
+.menu-horizontal{
+  display: none;
+}
+}
+
+
+
