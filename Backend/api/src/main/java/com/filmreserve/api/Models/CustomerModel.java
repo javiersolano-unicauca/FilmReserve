@@ -100,6 +100,7 @@ public class CustomerModel extends UserModel {
         objJson.add("month", atrMonth);
         objJson.add("year", atrYear);
         objJson.add("age", getAge());
+        objJson.add("avatar", getAvatar());
         objJson.add("role", "Cliente");
         return objJson;
     }
