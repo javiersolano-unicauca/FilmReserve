@@ -44,7 +44,7 @@ public class TicketSellerModel extends UserModel {
         objJson.add("firstSurname", getFirstSurname());
         objJson.add("secondSurname", (getSecondSurname() != null) ? getSecondSurname() : "null");
         objJson.add("turn", atrTurn);
-        objJson.add("avatar", getAvatar());
+        objJson.add("avatar", "http://localhost:8001/api/avatars/" +  getAvatar());
         objJson.add("role", "Taquillero");
         return objJson;
     }
