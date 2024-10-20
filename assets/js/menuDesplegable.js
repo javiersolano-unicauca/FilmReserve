@@ -26,7 +26,7 @@ export function showLoginUser() {
       localStorage.getItem("nameUser");
     document.querySelector(".userBox h2").innerText =
       localStorage.getItem("roleUser");
-      loginIcon.setAttribute("src",localStorage.getItem("AvatarImg"))
+      loginIcon.setAttribute("src",localStorage.getItem("AvatarImg"));
     if (localStorage.getItem("roleUser") == "Administrador") {
       document.querySelector(".userBox a").style.display = "block";
     } else {
@@ -38,6 +38,7 @@ export function showLoginUser() {
 }
 function prueba() {
   alert("fin de sesión");
+  loginIcon.setAttribute("src", "../assets/img/logoInicioSesion.png");
   showUserBox(userBox);
   localStorage.setItem("sesionActiva", "inactiva");
   if (localStorage.getItem("roleUser") == "Administrador") {

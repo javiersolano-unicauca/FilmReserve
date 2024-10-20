@@ -6,7 +6,7 @@ if (localStorage.getItem("roleUser") != "Administrador") {
 
 const userNameRegex = /^[A-Za-z]+$/;
 const turnRegex = /^(TARDE|NOCHE)$/;
-const textRegex = /^[a-zA-Z0-9 ]+$/;
+const textRegex = /^[^<>\/\\'";(){}[\]=+]+$/;
 const objClient = new ClientAPI("filmreserve", "123", "http://localhost:8001");
 
 var formRegister = document.querySelector(".form_register_seller");
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     validarCampo(
       passwordRegex,
       inputUserPassword,
-      "ingrese una contraseña, debe ser de 8 a 12 digitos"
+      "ingrese una contraseña, debe tener mas de 8 caracteres algunos caracteres pueden no ser admitidos"
     );
   });
   inputUserTurn.addEventListener("input", () => {
@@ -106,14 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
     validarCampo(
       textRegex,
       inputMovieName,
-      "solo letras y numeros no se permiten caracteres extraños"
+      "no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
     );
   });
   inputMovieSypnosis.addEventListener("input", () => {
     validarCampo(
       textRegex,
       inputMovieSypnosis,
-      "solo letras y numeros no se permiten caracteres extraños"
+      "no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
     );
   });
   inputMovieId.addEventListener("input", () => {

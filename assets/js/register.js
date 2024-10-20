@@ -2,7 +2,7 @@ import ClientAPI from "../api/ClientAPI.js";
 export const version = "v2";
 const userNameRegex = /^[A-Za-z]+$/;
 export const idRegex = /^(?!0$)[0-9]+$/;
-export const passwordRegex = /^.{8,12}$/;
+export const passwordRegex = /^[^<>\/\\'";(){}[\]&=+]{8,}$/;
 const phoneRegex = /^(?!0+$)[0-9]{10,}$/;
 const dateRegex = /^\d{4}[-\/](0[1-9]|1[0-2])[-\/](0[1-9]|[12][0-9]|3[01])$/;
 
@@ -17,6 +17,9 @@ var inputUserPassword = document.querySelector(
 );
 var inputUserPhone = document.querySelector(".form_register input[type='tel']");
 var inputUserDate = document.querySelector(".form_register input[type='date']");
+var inputUserAvatar = document.querySelector(
+  ".form_register input[type='file']"
+);
 
 export const validationStatus = {
   firstName: false,
@@ -25,11 +28,27 @@ export const validationStatus = {
   password: false,
   phone: false,
 };
+document
+  .getElementById("togglePassword")
+  .addEventListener("change", function () {
 
+    // Alternar el tipo de campo entre password y text
+    if (this.checked) {
+      inputUserPassword.type = "text";
+    } else {
+      inputUserPassword.type = "password";
+    }
+  });
 document.addEventListener("DOMContentLoaded", () => {
   formRegister.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = new FormData(e.target);
+    //verica si el usuario eligio una foto
+    if (inputUserAvatar.files.length === 0) {
+      datos.delete("avatarImage"); // elimina avatar image del formulario de envio
+      alert("No has seleccionado ninguna imagen. Se enviará un valor vacío.");
+    }
+
     const date1 = inputUserDate.value;
 
     if (date1) {
@@ -43,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
       datos.append("year", year);
       datos.append("month", month);
       datos.append("day", day);
-
     } else {
       console.log("No se ha ingresado una fecha válida.");
     }
@@ -80,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     validarCampo(
       passwordRegex,
       inputUserPassword,
-      "ingrese una contraseña, debe ser de 8 a 12 digitos"
+      "ingrese una contraseña, debe tener mas de 8 caracteres algunos caracteres pueden no ser admitidos"
     );
   });
   inputUserPhone.addEventListener("input", () => {

@@ -123,12 +123,17 @@
                         </label>
                         <label for="">
                             <input type="password" placeholder=" (*) Contraseña" name="password" required>
+                            Mostrar contraseña<input type="checkbox" id="togglePassword">
                         </label>
                         <label for="">
                             <input type="date" name="date" required>
                         </label>
                         <label for="">
                             <input type="tel" placeholder=" (*) Celular" name="phone" required>
+                        </label>
+                        <label class="custom-file-label" for="">
+                            Subir foto (opcional)
+                            <input type="file" name="avatarImage" id="avatarImage" accept=".jpeg, .jpg">
                         </label>
                         <button>Registrarse</button>
                     </form>
@@ -171,7 +176,7 @@
 
                         </datalist>
                     </label>
-                    <button>Registrar</button>
+                    <button>Registrar taquillero</button>
                 </form>
                 <form action="" class="form_register_movie">
                     <h2>Regístrar Pelicula</h2>
@@ -185,7 +190,7 @@
                         <input type="text" placeholder="(*) Sypnosis" id="MSypnosis" name="sypnosis" required>
                     </label>
                     <label for="">
-                        imagen de la pelicula:<input type="file" name="poster">
+                        imagen de la pelicula:<input type="file" name="poster" id="avatarImage" accept=".jpeg, .jpg">
                     </label>
                     <label for="" id="label_checkbox_group">
                         seleccionar los generos:
@@ -221,7 +226,7 @@
                             <label><input type="checkbox" name="listGender" value="terror"> Terror</label><br>
                         </div>
                     </label>
-                    <button id="button_movie">Registrar</button>
+                    <button id="button_movie">Registrar pelicula</button>
                 </form>
         </main>
         <script src="../assets/js/loginRegister.js"></script>

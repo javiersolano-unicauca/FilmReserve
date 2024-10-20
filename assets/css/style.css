@@ -155,13 +155,13 @@ body {
 /* Estilo del icono de usuario */
 #login {
   width: 40px;
-  height: auto;
+  height: 40px;
   margin-left: auto;
   margin-right: 20px;
   border-radius: 50%; /* Bordes completamente redondeados */
   background-color: #FFFFFF;
-  border: 2px dashed #0076ff; /* Borde punteado */
-  padding: 5px; /* Ajuste de padding */
+/* border: 2px dashed #0076ff;  Borde punteado */
+/* padding: 5px;  Ajuste de padding */
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 

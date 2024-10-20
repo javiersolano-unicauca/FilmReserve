@@ -1,22 +1,63 @@
 /* Estilo del texto "CineCol" con fondo y efecto de hover */
 :root {
-    --colorBotonesHorizontal: #1c508d; /* Variable para el color de los botones */
-  }
-  
+  --colorBotonesHorizontal: #1c508d;
+  /* Variable para el color de los botones */
+}
+
 .text-container h1 {
-    font-family: "Roboto", sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    color: white;
-    letter-spacing: 1px;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    
-  }
-  
-  /* Efecto hover en el texto "CineCol" */
-  .text-container h1:hover {
-   
-    transform: scale(1.05); /* Aumentar ligeramente el tamaño al hacer hover */
-  }
-  
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+/* Efecto hover en el texto "CineCol" */
+.text-container h1:hover {
+
+  transform: scale(1.05);
+  /* Aumentar ligeramente el tamaño al hacer hover */
+}
+
+.movies-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Espacio entre filas */
+}
+
+.movie-row {
+  display: flex;
+  justify-content: space-around;
+  /* Distribuye las películas en la fila */
+  gap: 15px;
+  /* Espacio entre películas */
+}
+
+.movie-item {
+  flex: 1;
+  max-width: 25%;
+  /* Limita el ancho de cada película para que quepan 3 por fila */
+  text-align: center;
+}
+
+.movie-item img {
+  /* aqui se puede acomodar el alto y ancho de la imagen */
+  max-height: 250px;
+  width: 100%;
+  height: auto;
+}
+
+.no-movies {
+  text-align: center;
+
+}
+
+.no-movies-img img {
+  text-align: center;
+  width: 100%;
+  height: 80vh;
+}

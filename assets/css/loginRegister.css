@@ -123,6 +123,10 @@
         background: #f2f2f2;
         font-size: 12px;
 }
+#togglePassword{
+    margin: auto 15px;
+    width: 10px;
+}
 
 .container_login_register form button,.container_form_register_seller form button {
     padding: 10px 40px;
@@ -152,6 +156,22 @@ form .alerta {
     /* outline: solid 2px #9d2222; */
     color: #9d2222;
 }
+
+
+
+/* Estilos para el botón personalizado */
+.custom-file-label {
+    display: inline-block;
+    padding: 10px 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+#avatarImage{
+    margin: 0 auto;
+}
+
+
 /* Responsive desing*/
 @media screen and (max-width: 900px) {
     .main_loginRegister{
