@@ -117,6 +117,12 @@ public class MovieValidation {
         validateEmpty(prmMovie.getSypnosis(), MovieException.SYPNOSIS);
 
         MovieException.throwException(
+            (prmMovie.getSypnosis().length() > 300),
+            MovieException.SYPNOSIS,
+            new Exception("No debe superar los 300 caracteres")
+        );
+
+        MovieException.throwException(
             prmMovie.getSypnosis().contains("<script>"),
             MovieException.SYPNOSIS,
             new Exception("No debe ingresar instrucciones!")
