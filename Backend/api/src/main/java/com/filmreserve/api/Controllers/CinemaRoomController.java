@@ -33,7 +33,7 @@ public class CinemaRoomController {
         }
     }
 
-    @PostMapping
+    @PostMapping(path = "/save")
     public ResponseEntity<String> save(CinemaRoomModel prmCinemaRoom)
     {
         try{
