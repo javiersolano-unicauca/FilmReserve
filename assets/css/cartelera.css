@@ -29,6 +29,7 @@ body {
 /* Estilos para organizar las películas en fila */
 .movies-container {
   display: flex;
+  padding: 20px;
   flex-direction: column; /* Asegúrate de que las filas se apilen verticalmente */
 }
 
