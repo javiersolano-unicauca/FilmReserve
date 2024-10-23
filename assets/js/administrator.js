@@ -3,12 +3,13 @@ import { idRegex, passwordRegex, version } from "./register.js";
 if (localStorage.getItem("roleUser") != "Administrador") {
   window.location.href = "/"; // Redirigir a la página principal
 }
-
+const optionAdmi = document.querySelector(".options_admi");
 const userNameRegex = /^[A-Za-z]+$/;
 const turnRegex = /^(TARDE|NOCHE)$/;
 const textRegex = /^[^<>\/\\'";(){}[\]=+]+$/;
+const synopsisRegex = /^[^<>\/\\'";(){}[\]=+]{1,300}$/;
 const objClient = new ClientAPI("filmreserve", "123", "http://localhost:8001");
-
+// elementos del dom taquillero
 var formRegister = document.querySelector(".form_register_seller");
 var formMovie = document.querySelector(".form_register_movie");
 var inputUserFirstName = document.getElementById("TprimerNomber");
@@ -22,11 +23,25 @@ var inputUserPassword = document.querySelector(
   ".form_register_seller input[type='password']"
 );
 var inputUserTurn = document.getElementById("turno");
+//elementos del dom pelicula
 var inputMovieId = document.querySelector(
   ".form_register_movie input[type='number']"
 );
 var inputMovieName = document.querySelector("#MName");
 var inputMovieSypnosis = document.querySelector("#MSypnosis");
+var contadorCaracteres = document.getElementById('contadorCaracteres');
+//elementos del dom sala
+var formSala = document.querySelector(".form_register_sala");
+var inputIdSala = document.querySelector(".form_register_sala #idCinemaRoom");
+//elementos del dom funcion
+var formFunction = document.querySelector(".form_register_function");
+var inputFunctionId = document.querySelector(
+  ".form_register_function #idMovie"
+);
+var inputSalaFunction = document.querySelector(
+  ".form_register_function #idCinemaRoom"
+);
+
 const validationStatus = {
   firstName: false,
   firstSurname: false,
@@ -38,7 +53,9 @@ const validationStatus = {
   sypnosis: false,
   poster: false,
   listGender: false,
+  idCinemaRoom: false,
 };
+//listerner formulario taquillero
 document.addEventListener("DOMContentLoaded", () => {
   formRegister.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -82,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 });
-// todo sobre pelicula
+// listener formulario sobre pelicula
 document.addEventListener("DOMContentLoaded", () => {
   formMovie.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -111,15 +128,59 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   inputMovieSypnosis.addEventListener("input", () => {
     validarCampo(
-      textRegex,
+      mostrarCaracteres(inputMovieSypnosis,contadorCaracteres),
+      synopsisRegex,
       inputMovieSypnosis,
-      "no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
+      " el texto de be tener minimo 300 caracteres no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
     );
   });
   inputMovieId.addEventListener("input", () => {
     validarCampo(
       idRegex,
       inputMovieId,
+      "Debe ingresar una identificacion, solo numeros"
+    );
+  });
+});
+// listener formulario sala
+document.addEventListener("DOMContentLoaded", () => {
+  formSala.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const datos = new FormData(e.target);
+    sendFormSala(formSala, datos);
+  });
+
+  inputIdSala.addEventListener("input", () => {
+    validarCampo(
+      idRegex,
+      inputIdSala,
+      "Debe ingresar una identificacion, solo numeros"
+    );
+  });
+});
+//listener formulario funcion
+document.addEventListener("DOMContentLoaded", () => {
+  formFunction.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const datos = new FormData(e.target);
+    const data = Object.fromEntries(datos.entries());
+    console.log(data);
+
+    sendFormFunction(formFunction, datos);
+  });
+
+  inputFunctionId.addEventListener("input", () => {
+    validarCampo(
+      idRegex,
+      inputFunctionId,
+      "Debe ingresar una identificacion, solo numeros"
+    );
+  });
+  inputSalaFunction.addEventListener("input", () => {
+    validarCampo(
+      idRegex,
+      inputSalaFunction,
       "Debe ingresar una identificacion, solo numeros"
     );
   });
@@ -148,6 +209,7 @@ function clearAlert(referencia) {
     alert.remove();
   }
 }
+//envia formulario taquillero
 function sendForm(form, datos) {
   console.log(validationStatus.turn);
   //validamos el envio del formulario
@@ -201,7 +263,7 @@ function validateCustomerRegitration(form, prmResponse) {
     });
   }
 }
-//formulario de peliculas
+// envia formulario de peliculas
 function sendFormMovie(form, datos) {
   console.log(validationStatus.turn);
   //validamos el envio del formulario
@@ -248,3 +310,131 @@ function validateMovieRegitration(form, prmResponse) {
     });
   }
 }
+//envia formulario sala
+function sendFormSala(form, datos) {
+  console.log(validationStatus.turn);
+  //validamos el envio del formulario
+  if (validationStatus.idCinemaRoom) {
+    salaRegistration(form, datos);
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "los campos marcados con * son obligatorios o rellena los campos correctamente",
+    });
+  }
+}
+function salaRegistration(form, variable) {
+  objClient.post(
+    `/api/${version}/cinema-room/save`,
+    variable,
+    (prmResponse) => {
+      console.log(prmResponse);
+      validateSalaRegitration(form, prmResponse);
+    }
+  );
+}
+function validateSalaRegitration(form, prmResponse) {
+  if (prmResponse.save == true) {
+    form.reset();
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Sala registrada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    validationStatus["idCinemaRoom"] = false;
+
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: prmResponse.cause,
+    });
+  }
+}
+//envia formulario funcion
+function sendFormFunction(form, datos) {
+  console.log(validationStatus.turn);
+  //validamos el envio del formulario
+  if (
+    validationStatus.idCinemaRoom &&
+    validationStatus.idMovie
+  ) {
+    functionRegistration(form, datos);
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "los campos marcados con * son obligatorios o rellena los campos correctamente",
+    });
+  }
+}
+
+function functionRegistration(form, variable) {
+  objClient.post(
+    `/api/${version}/movie-function/save`,
+    variable,
+    (prmResponse) => {
+      console.log(prmResponse);
+      validateFunctionRegitration(form, prmResponse);
+    }
+  );
+}
+function validateFunctionRegitration(form, prmResponse) {
+  if (prmResponse.save == true) {
+    form.reset();
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "funcion registrada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    validationStatus["idCinemaRoom"] = false;
+    validationStatus["idMovie"] = false;
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: prmResponse.cause,
+    });
+  }
+}
+
+
+
+
+function mostrarCaracteres(textareaElement, contadorElement) {
+  contadorElement.innerText = textareaElement.value.length;
+}
+
+function optionsAdmimistrator(){
+optionAdmi.innerHTML = `
+      <div class="opcion_admi">
+      <img src="" alt="">
+      <h1>Formularios</h1>
+        <ul>
+        <li><a href="#" data-form="form1">Registrar taquillero</a></li>
+        <li><a href="#" data-form="form2">Registrar Pelicula</a></li>
+        <li><a href="#" data-form="form3">Registrar Sala</a></li>
+        <li><a href="#" data-form="form4">Registrar funcion</a></li>
+        </ul>
+      </div>
+    `;
+    document.querySelectorAll("ul li a").forEach((link) => {
+      link.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevenir la recarga de la página
+
+        document.querySelectorAll('.main_administrator form').forEach(form => {
+          form.style.display="none"; // Remueve la clase 'active' de todos los formularios
+        });
+
+        // Mostrar el formulario seleccionado
+        const formId = this.getAttribute("data-form");
+        document.getElementById(formId).style.display="block";
+      });
+    });
+}
+optionsAdmimistrator();

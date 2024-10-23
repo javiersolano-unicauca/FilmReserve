@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../assets/css/loginRegister.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/administrator.css">
     <title>Cinecol</title>
     <style>
         form {
@@ -140,13 +141,12 @@
                 </div>
             </div>
         </div>
-        <main>
-
+        <main class="main_administrator">
             <h1>PAGINA EN CONSTRUCCION</h1>
             <h1>PAGINA PARA EL ADMINISTRADOR</h1>
-            <div class="container_form_register_seller">
+            <div class="options_admi"></div>
 
-                <form action="" class="form_register_seller">
+                <form action="" class="form_register_seller" id="form1">
                     <h2>Regístrar taquillero</h2>
                     <label for="">
                         <input type="number" placeholder=" (*) Identificacion" min="1" name="identification" required>
@@ -178,7 +178,7 @@
                     </label>
                     <button>Registrar taquillero</button>
                 </form>
-                <form action="" class="form_register_movie">
+                <form action="" class="form_register_movie" id="form2">
                     <h2>Regístrar Pelicula</h2>
                     <label for="">
                         <input type="number" placeholder=" (*) Identificacion" min="1" name="idMovie" required>
@@ -187,10 +187,13 @@
                         <input type="text" placeholder=" (*) Nombre de la pelicula" id="MName" name="name" required>
                     </label>
                     <label for="">
-                        <input type="text" placeholder="(*) Sypnosis" id="MSypnosis" name="sypnosis" required>
+                        <textarea placeholder="(*) Sypnosis" id="MSypnosis" name="sypnosis" cols="40" rows="9" maxlength="300" required></textarea>
+                        <p>
+                            Has escrito <span id="contadorCaracteres"></span> caracteres.
+                        </p>
                     </label>
                     <label for="">
-                        imagen de la pelicula:<input type="file" name="poster" id="avatarImage" accept=".jpeg, .jpg">
+                        imagen de la pelicula:<input type="file" name="poster" id="avatarImage" accept=".jpeg, .jpg" required>
                     </label>
                     <label for="" id="label_checkbox_group">
                         seleccionar los generos:
@@ -228,6 +231,36 @@
                     </label>
                     <button id="button_movie">Registrar pelicula</button>
                 </form>
+                <form action="" class="form_register_sala" id="form3">
+                    <label for="">
+                        <h2>Registrar sala</h2>
+                        <input type="text" placeholder="(*) id sala" name="idCinemaRoom" id="idCinemaRoom" required>
+                    </label>
+                    <button>Registrar sala</button>
+                </form>
+                <form action="" class="form_register_function" id="form4">
+                    <h2>Regístrar funcion</h2>
+                    <label for="">Id pelicula
+                        <input type="number" placeholder=" (*) Id pelicula" min="1" id="idMovie" name="idMovie" required>
+                    </label>Id sala
+                    <label for="">
+                        <input type="number" placeholder=" (*) Sala de cine" id="idCinemaRoom" name="idCinemaRoom" required>
+                    </label>
+                    <label for="">Fecha inicio
+                        <input type="date" id="startDate" name="startDate">
+                    </label>
+                    <label for="">Fecha fin
+                        <input type="date"  id="endDate" name="endDate" required>
+                    </label>
+                    <label for="">Hora inicio
+                        <input type="time"  id="startTime" name="startTime">
+                    </label>
+                    <label for="">Hora Fin
+                        <input type="time"  id="endTime" name="endTime">
+                    </label>
+                    <button>Registrar funcion</button>
+                </form>
+                
         </main>
         <script src="../assets/js/loginRegister.js"></script>
         <script type="module" src="../assets/js/login_module.js"></script>
