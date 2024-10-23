@@ -36,13 +36,11 @@ function fetchMovieDetails(id) {
       <div class="movie-details">
       <img src="${response.poster}" alt="${response.posterImage}">
       <h1>${response.name}</h1>
-        <p>Sinopsis: ${response.sypnosis}</p>
-        <p>Géneros: ${response.genders
-          .map((g) => g.idGender.name)
-          .join(", ")}</p>
-        <!-- Agrega más detalles según lo que devuelva la API -->
+      <p><strong>Sinopsis:</strong> ${response.sypnosis}</p>
+      <p><strong>Géneros:</strong> ${response.genders.map(g => g.idGender.name).join(", ")}</p>
+      <!-- Agrega más detalles según lo que devuelva la API -->
       </div>
     `;
-  });
+});
 }
 
