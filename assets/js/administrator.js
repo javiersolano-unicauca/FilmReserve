@@ -438,3 +438,62 @@ optionAdmi.innerHTML = `
     });
 }
 optionsAdmimistrator();
+
+function prueba(idMovie){
+  objClient.get(`/api/${version}/movie-function/all`, "", (prmResponse) =>
+  {
+    // Filtrar el resultado por idMovie
+    const resultadosContainer = document.getElementById("resultados");
+    resultadosContainer.innerHTML = ""; // Limpiar el contenedor
+    let encontrado = false;
+    prmResponse.forEach((prmResponse) => {
+      // Acceder al objeto anidado movie y verificar si idMovie coincide
+      if (prmResponse.movie && prmResponse.movie.idMovie === idMovie) {
+        const movieDiv = document.createElement("div");
+        movieDiv.classList.add("movie-result");
+        // Llenar el div con la información de la película
+        movieDiv.innerHTML = `
+          <h3>Película: ${prmResponse.movie.name}</h3>
+          <p>Sala de cine ID: ${prmResponse.cinemaRoom.idCinemaRoom}</p>
+          <p>Fecha de inicio: ${prmResponse.idMovieFunction.startDate}</p>
+          <p>Fecha de fin: ${prmResponse.endDate}</p>
+          <p>Hora de inicio: ${prmResponse.startTime}</p>
+          <p>Hora de fin: ${prmResponse.endTime}</p>
+        `;
+        // Agregar el div con la información al contenedor
+        resultadosContainer.appendChild(movieDiv);
+        // Mostrar los datos que coinciden con el idMovie
+        console.log(
+          "Datos de la función de película:",
+          prmResponse,
+          "nombre: ",
+          prmResponse.movie.name,
+          "sala: ",
+          prmResponse.cinemaRoom.idCinemaRoom,
+          " fecha:",
+          prmResponse.idMovieFunction.startDate,
+          " hora: ",
+          prmResponse.startTime
+        );
+        encontrado = true;
+      }
+    });
+
+    // Si no se encontró ninguna coincidencia, mostrar un mensaje
+    if (!encontrado) {
+       const movieDiv = document.createElement("div");
+       movieDiv.classList.add("movie-result");
+       // Llenar el div con la información de la película
+       movieDiv.innerHTML = `
+          <h1>no hay funciones</h1>
+          <p>proximamente estara disponoble</p>
+        `;
+       // Agregar el div con la información al contenedor
+       resultadosContainer.appendChild(movieDiv);
+      console.log(`No se encontraron funciones para idMovie: ${idMovie}`);
+    }
+    console.log(prmResponse);
+  }
+  );
+}
+prueba(2);
