@@ -1,0 +1,161 @@
+
+body {
+  background-color: hsla(0, 0%, 95%, 0.767); /* Gris claro */
+}
+/* Estilo del texto "CineCol" con fondo y efecto de hover */
+:root {
+  --colorBotonesHorizontal: #1c508d;
+  /* Variable para el color de los botones */
+}
+
+.text-container h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+/* Efecto hover en el texto "CineCol" */
+.text-container h1:hover {
+
+  transform: scale(1.05);
+  /* Aumentar ligeramente el tamaño al hacer hover */
+}
+
+/* Estilos para organizar las películas en fila */
+.movies-container {
+  display: flex;
+  padding: 20px;
+  flex-direction: column; /* Asegúrate de que las filas se apilen verticalmente */
+}
+
+.movie-row {
+  display: flex;
+  justify-content: space-around; /* Distribuir espacio entre las películas */
+  margin-bottom: 20px; /* Espacio entre filas */
+}
+
+/* Estilos para el contenedor de cada película */
+.movie-item {
+  width: 250px;
+  margin: 0; /* Eliminar el margen para evitar problemas de alineación */
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: #fff;
+  cursor: pointer; /* Añadir puntero para indicar que es clickeable */
+}
+
+.movie-item:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+}
+
+/* Contenedor de la imagen de la película */
+.movie-img img {
+  width: 100%;
+  height: 350px; /* Altura fija para la imagen */
+  object-fit: cover; /* Ajustar la imagen dentro del contenedor sin deformarla */
+}
+
+/* Información de la película */
+.movie-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.movie-info h2 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Añadir el género de la película */
+.movie-info p {
+  font-size: 14px;
+  color: #777; /* Color gris para diferenciar del título */
+  margin-bottom: 5px;
+}
+
+/* Botón o etiqueta (si deseas agregarlo en el futuro) */
+.movie-info span {
+  display: inline-block;
+  background-color: #007bff; /* Color del botón (puede cambiar según el contexto) */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.movie-info span:hover {
+  background-color: #0056b3;
+}
+/*Estilos para cartelera vacia */
+.no-movies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh; /* Reducido a 10vh para menos altura */
+  background-color: #111; /* Fondo oscuro */
+  color: #fff;
+  text-align: center;
+  padding: 5px; /* Reducido para menos espacio interno */
+  margin: 0 auto; /* Centrado */
+  border-radius: 30px; /* Bordes redondeados */
+  width: 95vw; /* Aumentado para más ancho */
+  max-width: 500px; /* Limitar el ancho */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Sombra */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+}
+
+.no-movies:hover {
+  transform: scale(1.05); /* Agranda al pasar el cursor */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
+.no-movies-txt h1 {
+  font-size: 1.5rem; /* Reducción adicional del tamaño */
+  margin-bottom: 5px; /* Reducido para menos espacio */
+}
+
+.no-movies-txt p {
+  font-size: 0.8rem; /* Reducción adicional del tamaño */
+  margin-bottom: 5px; /* Reducido para menos espacio */
+  text-align: justify; /* Justificar texto */
+  line-height: 1.3; /* Ajustado para un mejor espaciado */
+}
+
+.no-movies-img img {
+  max-width: 70%; /* Reducido para menos ancho de imagen */
+  height: auto; /* Mantener proporciones */
+  border-radius: 15px; /* Redondear imagen */
+  transition: transform 0.3s ease; /* Transición para la imagen */
+}
+
+@media (max-width: 768px) {
+  .no-movies {
+    width: 90%; /* Aumentar ancho para pantallas pequeñas */
+  }
+
+  .no-movies-txt h1 {
+    font-size: 1.3rem; /* Ajustado para pantallas pequeñas */
+  }
+
+  .no-movies-txt p {
+    font-size: 0.7rem; /* Ajustado para pantallas pequeñas */
+  }
+
+  .no-movies-img img {
+    max-width: 80%; /* Aumentado para pantallas pequeñas */
+  }
+}
+

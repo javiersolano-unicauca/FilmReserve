@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/loginRegister.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/acerca.css">
+    <title>Acerca de - CineCol</title>
+</head>
+
+<body>
+<header class="container">
+    <div class="header-content">
+        <div class="menu">
+            <img id="menu-icon" src="../assets/img/menuIcono.png" alt="Menú" />
+            <img id="logo" src="../assets/img/logoCineCol.png" alt="CineCol" />
+            <div class="text-container">
+                <h1 class="title">
+                    <a href="../index.html" style="color: white;">CineCol</a>
+                </h1> <!-- Enlace aquí -->
+            </div>
+
+            <nav class="submenu">
+                <a href="/view/cartelera.html">Cartelera</a>
+                <a href="#suscripcion">Suscripción</a>
+                <a href="/view/acerca.html">Acerca de</a>
+            </nav>
+        </div>
+
+        <nav id="menu-horizontal" class="menu-horizontal">
+            <a href="/view/cartelera.html">Cartelera</a>
+            <a href="#suscripcion">Suscripción</a>
+            <a href="/view/acerca.html">Acerca de</a>
+        </nav>
+
+        <a href="#ingresar html del login">
+            <img id="login" src="../assets/img/logoInicioSesion.png" alt="Login">
+        </a>
+        <div class="userBox">
+            <h1></h1>
+            <h2></h2>
+            <a href="/view/admi.html">administrar</a>
+            <button id="btn_cerrarSesion">cerrar sesion</button>
+        </div>
+    </div>
+    <div class="main_loginRegister">
+        <div class="container">
+            <div class="backBox">
+                <div class="backBox_login">
+                    <h3>¿Ya tienes una cuenta?</h3>
+                    <p>Inicia sesión para entrar a la página</p>
+                    <button id="btn_login">Iniciar sesión</button>
+                </div>
+                <div class="backBox_register">
+                    <h3>¿Aún no tienes una cuenta?</h3>
+                    <p>Regístrate para entrar a la página</p>
+                    <button id="btn_register">Registrarse</button>
+                </div>
+            </div>
+            <div class="container_login_register">
+                <form action="" class="form_login">
+                    <h2>Iniciar sesión</h2>
+                    <label for="">
+                        <input type="number" placeholder="Identificacion" id="loginId" name="identification" required>
+                    </label>
+                    <label for="">
+                        <input type="password" placeholder="Contraseña" id="loginPassWord" name="password" required>
+                    </label>
+                    <button id="boton_registro">Entrar</button>
+                </form>
+                <form action="" class="form_register">
+                    <h2>Regístrarse</h2>
+                    <label for="">
+                        <input type="number" placeholder=" (*) Identificacion" min="1" name="identification" required>
+                    </label>
+                    <label for="">
+                        <input type="text" placeholder=" (*) Primer Nombre" id="FRprimerNomber" name="firstName"
+                            required>
+                    </label>
+                    <label for="">
+                        <input type="text" placeholder="Segundo nombre" id="secondName" name="secondName">
+                    </label>
+                    <label for="">
+                        <input type="text" placeholder=" (*) Primer apellido" id="FRprimerApellido" name="firstSurname"
+                            required>
+                    </label>
+                    <label for="">
+                        <input type="text" placeholder="Segundo apellido" id="FRsegundoApellido" name="secondSurname">
+                    </label>
+                    <label for="">
+                        <input type="password" placeholder=" (*) Contraseña" name="password" required>
+                        Mostrar contraseña<input type="checkbox" id="togglePassword">
+                    </label>
+                    <label for="">
+                        <input type="date" id="date" name="date" required>
+                    </label>
+                    <label for="">
+                        <input type="tel" placeholder=" (*) Celular" name="phone" required>
+                    </label>
+                    <label class="custom-file-label" for="">
+                        Subir foto (opcional)
+                        <input type="file" name="avatarImage" id="avatarImage" accept=".jpeg, .jpg">
+                    </label>
+                    <button>Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</header>
+    <main>
+        <img src="" alt="">
+        <h1>Acerca de CineCol</h1>
+        <p>Aquí puedes agregar información sobre CineCol.</p>
+
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-container-options">
+                <div class="logo-section">
+                    <a href="./index.html">
+                        <img id="logoFooter" src="../assets/img/cineColFooter[1].jpg" alt="Cine Colombia">
+                    </a>
+                </div>
+                <div class="links-section">
+                    <a href="#">Información Legal</a>
+                    <span>|</span>
+                    <a href="#">Acerca de Cinecol</a>
+                    <span>|</span>
+                    <a href="#">Contáctanos PQR</a>
+                    <span>|</span>
+                    <a href="#">Preguntas Frecuentes</a>
+                </div>
+                <div class="social-section">
+                    <p>Síguenos en redes sociales</p> <!-- Alineado con las otras palabras -->
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61565998315161&mibextid=ZbWKwL">
+                            <img src="../assets/img/iconFacebook.png" alt="Facebook">
+                        </a>
+                        <a href="https://wa.link/dpjq8p">
+                            <img src="../assets/img/iconWhatsapp.png" alt="whatsapp">
+                        </a>
+                        <a href="https://www.instagram.com/josealejorodriguez/">
+                            <img src="../assets/img/iconInstagram.png" alt="Instagram">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-section">
+            <p>© 2024 Cine Col</p>
+        </div>
+    </footer>
+
+
+    <script src="../assets/js/loginRegister.js"></script>
+    <script type="module" src="../assets/js/login_module.js"></script>
+    <script type="module" src="../assets/js/register.js"></script>
+    <script type="module" src="../assets/js/menuDesplegable.js"></script>
+    <script type="module" src="../assets/api/ClientAPI.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+</body>
+
+</html>
