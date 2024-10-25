@@ -127,12 +127,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
   inputMovieSypnosis.addEventListener("input", () => {
-    validarCampo(
-      mostrarCaracteres(inputMovieSypnosis,contadorCaracteres),
-      synopsisRegex,
-      inputMovieSypnosis,
-      " el texto de be tener minimo 300 caracteres no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
-    );
+    mostrarCaracteres(inputMovieSypnosis, contadorCaracteres);
+      validarCampo(
+        synopsisRegex,
+        inputMovieSypnosis,
+        " el texto de be tener minimo 300 caracteres no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
+      );
   });
   inputMovieId.addEventListener("input", () => {
     validarCampo(
