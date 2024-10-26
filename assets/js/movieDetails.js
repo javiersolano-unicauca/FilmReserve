@@ -175,12 +175,12 @@ const continueButton = document.querySelector("#continue-btn");
 const summary = document.getElementById("summary");
 const totalChairsSpan = document.getElementById("total-chairs");
 const totalValueSpan = document.getElementById("total-value");
-let generalCount = 0;
+var generalCount = 0;
 
 masButton.addEventListener("click", function () {
-  generalCount++;
-
-  if (generalCount <= 10) {
+  if (generalCount < 10) {
+    //10 es el numero de asientos disponibles
+    generalCount++;
     minusGeneralButton.disabled = false;
     continueButton.disabled = false;
     continueButton.classList.add("enabled");
@@ -213,14 +213,12 @@ minusGeneralButton.addEventListener("click", function () {
 });
 continueButton.addEventListener("click", function () {
   if (!continueButton.disabled) {
-    // Guardar el valor de generalCount en localStorage
-    localStorage.setItem("generalCount", generalCount);
-    // Redirige a la nueva página
-    // window.location.href = "/view/sala.html";
     CinemaRoomContainerChange();
+    maxSeats = generalCount;
+    generateSeatingMap();
   }
 });
-
+var maxSeats;
 //----------funciones de la silleteria----------------------------
 const seatingMap = document.getElementById("seating-map");
 
@@ -229,7 +227,8 @@ const rows = 6;
 const cols = 10;
 
 // Obtener la cantidad de asientos seleccionados (generalCount) de localStorage
-const maxSeats = parseInt(localStorage.getItem("generalCount"), 10);
+// const maxSeats = parseInt(localStorage.getItem("generalCount"), 10);
+
 const totalValue = document.getElementById("total-a-pagar");
 // Variable para rastrear cuántos asientos han sido seleccionados
 let selectedSeatsCount = 0;
@@ -242,28 +241,31 @@ document.getElementById("total-a-pagar").textContent = `$${totalPagar}`;
 // Función para generar los asientos en el DOM
 function generateSeatingMap() {
   const titulo = document.createElement("p");
-  titulo.innerText =
-    "Escoge " + localStorage.getItem("generalCount") + " lugar(es)";
+  titulo.innerText = "Escoge " + generalCount + " lugar(es)";
   document.querySelector(".container-ubicacion").appendChild(titulo);
-  seatingMap.innerHTML = ""; // Limpiar el mapa actual
-  let seatId = 1; // Comienza la numeración de IDs desde 1
 
+  seatingMap.innerHTML = ""; // Limpiar el mapa actual
+
+  const rowLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Letras para las filas
   for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
+    for (let j = 1; j <= cols; j++) {
+      // Comenzar desde 1 para numeración de columnas
       const seatElement = document.createElement("div");
       seatElement.classList.add("seat", "libre"); // Todos los asientos inician como "libres"
-      seatElement.id = seatId; // Asignar el número como id
-      seatElement.textContent = seatId; // Mostrar el id dentro del asiento
-      seatId++; // Incrementar el id para el siguiente asiento
 
+      // Asignar ID basado en la letra de la fila y número de columna
+      const seatId = rowLetters[i] + j;
+      seatElement.id = seatId;
+      seatElement.textContent = seatId; // Mostrar el id dentro del asiento
+      console.log(`fila: ${rowLetters[i]} columna: ${j}`);
       // Hacer que los asientos "libres" sean seleccionables
       seatElement.addEventListener("click", function () {
-        if (this.classList.contains("libre")) {
-          // if (this.classList.contains("selected")) {
-          //   this.classList.remove("selected");
-          //   selectedSeatsCount--;
-          // } else if (selectedSeatsCount < maxSeats) {
-          if (selectedSeatsCount < maxSeats) { //SE TIENE QUE BORRAR  DESPUES PARA LIBERAR ASIENTO
+        if (
+          this.classList.contains("libre") &&
+          !this.classList.contains("ocupado")
+        ) {
+          if (selectedSeatsCount < maxSeats) {
+            // Permitir seleccionar hasta el máximo
             this.classList.add("selected");
             selectedSeatsCount++;
           }
@@ -273,12 +275,22 @@ function generateSeatingMap() {
       seatingMap.appendChild(seatElement);
     }
   }
-  asientosOcupados(11); // Ejemplo de asiento ocupado
-}
 
+  // Marcar algunos asientos como ocupados
+  asientosOcupados("A3"); // Ejemplo de asiento ocupado
+  asientosOcupados("B2");
+  asientosOcupados("B3");
+  asientosOcupados("B4");
+  asientosOcupados("B5");
+  asientosOcupados("B6");
+  asientosOcupados("B7");
+  asientosOcupados("B8");
+  asientosOcupados("B9");
+  asientosOcupados("B10");
+}
 // Inicialización del mapa de asientos
-generateSeatingMap();
-// Modificar asientos ocupados
+
+// Función para marcar un asiento como ocupado
 function asientosOcupados(id) {
   const seatElement = document.getElementById(id);
   if (seatElement) {
