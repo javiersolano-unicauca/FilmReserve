@@ -1,7 +1,7 @@
 /* estilos para la pagina de la pelicula individual */
-.container-primary{
+.container-primary {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.3fr;
 }
 
 
@@ -10,17 +10,12 @@
     display: grid;
     gap: 20px;
     padding: 20px;
-    background-color: #fbf8f8; /* Color de fondo claro */
+    background-color: #fbf8f8;
+    /* Color de fondo claro */
     height: 80vh;
     width: 45vw;
 }
-.segundaParte {
-    grid-column: 2;
-    background-color: #fbf8f8; /* Color de fondo claro */
-    height: 80vh;
-    width: 45vw;
-    
-}
+
 /* Estilo de la tarjeta de la película */
 .movie-details {
     background-color: #fff;
@@ -29,8 +24,10 @@
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    width: 100%; /* Asegúrate de que ocupe el ancho total del contenedor */
-    max-width: none; /* Aumenta este valor para mayor ancho */
+    width: 100%;
+    /* Asegúrate de que ocupe el ancho total del contenedor */
+    max-width: none;
+    /* Aumenta este valor para mayor ancho */
 }
 
 /* Efecto hover para tarjetas */
@@ -42,34 +39,46 @@
 /* Imagen del póster */
 .movie-details img {
     padding: 10px;
-    width: 50%; /* Imagen cubriendo el ancho del contenedor */
-    height: 50%; /* Mantiene la proporción */
+    width: 50%;
+    /* Imagen cubriendo el ancho del contenedor */
+    height: 50%;
+    /* Mantiene la proporción */
     border-bottom: 1px solid #ddd;
     border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra de la imagen */
-    transition: box-shadow 0.3s ease; /* Suaviza la transición de la sombra */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Sombra de la imagen */
+    transition: box-shadow 0.3s ease;
+    /* Suaviza la transición de la sombra */
 }
-.movie-details img:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más intensa al hacer hover */
+
+.movie-details img:hover,
+.info_function_container:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    /* Sombra más intensa al hacer hover */
 }
 
 /* Nombre de la película */
 .movie-details h1 {
-    font-size: 25px; /* Aumentar tamaño para mayor impacto */
+    font-size: 25px;
+    /* Aumentar tamaño para mayor impacto */
     font-weight: bold;
     margin: 10px 0;
 }
 
 .movie-details p {
-    font-size: 16px; /* Aumentar tamaño para mejor legibilidad */
+    font-size: 16px;
+    /* Aumentar tamaño para mejor legibilidad */
     color: #666;
     margin: 5px 15px;
-    text-align: left; /* Alinear texto a la izquierda */
-    font-weight: 600; /* Peso de fuente más grueso */
+    text-align: left;
+    /* Alinear texto a la izquierda */
+    font-weight: 600;
+    /* Peso de fuente más grueso */
 }
 
 .movie-details p strong {
-    font-weight: 900; /* Aumentar el peso de la negrita para mayor impacto */
+    font-weight: 900;
+    /* Aumentar el peso de la negrita para mayor impacto */
 }
 
 /* Contenedor de cada fila de la galería */
@@ -77,4 +86,122 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+}
+.info_function_container{
+    grid-column: 2;
+    width: 100%;
+}
+#resultados {
+    /* border: 1px solid red; */
+    padding-top: 20px;
+    justify-content: space-between;
+    display: flex;
+    height: 130px;
+    flex-wrap: wrap;
+  
+}
+#resultados #select_function{
+    margin: 0 35px;
+}
+#resultados #select_function input, #resultados #select_function select{
+    width: 200px;
+    height: 28px;
+}
+#sala{
+    margin-left:13px ;
+}
+
+
+
+.info_function_container {
+
+    font-size: 13px;
+    background-color: #fff;
+    margin: 0px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);    /* Sombra de la imagen */
+    transition: box-shadow 0.3s ease;    /* Suaviza la transición de la sombra */
+    padding: 5px;
+    border-radius: 15px;
+    height: 28rem;
+    min-height: fit-content;
+    margin: 5px 0 5px 0;
+
+}
+#okButton{
+    max-height: 25px;
+}
+.CinemaRoom_container{
+    display: block;
+    bottom: 0;
+    /* background-color: #666; */
+    width: 100%;
+    height: 100%;
+}
+
+.chairs_container{
+    display: none;
+}
+ /* todo sobre seleccionar numeros de sillas */
+.container-selection {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.container-numberChairs {
+    display: block;
+    top: 100px;
+    text-align: center;
+    padding: 100px;
+}
+
+.selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.counter {
+    margin: 0 10px;
+}
+
+.hidden {
+    color: antiquewhite;
+}
+
+.button {
+    background-color: transparent;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+}
+
+#continue-btn {
+    background-color: transparent;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px;
+}
+
+#continue-btn.enabled {
+    background-color: blue;
+    color: white;
+}
+
+
+
+#total-chairs {
+    justify-items: right;
+}
+
+#summary.visible {
+    color: black;
 }

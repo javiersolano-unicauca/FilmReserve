@@ -1,0 +1,196 @@
+h1 {
+    color: #1c508d;
+    font-size: 24px;
+    margin: 0 0 10px 0;
+}
+
+
+.container-ubicacion{
+    justify-content: center;
+    display: flex;
+    position: relative;
+    top: 5px; 
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.container-mapa {
+    box-sizing: content-box;
+    position: relative;
+    top: 20px; 
+    width: 80%;
+    background-color: #cbcbcf;
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    text-align: center;
+    margin: 0 auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+#seating-map {
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.seat {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 10px; 
+}
+
+.libre {
+    
+    background-color: #ffff;
+  /*  border: 0.8px solid #000000;*/
+}
+
+.ocupado {
+    background-color: #0000ff;
+    cursor: not-allowed;
+}
+
+.reservado {
+    background-color: #008000;
+}
+
+.selected {
+    
+    background-color: #008000;
+}
+
+/* Leyenda organizada en una fila horizontal */
+#legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px 0;
+    gap: 20px; 
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
+
+.legend-item .seat {
+    width: 20px;  
+    height: 20px;
+}
+.screen {
+   
+    background-color: #1c508d;
+    height: 8px;
+    width: calc(10 * 30px + 9 * 10px); 
+    margin: 0 auto 15px auto; 
+    transform: none; 
+    box-shadow: 0 3px 10px rgba(80, 83, 230, 0.7);
+  }
+
+
+
+
+.purchase-container {
+    display: none;
+    /* display: flex; */
+    justify-content: space-between;
+   /* background-color: #fff;*/
+    padding: 20px;
+   /* border: 1px solid #e1e1e1;*/
+    border-radius: 8px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.purchase-details {
+    max-width: 60%;
+}
+
+.confirmation-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-btn {
+    background-color: #e1e1e1;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-btn.active {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.pay-btn {
+    margin-top: 20px;
+    background-color: #e1e1e1;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: not-allowed;
+    transition: background-color 0.3s ease;
+}
+
+.pay-btn.active {
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+.location-icon {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+/* Contenedor para centrar la factura */
+/* Contenedor centrado para la factura */
+
+.factura-container {
+    position: relative;
+    top: 40px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+.factura {
+    width: 82%;
+    background-color: #e5e9f1;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+    color: #333;
+    text-align: center;
+    position: relative;
+   /* z-index: 10;*/
+}
+
+
+.factura p {
+    margin: 0;
+    
+    color: #333;
+}
+.factura .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
