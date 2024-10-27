@@ -38,13 +38,13 @@ public class LinkedList<T> implements Iterable<T> {
     {
         if(atrLast != null)
         {
-            Node<T> ptrNewNode = new Node(prmValue);
+            Node<T> ptrNewNode = new Node<>(prmValue);
             ptrNewNode.setRight(atrFirst);
             atrFirst.setLeft(ptrNewNode);
             atrFirst = ptrNewNode;
         }
         else{
-            atrLast = new Node(prmValue);
+            atrLast = new Node<>(prmValue);
             atrFirst = atrLast;
         }
         atrSize++;
@@ -59,13 +59,13 @@ public class LinkedList<T> implements Iterable<T> {
     {
         if(atrFirst != null)
         {
-            Node<T> ptrNewNode = new Node(prmValue);
+            Node<T> ptrNewNode = new Node<>(prmValue);
             ptrNewNode.setLeft(atrLast);
             atrLast.setRight(ptrNewNode);
             atrLast = ptrNewNode;
         }
         else{
-            atrFirst = new Node(prmValue);
+            atrFirst = new Node<>(prmValue);
             atrLast = atrFirst;
         }
         atrSize++;
@@ -274,49 +274,6 @@ public class LinkedList<T> implements Iterable<T> {
         ListException.throwException((atrLast == null), ListException.EMPTY);
         return atrLast.getValue();
     }
-
-    /**
-     *  Metodo para obtener la lista de strings de 'JSON'
-     * 
-     *  @return La lista de strings o null si esta vacia
-     */
-    // public String[] toStrings() throws Exception
-    // {
-    //     if(isEmpty()) return null; 
-        
-    //     String[] arrJson = {};
-                
-    //     int varSize = atrSize, 
-    //     varIterador = varSize - 1;
-
-    //     arrJson = new String[varSize];
-
-    //     if(varSize > 1)
-    //     {
-    //         Node<T> ptrNode = atrFirst;
-
-    //         while((ptrNode != null) && (!ptrNode.getValue().equals(prmValue.toJSON())))
-    //         {
-
-    //         }
-    //         // for (iJSON objJson : prmJsons) {
-
-    //         //     if(varIterador == 0)
-    //         //         arrJson[varIterador] = "["+objJson.toJSON().toString();
-    //         //     else
-    //         //         arrJson[varIterador] = objJson.toJSON().toString();
-
-    //         //     if(varIterador < (varSize - 1))
-    //         //         arrJson[varIterador] += ",";
-    //         //     varIterador--;
-    //         // }
-    //     }    
-    //     else
-    //         arrJson[0] = "["+prmJsons.getFirst().toJSON().toString();
-
-    //     arrJson[varSize - 1] += "]";
-    //     return arrJson;
-    // }
 
     @Override
     public Iterator iterator() {

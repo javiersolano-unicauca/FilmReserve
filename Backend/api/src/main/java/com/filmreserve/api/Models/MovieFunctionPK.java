@@ -17,18 +17,18 @@ public class MovieFunctionPK implements iJSON {
     @Column(name = "id_movie")
     private Long atrIdMovie;
 
-    @Column(name = "id_cinema_room")
-    private Long atrIdCinemaRoom;
+    @Column(name = "cinema_room")
+    private Integer atrCinemaRoom;
 
     @Column(name = "start_date")
     private LocalDate atrStartDate;
 
     public MovieFunctionPK(){}
 
-    public MovieFunctionPK(Long prmIdMovie, Long prmIdCinemaRoom, LocalDate prmStartDate)
+    public MovieFunctionPK(Long prmIdMovie, Integer prmCinemaRoom, LocalDate prmStartDate)
     {
         atrIdMovie = prmIdMovie;
-        atrIdCinemaRoom = prmIdCinemaRoom;
+        atrCinemaRoom = prmCinemaRoom;
         atrStartDate = prmStartDate;
     }
 
@@ -42,14 +42,14 @@ public class MovieFunctionPK implements iJSON {
         atrIdMovie = prmIdMovie;
     }
 
-    public Long getIdCinemaRoom()
+    public Integer getCinemaRoom()
     {
-        return atrIdCinemaRoom;
+        return atrCinemaRoom;
     }
 
-    public void setIdCinemaRoom(Long prmIdCinemaRoom)
+    public void setCinemaRoom(Integer prmCinemaRoom)
     {
-        atrIdCinemaRoom = prmIdCinemaRoom;
+        atrCinemaRoom = prmCinemaRoom;
     }
 
     public LocalDate getStartDate()
@@ -72,7 +72,7 @@ public class MovieFunctionPK implements iJSON {
     {
         JSON objJson = new JSON();
         objJson.add("idMovie", atrIdMovie);
-        objJson.add("idCinemaRoom", atrIdCinemaRoom);
+        objJson.add("cinemaRoom", atrCinemaRoom);
         objJson.add("startDate", atrStartDate);
         return objJson;
     }

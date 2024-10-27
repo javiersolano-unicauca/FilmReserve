@@ -6,12 +6,14 @@ package com.filmreserve.Utilities.Arrays.JSON;
 public enum EnumJSON {
     
     STRING("String"),
+    CHARACTER("Character"),
     INTEGER("Integer"),
     LONG("Long"),
     FLOAT("Float"),
     DOUBLE("Double"),
     BOOLEAN("Boolean"),
-    JSON("JSON");
+    JSON("JSON"),
+    LINKED_LIST_JSON("LinkedListJSON");
 
     // Properties:
     private String atrTypeData;

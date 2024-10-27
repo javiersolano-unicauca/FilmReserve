@@ -11,22 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
-import com.filmreserve.api.Models.CinemaRoomModel;
-import com.filmreserve.api.Services.iCinemaRoomService;
+import com.filmreserve.api.Models.SeatPK;
+import com.filmreserve.api.Services.iSeatService;
 
 @RestController
-@RequestMapping(path = "/api/v2/cinema-room")
-public class CinemaRoomController {
+@RequestMapping(path = "/api/v2/seat")
+public class SeatController {
 
     @Autowired
-    iCinemaRoomService cinemaRoomService;
+    iSeatService seatService;
 
-    @GetMapping(path = "/{idCinemaRoom}")
-    public ResponseEntity<String> get(@PathVariable("idCinemaRoom") Long prmIdCinemaRoom)
+    @GetMapping(path = "/{cinemaRoom}")
+    public ResponseEntity<String> getSeats(@PathVariable("cinemaRoom") Integer prmCinemaRoom)
     {
         try{
-            JSON objResponse = cinemaRoomService.getCinemaRoom(prmIdCinemaRoom);
-            return new ResponseEntity<>(objResponse.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(seatService.getSeatsOfCinemaRoom(prmCinemaRoom).toString(), HttpStatus.OK);
         }catch(Exception e)
         {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -34,10 +33,10 @@ public class CinemaRoomController {
     }
 
     @PostMapping(path = "/save")
-    public ResponseEntity<String> save(CinemaRoomModel prmCinemaRoom)
+    public ResponseEntity<String> save(SeatPK prmSeatPK)
     {
         try{
-            JSON objResponse = cinemaRoomService.save(prmCinemaRoom);
+            JSON objResponse = seatService.save(prmSeatPK);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
         }catch(Exception e)
         {
@@ -45,11 +44,14 @@ public class CinemaRoomController {
         }
     }
 
-    @DeleteMapping(path = "/{idCinemaRoom}")
-    public ResponseEntity<String> delete(@PathVariable("idCinemaRoom") Long prmIdCinemaRoom)
-    {
+    @DeleteMapping(path = "/{cinemaRoom}/{row}/{numColumn}")
+    public ResponseEntity<String> delete(
+        @PathVariable("cinemaRoom") Integer prmCinemaRoom,
+        @PathVariable("row") Character prmRow,
+        @PathVariable("numColumn") Integer prmNumColumn
+    ){
         try{
-            JSON objResponse = cinemaRoomService.delete(prmIdCinemaRoom);
+            JSON objResponse = seatService.delete(prmCinemaRoom, prmRow, prmNumColumn);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.ACCEPTED);
         }catch(Exception e)
         {

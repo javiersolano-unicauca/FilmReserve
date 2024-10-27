@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
+import com.filmreserve.Utilities.Arrays.Lists.LinkedListJSON;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.Utilities.Validations.MovieFunctionValidation;
 import com.filmreserve.api.Dao.iMovieFunctionDao;
 import com.filmreserve.api.Models.MovieFunctionModel;
 import com.filmreserve.api.Models.MovieFunctionPK;
 import com.filmreserve.api.Services.iMovieFunctionService;
+import com.filmreserve.api.Services.iSeatService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,29 +25,50 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
     @Autowired
     iMovieFunctionDao movieFunctionDao;
 
+    @Autowired
+    iSeatService seatService;
+
     @Override
-    public MovieFunctionModel getMovieFunctionModel(Long prmIdMovie, Long prmIdCinemaRoom, LocalDate prmStartDate) throws Exception 
+    public MovieFunctionModel getMovieFunctionModel(Long prmIdMovie, Integer prmCinemaRoom, LocalDate prmStartDate) throws Exception 
     {
-        return movieFunctionDao.findById(new MovieFunctionPK(prmIdMovie, prmIdCinemaRoom, prmStartDate))
+        return movieFunctionDao.findById(new MovieFunctionPK(prmIdMovie, prmCinemaRoom, prmStartDate))
                .orElse(null);
     }
 
     @Override
-    public JSON getMovieFunction(Long prmIdMovie, Long prmIdCinemaRoom, LocalDate prmStartDate) throws Exception 
+    public JSON getMovieFunction(Long prmIdMovie, Integer prmCinemaRoom, LocalDate prmStartDate) throws Exception 
     {
-        MovieFunctionModel objMovieFunction = getMovieFunctionModel(prmIdMovie, prmIdCinemaRoom, prmStartDate);
+        MovieFunctionModel objMovieFunction = getMovieFunctionModel(prmIdMovie, prmCinemaRoom, prmStartDate);
 
         ServiceResponseException.throwException(
             (objMovieFunction == null),
             "getMovieFunction",
             "No existe la funcion con la identificacion de pelicula " + 
-            + prmIdMovie + ", sala " + prmIdCinemaRoom + " y fecha de inicio " + prmStartDate.toString()    
+            + prmIdMovie + ", sala " + prmCinemaRoom + " y fecha de inicio " + prmStartDate.toString()    
         );
 
         JSON objResponse = new JSON();
         objResponse.add("getMovieFunction", true);
         objResponse.add("movieFunction", objMovieFunction.toJSON());
         return objResponse;
+    }
+
+    @Override
+    public JSON getSeats(Long prmIdMovie, LocalDate prmStartDate) throws Exception 
+    {
+        MovieFunctionModel objMovieFunction = movieFunctionDao.findByIdMovieAndStartDateAndActive(prmIdMovie, prmStartDate, true);
+
+        ServiceResponseException.throwException(
+            (objMovieFunction == null), 
+            "getSeats",
+            "No se encuentra una funcion activa con el id de pelicula " + prmIdMovie
+            + " y fecha de inicio " + prmStartDate
+        );
+        
+        JSON objCinemaRoom = new JSON();
+        objCinemaRoom.add("cinemaRoom", objMovieFunction.getCinemaRoom());
+        objCinemaRoom.add("seats", seatService.getSeatsOfCinemaRoom(objMovieFunction.getCinemaRoom()));
+        return objCinemaRoom;
     }
 
     @Override
@@ -66,9 +89,10 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
     public JSON save(MovieFunctionPK prmMovieFunctionPK, MovieFunctionModel prmMovieFunction) throws Exception 
     {
         ServiceResponseException.throwException(
-            movieFunctionDao.existsById(prmMovieFunctionPK),
+            (movieFunctionDao.find(prmMovieFunctionPK.getCinemaRoom(), true, prmMovieFunctionPK.getStartDate()) != null),
             "save",
-            "Ya existe esa pelicula en el sistema"
+            "Ya se encuentra reservada la sala " + prmMovieFunctionPK.getCinemaRoom() + 
+            " entre las fechas " + prmMovieFunctionPK.getStartDate() + " y " + prmMovieFunction.getEndDate()
         );
 
         try{ MovieFunctionValidation.validate(prmMovieFunctionPK, prmMovieFunction); }
@@ -79,7 +103,6 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
         ); }
         
         prmMovieFunction.setIdMovieFunction(prmMovieFunctionPK);
-        prmMovieFunction.setCinemaRoom(prmMovieFunctionPK.getIdCinemaRoom());
         prmMovieFunction.setMovie(prmMovieFunctionPK.getIdMovie());
         prmMovieFunction.setActive(true);
         movieFunctionDao.save(prmMovieFunction);
@@ -94,7 +117,7 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
         
         MovieFunctionModel objMovieFunction = getMovieFunctionModel(
             prmMovieFunctionPK.getIdMovie(),
-            prmMovieFunctionPK.getIdCinemaRoom(),
+            prmMovieFunctionPK.getCinemaRoom(),
             prmMovieFunctionPK.getStartDate()
         );
 
@@ -102,8 +125,8 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
             (objMovieFunction == null),
             "functionEnd",
             "No existe la funcion con la identificacion de pelicula " + 
-            + prmMovieFunctionPK.getIdMovie() + ", sala " +
-            + prmMovieFunctionPK.getIdCinemaRoom() + " y fecha de inicio " + prmMovieFunctionPK.getStartDate().toString()    
+            + prmMovieFunctionPK.getIdMovie() + ", sala " + 
+            prmMovieFunctionPK.getCinemaRoom() + " y fecha de inicio " + prmMovieFunctionPK.getStartDate().toString()
         );
 
         objMovieFunction.setActive(false);
@@ -115,9 +138,9 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
     }
 
     @Override
-    public JSON delete(Long prmIdMovie, Long prmIdCinemaRoom, LocalDate prmStartDate) throws Exception 
+    public JSON delete(Long prmIdMovie, Integer prmCinemaRoom, LocalDate prmStartDate) throws Exception 
     {
-        MovieFunctionPK objId = new MovieFunctionPK(prmIdMovie, prmIdCinemaRoom, prmStartDate);
+        MovieFunctionPK objId = new MovieFunctionPK(prmIdMovie, prmCinemaRoom, prmStartDate);
 
         MovieFunctionModel objMovieFunction = movieFunctionDao.findById(objId).orElse(null);
 
@@ -125,7 +148,7 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
             (objMovieFunction == null),
             "delete",
             "No existe la funcion con la identificacion de pelicula " + 
-            + prmIdMovie + ", sala " + prmIdCinemaRoom + " y fecha de inicio " + prmStartDate.toString()
+            + prmIdMovie + ", sala " + prmCinemaRoom + " y fecha de inicio " + prmStartDate.toString()
         );
 
         movieFunctionDao.deleteById(objId);

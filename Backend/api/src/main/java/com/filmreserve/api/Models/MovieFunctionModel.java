@@ -19,7 +19,7 @@ import com.filmreserve.Utilities.Arrays.JSON.iJSON;
  * @author javiersolanop
  */
 @Table
-@Entity(name = "cin_presents_mov")
+@Entity(name = "sea_presents_mov")
 public class MovieFunctionModel implements Serializable, iJSON  {
 
     @EmbeddedId
@@ -42,21 +42,21 @@ public class MovieFunctionModel implements Serializable, iJSON  {
     @MapsId("atrIdMovie")
     private MovieModel atrMovie;
 
-    @ManyToOne
-    @JoinColumn(name = "id_cinema_room")
-    @MapsId("atrIdCinemaRoom")
-    private CinemaRoomModel atrCinemaRoom;
-
     public MovieFunctionModel(){}
-
-    public MovieFunctionPK getIdMovieFunction()
-    {
-        return atrIdMovieFunction;
-    }
 
     public void setIdMovieFunction(MovieFunctionPK prmMovieFunctionPK)
     {
         atrIdMovieFunction = prmMovieFunctionPK;
+    }
+
+    public Integer getCinemaRoom()
+    {
+        return atrIdMovieFunction.getCinemaRoom();
+    }
+
+    public LocalDate getStartDate()
+    {
+        return atrIdMovieFunction.getStartDate();
     }
 
     public LocalDate getEndDate()
@@ -115,22 +115,6 @@ public class MovieFunctionModel implements Serializable, iJSON  {
         atrMovie.setIdMovie(prmIdMovie);
     }
 
-    public CinemaRoomModel getCinemaRoom()
-    {
-        return atrCinemaRoom;
-    }
-
-    public void setCinemaRoom(CinemaRoomModel prmCinemaRoom)
-    {
-        atrCinemaRoom = prmCinemaRoom;
-    }
-
-    public void setCinemaRoom(Long prmIdCinemaRoom)
-    {
-        atrCinemaRoom = new CinemaRoomModel();
-        atrCinemaRoom.setIdCinemaRoom(prmIdCinemaRoom);;
-    }
-
     /**
      *  Metodo para obtener una instancia de 'JSON' con la 
      *  informacion de la funcion
@@ -144,7 +128,6 @@ public class MovieFunctionModel implements Serializable, iJSON  {
         objJson.add("endTime", atrEndTime.toString());
         objJson.add("active", atrActive);
         objJson.add("movie", atrMovie.toJSON());
-        objJson.add("cinemaRoom", atrCinemaRoom.toJSON());
         return objJson;
     }
 

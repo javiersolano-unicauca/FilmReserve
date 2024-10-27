@@ -12,7 +12,7 @@ import com.filmreserve.Utilities.Exceptions.ListException;
 /**
 *  @author javiersolanop
 */
-public class JSON  {
+public class JSON implements iJSON {
     
     // Properties:
     private final SuperLinkedList<String, Object> atrJSON;
@@ -59,7 +59,8 @@ public class JSON  {
     }
 
     /**
-     *  Metodo para adicionar una clave y su valor.El tipo de dato del valor debe ser compatible con los
+     *  Metodo para adicionar una clave y su valor.
+     *  El tipo de dato del valor debe ser compatible con los
      *  definidos en el 'EnumJSON':
      *  @see EnumJSON
      * 
@@ -143,11 +144,13 @@ public class JSON  {
             
             varJSON += "\""+objJSON.getKey()+"\":";
 
-            if(objJSON.getValue() instanceof String)
+            if((objJSON.getValue() instanceof String)
+            || (objJSON.getValue() instanceof Character))
                 varJSON += "\""+objJSON.getValue()+"\"";
             
-            else if(objJSON.getValue() instanceof JSON)
-                varJSON += objJSON.getValue().toString();
+            else if((objJSON.getValue() instanceof JSON) 
+            || (objJSON.getValue() instanceof LinkedListJSON)) 
+            { varJSON += objJSON.getValue().toString(); }
 
             else varJSON += objJSON.getValue();
 
@@ -278,6 +281,47 @@ public class JSON  {
         return arrObjJsons;
     }
  
+    // /**
+    //  *  Metodo para convertir el arreglo de objetos a de String de 'JSON'
+    //  * 
+    //  *  @param prmJsons Recibe el arreglo de objetos
+    //  *  @return  El arreglo de String de 'JSON'
+    //  * 
+    //  *  @throws Libraries.Exceptions.ListException Si hay un error en la lista de claves
+    //  */
+    // public static String[] toStringJSON(LinkedList<JSON> prmJsons) throws Exception
+    // {   
+    //     String[] arrJson = {};
+                
+    //     if(!prmJsons.isEmpty())
+    //     {
+    //         int varSize = prmJsons.size(), 
+    //         varIterador = varSize - 1;
+
+    //         arrJson = new String[varSize];
+
+    //         if(varSize > 1)
+    //         {
+    //             for (JSON objJson : prmJsons) {
+
+    //                 if(varIterador == 0)
+    //                     arrJson[varIterador] = "["+objJson.toString();
+    //                 else
+    //                     arrJson[varIterador] = objJson.toString();
+
+    //                 if(varIterador < (varSize - 1))
+    //                     arrJson[varIterador] += ",";
+    //                 varIterador--;
+    //             }
+    //         }    
+    //         else
+    //             arrJson[0] = "["+prmJsons.getFirst().toString();
+
+    //         arrJson[varSize - 1] += "]";
+    //     }
+    //     return arrJson;
+    // }
+
     /**
      *  Metodo para convertir el arreglo de objetos a de String de 'JSON'
      * 
@@ -286,37 +330,26 @@ public class JSON  {
      * 
      *  @throws Libraries.Exceptions.ListException Si hay un error en la lista de claves
      */
-    public static String[] toStringJSON(LinkedList<JSON> prmJsons) throws Exception
+    public static String toStringJSON(LinkedList<JSON> prmJsons) throws Exception
     {   
-        String[] arrJson = {};
-                
-        if(!prmJsons.isEmpty())
+        if(prmJsons.isEmpty()) return null;
+
+        String listJson = "[";
+        int varSize = prmJsons.size(), varCount = 1;
+
+        for(JSON obJson: prmJsons)
         {
-            int varSize = prmJsons.size(), 
-            varIterador = varSize - 1;
+            listJson += obJson.toString();
 
-            arrJson = new String[varSize];
-
-            if(varSize > 1)
+            if(varCount < varSize)
             {
-                for (JSON objJson : prmJsons) {
-
-                    if(varIterador == 0)
-                        arrJson[varIterador] = "["+objJson.toString();
-                    else
-                        arrJson[varIterador] = objJson.toString();
-
-                    if(varIterador < (varSize - 1))
-                        arrJson[varIterador] += ",";
-                    varIterador--;
-                }
-            }    
-            else
-                arrJson[0] = "["+prmJsons.getFirst().toString();
-
-            arrJson[varSize - 1] += "]";
+                listJson += ",";
+                varCount++;
+            }
         }
-        return arrJson;
+        
+        listJson += "]";
+        return listJson;
     }
 
     /**
@@ -327,36 +360,30 @@ public class JSON  {
      * 
      *  @throws Libraries.Exceptions.ListException Si hay un error en la lista de claves
      */
-    public static String[] toStringJSON(LinkedListJSON prmJsons) throws Exception
+    public static String toStringJSON(LinkedListJSON prmJsons) throws Exception
     {   
-        String[] arrJson = {};
-                
-        if(!prmJsons.isEmpty())
+        if(prmJsons.isEmpty()) return null;
+
+        String listJson = "[";
+        int varSize = prmJsons.size(), varCount = 1;
+
+        for(iJSON obJson: prmJsons)
         {
-            int varSize = prmJsons.size(), 
-            varIterador = varSize - 1;
+            listJson += obJson.toJSON().toString();
 
-            arrJson = new String[varSize];
-
-            if(varSize > 1)
+            if(varCount < varSize)
             {
-                for (iJSON objJson : prmJsons) {
-
-                    if(varIterador == 0)
-                        arrJson[varIterador] = "["+objJson.toJSON().toString();
-                    else
-                        arrJson[varIterador] = objJson.toJSON().toString();
-
-                    if(varIterador < (varSize - 1))
-                        arrJson[varIterador] += ",";
-                    varIterador--;
-                }
-            }    
-            else
-                arrJson[0] = "["+prmJsons.getFirst().toJSON().toString();
-
-            arrJson[varSize - 1] += "]";
+                listJson += ",";
+                varCount++;
+            }
         }
-        return arrJson;
+        
+        listJson += "]";
+        return listJson;
+    }
+
+    @Override
+    public JSON toJSON() throws Exception {
+        return this;
     }
 }

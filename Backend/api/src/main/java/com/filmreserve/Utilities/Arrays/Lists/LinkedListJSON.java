@@ -37,13 +37,13 @@ public class LinkedListJSON implements Iterable<iJSON> {
     {
         if(atrLast != null)
         {
-            Node<iJSON> ptrNewNode = new Node(prmValue);
+            Node<iJSON> ptrNewNode = new Node<>(prmValue);
             ptrNewNode.setRight(atrFirst);
             atrFirst.setLeft(ptrNewNode);
             atrFirst = ptrNewNode;
         }
         else{
-            atrLast = new Node(prmValue);
+            atrLast = new Node<>(prmValue);
             atrFirst = atrLast;
         }
         atrSize++;
@@ -58,13 +58,13 @@ public class LinkedListJSON implements Iterable<iJSON> {
     {
         if(atrFirst != null)
         {
-            Node<iJSON> ptrNewNode = new Node(prmValue);
+            Node<iJSON> ptrNewNode = new Node<>(prmValue);
             ptrNewNode.setLeft(atrLast);
             atrLast.setRight(ptrNewNode);
             atrLast = ptrNewNode;
         }
         else{
-            atrFirst = new Node(prmValue);
+            atrFirst = new Node<>(prmValue);
             atrLast = atrFirst;
         }
         atrSize++;
@@ -281,11 +281,12 @@ public class LinkedListJSON implements Iterable<iJSON> {
      * 
      *  @return La lista de strings o null si esta vacia
      */
-    public String[] toStrings() throws Exception
+    @Override
+    public String toString()
     {
-        if(isEmpty()) 
-            return null; 
-        return JSON.toStringJSON(this);
+        try{
+            return JSON.toStringJSON(this);
+        }catch(Exception e){ return null; }
     }
 
     @Override

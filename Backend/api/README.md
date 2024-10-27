@@ -152,22 +152,36 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
         - Endpoint: `/api/v2/movie/{idMovie}`
         - Method: `DELETE`
 
-- SALAS DE CINE
+- ASIENTOS
+
+    - Obtener por sala de cine
+        - Enpoint: `/api/v2/seat/{cinemaRoom}`
+        - Method: `GET`        
 
     - Registro
-        - Endpoint: `/api/v2/cinema-room/save`
+        - Endpoint: `/api/v2/seat/save`
         - Method: `POST`
         - Body:
         ```
             {
-                "idCinemaRoom": Long
+                "cinemaRoom": Integer,
+                "row": Character,
+                "numColumn": Integer
             }
         ```
+
+    - Eliminar por identificacion
+        - Endpoint: `/api/v2/seat/{cinemaRoom}/{row}/{numColumn}`
+        - Method: `DELETE`
 
 - FUNCIONES DE CINE
 
     - Obtener por identificacion
-        - Enpoint: `/api/v2/movie-function/{idMovie}/{idCinemaRoom}/{startDate}`
+        - Enpoint: `/api/v2/movie-function/{idMovie}/{cinemaRoom}/{startDate}`
+        - Method: `GET`
+
+    - Obtener asientos:
+        - Enpoint: `/api/v2/movie-function/seats/{idMovie}/{startDate}`
         - Method: `GET`
 
     - Obtener todo
@@ -181,7 +195,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
         ```
             {
                 "idMovie": Long,
-                "idCinemaRoom": Long,
+                "cinemaRoom": Integer,
                 "startDate": Date [yyyy-mm-dd],
                 "endDate": Date [yyyy-mm-dd],
                 "startTime": Time [hh:mm],
@@ -190,5 +204,5 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
         ```
 
     - Eliminar por identificacion
-        - Endpoint: `/api/v2/movie-function/{idMovie}/{idCinemaRoom}/{startDate}`
+        - Endpoint: `/api/v2/movie-function/{idMovie}/{cinemaRoom}/{startDate}`
         - Method: `DELETE`

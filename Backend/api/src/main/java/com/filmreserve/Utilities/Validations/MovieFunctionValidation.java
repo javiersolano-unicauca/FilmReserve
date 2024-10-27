@@ -56,7 +56,7 @@ public class MovieFunctionValidation {
     public static void validateId(MovieFunctionPK prmMovieFunctionPK) throws MovieFunctionException 
     {   
         validateNull(prmMovieFunctionPK.getIdMovie(), MovieFunctionException.ID_MOVIE);
-        validateNull(prmMovieFunctionPK.getIdCinemaRoom(), MovieFunctionException.ID_CINEMA_ROOM);
+        validateNull(prmMovieFunctionPK.getCinemaRoom(), MovieFunctionException.ID_CINEMA_ROOM);
         validateNull(prmMovieFunctionPK.getStartDate(), MovieFunctionException.START_DATE);
 
         MovieFunctionException.throwException(
@@ -66,7 +66,7 @@ public class MovieFunctionValidation {
         );
 
         MovieFunctionException.throwException(
-            (prmMovieFunctionPK.getIdCinemaRoom() <= 0), 
+            (prmMovieFunctionPK.getCinemaRoom() <= 0), 
             MovieFunctionException.ID_CINEMA_ROOM,
             new Exception("Debe ser positivo")
         );
@@ -112,12 +112,13 @@ public class MovieFunctionValidation {
     public static void validateStartTime(MovieFunctionModel prmMovieFunction) throws MovieFunctionException
     {
         validateNull(prmMovieFunction.getStartTime(), MovieFunctionException.START_TIME);
-        LocalTime varNowTime = LocalTime.now();
+        String varMin = "14:00", varMax = "20:00";
 
         MovieFunctionException.throwException(
-            (varNowTime.isAfter(prmMovieFunction.getStartTime())),
+            (prmMovieFunction.getStartTime().isBefore(LocalTime.parse(varMin))
+            || prmMovieFunction.getStartTime().isAfter(LocalTime.parse(varMax))),
             MovieFunctionException.START_TIME,
-            new Exception("Debe ser superior a la hora actual")
+            new Exception("Debe ser estar entre las " + varMin + " y " + varMax + " horas")
         );
     }
 
@@ -129,12 +130,13 @@ public class MovieFunctionValidation {
     public static void validateEndTime(MovieFunctionModel prmMovieFunction) throws MovieFunctionException
     {
         validateNull(prmMovieFunction.getEndTime(), MovieFunctionException.END_TIME);
-        LocalTime varNowTime = LocalTime.now();
+        String varMin = "15:30", varMax = "22:00";
 
         MovieFunctionException.throwException(
-            (varNowTime.isAfter(prmMovieFunction.getEndTime())),
+            (prmMovieFunction.getEndTime().isBefore(LocalTime.parse(varMin))
+            || prmMovieFunction.getEndTime().isAfter(LocalTime.parse(varMax))),
             MovieFunctionException.END_TIME,
-            new Exception("Debe ser superior a la hora actual")
+            new Exception("Debe ser estar entre las " + varMin + " y " + varMax + " horas")
         );
 
         MovieFunctionException.throwException(

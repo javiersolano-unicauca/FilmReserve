@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
-import com.filmreserve.Utilities.Arrays.Lists.LinkedList;
-import com.filmreserve.api.Dao.iMovieFunctionDao;
 import com.filmreserve.api.Models.MovieFunctionModel;
 import com.filmreserve.api.Models.MovieFunctionPK;
 import com.filmreserve.api.Services.iMovieFunctionService;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  *  Clase controladora para la gestion de funciones
@@ -32,14 +29,28 @@ public class MovieFuntionController {
     @Autowired
     iMovieFunctionService movieFunctionService;
 
-    @GetMapping(path = "/{idMovie}/{idCinemaRoom}/{startDate}")
+    @GetMapping(path = "/{idMovie}/{cinemaRoom}/{startDate}")
     public ResponseEntity<String> get(
         @PathVariable("idMovie") Long prmIdMovie, 
-        @PathVariable("idCinemaRoom") Long prmCinemaRoom,
+        @PathVariable("cinemaRoom") Integer prmCinemaRoom,
         @PathVariable("startDate") LocalDate prmStartDate
     ){
         try{
             JSON objResponse = movieFunctionService.getMovieFunction(prmIdMovie, prmCinemaRoom, prmStartDate);
+            return new ResponseEntity<>(objResponse.toString(), HttpStatus.OK);
+        }catch(Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(path = "/seats/{idMovie}/{startDate}")
+    public ResponseEntity<String> getSeats(
+        @PathVariable("idMovie") Long prmIdMovie, 
+        @PathVariable("startDate") LocalDate prmStartDate
+    ){
+        try{
+            JSON objResponse = movieFunctionService.getSeats(prmIdMovie, prmStartDate);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.OK);
         }catch(Exception e)
         {
@@ -70,10 +81,10 @@ public class MovieFuntionController {
         }
     }
 
-    @DeleteMapping(path = "/{idMovie}/{idCinemaRoom}/{startDate}")
+    @DeleteMapping(path = "/{idMovie}/{cinemaRoom}/{startDate}")
     public ResponseEntity<String> delete(
         @PathVariable("idMovie") Long prmIdMovie, 
-        @PathVariable("idCinemaRoom") Long prmCinemaRoom,
+        @PathVariable("cinemaRoom") Integer prmCinemaRoom,
         @PathVariable("startDate") LocalDate prmStartDate
     ){
         try{
