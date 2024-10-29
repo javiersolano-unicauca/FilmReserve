@@ -181,7 +181,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
         - Method: `GET`
 
     - Obtener asientos:
-        - Enpoint: `/api/v2/movie-function/seats/{idMovie}/{startDate}`
+        - Enpoint: `/api/v2/movie-function/seats/{idMovie}/{startDate}/{startTime}`
         - Method: `GET`
 
     - Obtener todo

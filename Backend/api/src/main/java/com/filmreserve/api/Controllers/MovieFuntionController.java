@@ -16,6 +16,7 @@ import com.filmreserve.api.Models.MovieFunctionPK;
 import com.filmreserve.api.Services.iMovieFunctionService;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *  Clase controladora para la gestion de funciones
@@ -44,16 +45,16 @@ public class MovieFuntionController {
         }
     }
 
-    @GetMapping(path = "/seats/{idMovie}/{startDate}")
+    @GetMapping(path = "/seats/{idMovie}/{startDate}/{startTime}")
     public ResponseEntity<String> getSeats(
-        @PathVariable("idMovie") Long prmIdMovie, 
-        @PathVariable("startDate") LocalDate prmStartDate
+            @PathVariable("idMovie") Long prmIdMovie,
+            @PathVariable("startDate") LocalDate prmStartDate,
+            @PathVariable("startTime") LocalTime prmStartTime
     ){
-        try{
-            JSON objResponse = movieFunctionService.getSeats(prmIdMovie, prmStartDate);
+        try {
+            JSON objResponse = movieFunctionService.getSeats(prmIdMovie, prmStartDate, prmStartTime);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.OK);
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }

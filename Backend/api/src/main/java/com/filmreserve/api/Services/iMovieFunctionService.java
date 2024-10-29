@@ -6,6 +6,7 @@ import com.filmreserve.api.Models.MovieFunctionPK;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.time.LocalTime;
 
 /**
  * @author javiersolanop
@@ -39,14 +40,15 @@ public interface iMovieFunctionService {
     public JSON getMovieFunction(Long prmIdMovie, Integer prmCinemaRoom, LocalDate prmStartDate) throws Exception;
 
     /**
-     *  Metodo para obtener los asientos de la sala de una funcion
+     * Metodo para obtener los asientos de la sala de una funcion
      * 
-     *  @param prmIdMovie Recibe el id de la pelicula
-     *  @param prmStartDate Recibe la fecha de inicio
+     * @param prmIdMovie   Recibe el id de la pelicula
+     * @param prmStartDate Recibe la fecha de inicio
+     * @param prmStartTime Recibe la hora de inicio
      * 
-     *  @return La lista con los asientos o vacia si no existe la funcion
+     * @return La lista con los asientos o vacia si no existe la funcion
      */
-    public JSON getSeats(Long prmIdMovie, LocalDate prmStartDate) throws Exception;
+    public JSON getSeats(Long prmIdMovie, LocalDate prmStartDate, LocalTime prmStartTime) throws Exception;
 
     /**
      *  Metodo para obtener todas las funciones

@@ -15,6 +15,7 @@ import com.filmreserve.api.Services.iSeatService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.time.LocalTime;
 
 /**
  *  @author javiersolanop
@@ -54,17 +55,16 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
     }
 
     @Override
-    public JSON getSeats(Long prmIdMovie, LocalDate prmStartDate) throws Exception 
+    public JSON getSeats(Long prmIdMovie, LocalDate prmStartDate, LocalTime prmStartTime) throws Exception 
     {
-        MovieFunctionModel objMovieFunction = movieFunctionDao.findByIdMovieAndStartDateAndActive(prmIdMovie, prmStartDate, true);
+        MovieFunctionModel objMovieFunction = movieFunctionDao.findByIdMovieAndStartDateAndStartTimeAndActive(prmIdMovie, prmStartDate, prmStartTime, true);
 
         ServiceResponseException.throwException(
-            (objMovieFunction == null), 
-            "getSeats",
-            "No se encuentra una funcion activa con el id de pelicula " + prmIdMovie
-            + " y fecha de inicio " + prmStartDate
-        );
-        
+                (objMovieFunction == null),
+                "getSeats",
+                "No se encuentra una funcion activa con el id de pelicula " + prmIdMovie
+                + ", fecha de inicio " + prmStartDate + " y hora de inicio " + prmStartTime);
+
         JSON objCinemaRoom = new JSON();
         objCinemaRoom.add("cinemaRoom", objMovieFunction.getCinemaRoom());
         objCinemaRoom.add("seats", seatService.getSeatsOfCinemaRoom(objMovieFunction.getCinemaRoom()));
@@ -72,8 +72,8 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
     }
 
     @Override
-    public List<MovieFunctionModel> all() throws Exception {
-        
+    public List<MovieFunctionModel> all() throws Exception 
+    {
         List<MovieFunctionModel> objList = (List<MovieFunctionModel>) movieFunctionDao.findAll();
         
         ServiceResponseException.throwException(
@@ -89,32 +89,34 @@ public class MovieFunctionServiceImp implements iMovieFunctionService {
     public JSON save(MovieFunctionPK prmMovieFunctionPK, MovieFunctionModel prmMovieFunction) throws Exception 
     {
         ServiceResponseException.throwException(
-            (movieFunctionDao.find(prmMovieFunctionPK.getCinemaRoom(), true, prmMovieFunctionPK.getStartDate()) != null),
+            (movieFunctionDao.find(prmMovieFunctionPK.getCinemaRoom(), true, prmMovieFunctionPK.getStartDate(), prmMovieFunction.getStartTime()) != null),
             "save",
-            "Ya se encuentra reservada la sala " + prmMovieFunctionPK.getCinemaRoom() + 
-            " entre las fechas " + prmMovieFunctionPK.getStartDate() + " y " + prmMovieFunction.getEndDate()
+            "Ya se encuentra reservada la sala " + prmMovieFunctionPK.getCinemaRoom() +
+            " entre las fechas " + prmMovieFunctionPK.getStartDate() + " - " + prmMovieFunction.getEndDate()
+            + " y las horas " + prmMovieFunction.getStartTime() + " - " + prmMovieFunction.getEndTime()
         );
 
-        try{ MovieFunctionValidation.validate(prmMovieFunctionPK, prmMovieFunction); }
-        catch(Exception e) { 
+        try {
+            MovieFunctionValidation.validate(prmMovieFunctionPK, prmMovieFunction);
+        } catch (Exception e) {
             ServiceResponseException.throwException(
-                "save", 
-                e.getMessage()
-        ); }
-        
+                    "save",
+                    e.getMessage());
+        }
+
         prmMovieFunction.setIdMovieFunction(prmMovieFunctionPK);
         prmMovieFunction.setMovie(prmMovieFunctionPK.getIdMovie());
         prmMovieFunction.setActive(true);
         movieFunctionDao.save(prmMovieFunction);
-        
+
         JSON objJson = new JSON();
         objJson.add("save", true);
         return objJson;
     }
 
     @Override
-    public JSON functionEnd(MovieFunctionPK prmMovieFunctionPK) throws Exception {
-        
+    public JSON functionEnd(MovieFunctionPK prmMovieFunctionPK) throws Exception 
+    {
         MovieFunctionModel objMovieFunction = getMovieFunctionModel(
             prmMovieFunctionPK.getIdMovie(),
             prmMovieFunctionPK.getCinemaRoom(),
