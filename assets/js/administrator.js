@@ -29,17 +29,17 @@ var inputMovieId = document.querySelector(
 );
 var inputMovieName = document.querySelector("#MName");
 var inputMovieSypnosis = document.querySelector("#MSypnosis");
-var contadorCaracteres = document.getElementById('contadorCaracteres');
+var contadorCaracteres = document.getElementById("contadorCaracteres");
 //elementos del dom sala
 var formSala = document.querySelector(".form_register_sala");
-var inputIdSala = document.querySelector(".form_register_sala #idCinemaRoom");
+var inputIdSala = document.querySelector(".form_register_sala #cinemaRoom");
 //elementos del dom funcion
 var formFunction = document.querySelector(".form_register_function");
 var inputFunctionId = document.querySelector(
   ".form_register_function #idMovie"
 );
 var inputSalaFunction = document.querySelector(
-  ".form_register_function #idCinemaRoom"
+  ".form_register_function #cinemaRoom"
 );
 
 const validationStatus = {
@@ -53,7 +53,7 @@ const validationStatus = {
   sypnosis: false,
   poster: false,
   listGender: false,
-  idCinemaRoom: false,
+  cinemaRoom: false,
 };
 //listerner formulario taquillero
 document.addEventListener("DOMContentLoaded", () => {
@@ -128,11 +128,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   inputMovieSypnosis.addEventListener("input", () => {
     mostrarCaracteres(inputMovieSypnosis, contadorCaracteres);
-      validarCampo(
-        synopsisRegex,
-        inputMovieSypnosis,
-        " el texto de be tener minimo 300 caracteres no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
-      );
+    validarCampo(
+      synopsisRegex,
+      inputMovieSypnosis,
+      " el texto de be tener minimo 300 caracteres no se permiten ciertos caracteres como : <, >, /,', ;, (, ), {, }, [, ], , =, +"
+    );
   });
   inputMovieId.addEventListener("input", () => {
     validarCampo(
@@ -147,7 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
   formSala.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = new FormData(e.target);
-    sendFormSala(formSala, datos);
+    const data = Object.fromEntries(datos.entries());
+    console.log(data.cinemaRoom);
+    sendFormSala(formSala, data);
   });
 
   inputIdSala.addEventListener("input", () => {
@@ -158,11 +160,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 });
-//listener formulario funcion
+
+// //listener formulario funcion
 document.addEventListener("DOMContentLoaded", () => {
   formFunction.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const datos = new FormData(e.target);
     const data = Object.fromEntries(datos.entries());
     console.log(data);
@@ -312,9 +315,9 @@ function validateMovieRegitration(form, prmResponse) {
 }
 //envia formulario sala
 function sendFormSala(form, datos) {
-  console.log(validationStatus.turn);
+  console.log(validationStatus.cinemaRoom);
   //validamos el envio del formulario
-  if (validationStatus.idCinemaRoom) {
+  if (validationStatus.cinemaRoom) {
     salaRegistration(form, datos);
   } else {
     Swal.fire({
@@ -325,14 +328,34 @@ function sendFormSala(form, datos) {
   }
 }
 function salaRegistration(form, variable) {
-  objClient.post(
-    `/api/${version}/cinema-room/save`,
-    variable,
-    (prmResponse) => {
-      console.log(prmResponse);
-      validateSalaRegitration(form, prmResponse);
+  const filas = ["A", "B", "C", "D", "E", "F"]; // Filas desde A hasta F
+  const numAsientosPorFila = 10; // 10 asientos por fila
+  let res;
+  filas.forEach((fila) => {
+    for (let numColumn = 1; numColumn <= numAsientosPorFila; numColumn++) {
+      // Crear FormData para cada asiento
+      const varData = new FormData();
+
+      varData.append("cinemaRoom", variable.cinemaRoom);
+      varData.append("row", fila);
+      varData.append("numColumn", numColumn);
+
+      // Llamada al endpoint para crear cada asiento
+      objClient.post("/api/v2/seat/save", varData, (prmResponse) => {
+        console.log(`Asiento creado: ${fila}${numColumn}`, prmResponse);
+        validateSalaRegitration(form, prmResponse);
+      });
     }
-  );
+  });
+
+  // objClient.post(
+  //   `/api/${version}/cinema-room/save`,
+  //   variable,
+  //   (prmResponse) => {
+  //     console.log(prmResponse);
+  //     validateSalaRegitration(form, prmResponse);
+  //   }
+  // );
 }
 function validateSalaRegitration(form, prmResponse) {
   if (prmResponse.save == true) {
@@ -344,8 +367,7 @@ function validateSalaRegitration(form, prmResponse) {
       showConfirmButton: false,
       timer: 1500,
     });
-    validationStatus["idCinemaRoom"] = false;
-
+    validationStatus["cinemaRoom"] = false;
   } else {
     Swal.fire({
       icon: "error",
@@ -354,14 +376,10 @@ function validateSalaRegitration(form, prmResponse) {
     });
   }
 }
-//envia formulario funcion
+
 function sendFormFunction(form, datos) {
-  console.log(validationStatus.turn);
   //validamos el envio del formulario
-  if (
-    validationStatus.idCinemaRoom &&
-    validationStatus.idMovie
-  ) {
+  if (validationStatus.cinemaRoom && validationStatus.idMovie) {
     functionRegistration(form, datos);
   } else {
     Swal.fire({
@@ -392,7 +410,7 @@ function validateFunctionRegitration(form, prmResponse) {
       showConfirmButton: false,
       timer: 1500,
     });
-    validationStatus["idCinemaRoom"] = false;
+    validationStatus["cinemaRoom"] = false;
     validationStatus["idMovie"] = false;
   } else {
     Swal.fire({
@@ -403,15 +421,12 @@ function validateFunctionRegitration(form, prmResponse) {
   }
 }
 
-
-
-
 function mostrarCaracteres(textareaElement, contadorElement) {
   contadorElement.innerText = textareaElement.value.length;
 }
 
-function optionsAdmimistrator(){
-optionAdmi.innerHTML = `
+function optionsAdmimistrator() {
+  optionAdmi.innerHTML = `
       <div class="opcion_admi">
       <img src="" alt="">
       <h1>Formularios</h1>
@@ -423,77 +438,60 @@ optionAdmi.innerHTML = `
         </ul>
       </div>
     `;
-    document.querySelectorAll("ul li a").forEach((link) => {
-      link.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevenir la recarga de la página
+  document.querySelectorAll("ul li a").forEach((link) => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevenir la recarga de la página
 
-        document.querySelectorAll('.main_administrator form').forEach(form => {
-          form.style.display="none"; // Remueve la clase 'active' de todos los formularios
-        });
-
-        // Mostrar el formulario seleccionado
-        const formId = this.getAttribute("data-form");
-        document.getElementById(formId).style.display="block";
+      document.querySelectorAll(".main_administrator form").forEach((form) => {
+        form.style.display = "none"; // Remueve la clase 'active' de todos los formularios
       });
+
+      // Mostrar el formulario seleccionado
+      const formId = this.getAttribute("data-form");
+      document.getElementById(formId).style.display = "block";
     });
+  });
 }
 optionsAdmimistrator();
 
-function prueba(idMovie){
-  objClient.get(`/api/${version}/movie-function/all`, "", (prmResponse) =>
-  {
-    // Filtrar el resultado por idMovie
-    const resultadosContainer = document.getElementById("resultados");
-    resultadosContainer.innerHTML = ""; // Limpiar el contenedor
-    let encontrado = false;
-    prmResponse.forEach((prmResponse) => {
-      // Acceder al objeto anidado movie y verificar si idMovie coincide
-      if (prmResponse.movie && prmResponse.movie.idMovie === idMovie) {
-        const movieDiv = document.createElement("div");
-        movieDiv.classList.add("movie-result");
-        // Llenar el div con la información de la película
-        movieDiv.innerHTML = `
-          <h3>Película: ${prmResponse.movie.name}</h3>
-          <p>Sala de cine ID: ${prmResponse.cinemaRoom.idCinemaRoom}</p>
-          <p>Fecha de inicio: ${prmResponse.idMovieFunction.startDate}</p>
-          <p>Fecha de fin: ${prmResponse.endDate}</p>
-          <p>Hora de inicio: ${prmResponse.startTime}</p>
-          <p>Hora de fin: ${prmResponse.endTime}</p>
-        `;
-        // Agregar el div con la información al contenedor
-        resultadosContainer.appendChild(movieDiv);
-        // Mostrar los datos que coinciden con el idMovie
-        console.log(
-          "Datos de la función de película:",
-          prmResponse,
-          "nombre: ",
-          prmResponse.movie.name,
-          "sala: ",
-          prmResponse.cinemaRoom.idCinemaRoom,
-          " fecha:",
-          prmResponse.idMovieFunction.startDate,
-          " hora: ",
-          prmResponse.startTime
-        );
-        encontrado = true;
-      }
-    });
+function createSeats(cinemaRoomId) {
+  objClient.get("/api/v2/seat/", 1, (prmResponse) => {
+    console.log(prmResponse);
+    const resultado = contarAsientos(prmResponse);
+    console.log("Asientos reservados:", resultado.reservados);
+    console.log("Asientos disponibles:", resultado.disponibles);
+  });
+}
 
-    // Si no se encontró ninguna coincidencia, mostrar un mensaje
-    if (!encontrado) {
-       const movieDiv = document.createElement("div");
-       movieDiv.classList.add("movie-result");
-       // Llenar el div con la información de la película
-       movieDiv.innerHTML = `
-          <h1>no hay funciones</h1>
-          <p>proximamente estara disponoble</p>
-        `;
-       // Agregar el div con la información al contenedor
-       resultadosContainer.appendChild(movieDiv);
-      console.log(`No se encontraron funciones para idMovie: ${idMovie}`);
-    }
+function contarAsientos(datosAsientos) {
+  // Inicializamos contadores
+  let reservados = 0;
+  let disponibles = 0;
+
+  // Iteramos sobre cada fila y columna
+  datosAsientos.forEach((fila) => {
+    fila.columns.forEach((asiento) => {
+      asiento.reserved ? reservados++ : disponibles++;
+    });
+  });
+
+  return {
+    reservados,
+    disponibles,
+  };
+}
+// createSeats(1);
+
+// objClient.get("/api/v2/movie-function/all", "", (prmResponse) =>{
+//          console.log(prmResponse);
+// })
+// objClient.get("/api/v2/seat/", 1, (prmResponse) =>{
+//          console.log(prmResponse);
+// })
+objClient.get(
+  "/api/v2/movie-function/seats/1/2024-10-29/20:00",
+  "",
+  (prmResponse) => {
     console.log(prmResponse);
   }
-  );
-}
-prueba(2);
+);

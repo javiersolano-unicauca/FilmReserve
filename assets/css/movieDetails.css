@@ -9,7 +9,7 @@
     grid-column: 1;
     display: grid;
     gap: 20px;
-    padding: 20px;
+    padding: 5px;
     background-color: #fbf8f8;
     /* Color de fondo claro */
     height: 80vh;
@@ -87,10 +87,12 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.info_function_container{
+
+.info_function_container {
     grid-column: 2;
     width: 100%;
 }
+
 #resultados {
     /* border: 1px solid red; */
     padding-top: 20px;
@@ -98,17 +100,21 @@
     display: flex;
     height: 130px;
     flex-wrap: wrap;
-  
+
 }
-#resultados #select_function{
+
+#resultados #select_function {
     margin: 0 35px;
 }
-#resultados #select_function input, #resultados #select_function select{
+
+#resultados #select_function input,
+#resultados #select_function select {
     width: 200px;
     height: 28px;
 }
-#sala{
-    margin-left:13px ;
+
+#sala {
+    margin-left: 13px;
 }
 
 
@@ -118,8 +124,10 @@
     font-size: 13px;
     background-color: #fff;
     margin: 0px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);    /* Sombra de la imagen */
-    transition: box-shadow 0.3s ease;    /* Suaviza la transición de la sombra */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Sombra de la imagen */
+    transition: box-shadow 0.3s ease;
+    /* Suaviza la transición de la sombra */
     padding: 5px;
     border-radius: 15px;
     height: 28rem;
@@ -127,10 +135,12 @@
     margin: 5px 0 5px 0;
 
 }
-#okButton{
+
+#okButton {
     max-height: 25px;
 }
-.CinemaRoom_container{
+
+.CinemaRoom_container {
     display: block;
     bottom: 0;
     /* background-color: #666; */
@@ -138,10 +148,11 @@
     height: 100%;
 }
 
-.chairs_container{
+.chairs_container {
     display: none;
 }
- /* todo sobre seleccionar numeros de sillas */
+
+/* todo sobre seleccionar numeros de sillas */
 .container-selection {
     position: relative;
     top: 20px;

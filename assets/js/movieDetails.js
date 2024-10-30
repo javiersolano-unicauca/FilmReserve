@@ -5,6 +5,10 @@ const objClientAPI = new ClientAPI(
   "123",
   "http://localhost:8001"
 );
+let resultado2;
+let disponibles;
+let ocupados;
+let totalAPagar;
 document.addEventListener("DOMContentLoaded", function () {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -16,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     getDataFunction(Number(movieId));
   }
 });
+objClientAPI.get("/api/v2/movie-function/all", "", (prmResponse) =>
+  console.log(prmResponse)
+);
 
 function fetchMovieDetails(id) {
   objClientAPI.get(`/api/v2/movie/`, id, (response) => {
@@ -29,16 +36,16 @@ function fetchMovieDetails(id) {
       <img src="${response.poster}" alt="${response.posterImage}">
       <h1>${response.name}</h1>
       <p><strong>Sinopsis:</strong> ${response.sypnosis}</p>
-      <p><strong>GÃ©neros:</strong> ${response.genders
+      <p><strong>Géneros:</strong> ${response.genders
         .map((g) => g.idGender.name)
         .join(", ")}</p>
-      <!-- Agrega mÃ¡s detalles segÃºn lo que devuelva la API -->
+      <!-- Agrega más detalles según lo que devuelva la API -->
       </div>
     `;
   });
 }
-
-//codigo nuevo
+//
+// codigo auxiliar
 function getDataFunction(idMovie) {
   const fechaInput = document.getElementById("fecha");
   const horaSelect = document.getElementById("hora");
@@ -46,7 +53,20 @@ function getDataFunction(idMovie) {
   const okButton = document.getElementById("okButton");
   const resultadosContainer = document.getElementById("resultados2");
 
-  // FunciÃ³n para habilitar el botÃ³n OK si todos los campos estÃ¡n seleccionados
+  const today = new Date();
+  const todayDate =
+    today.getFullYear() +
+    "-" +
+    String(today.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(today.getDate()).padStart(2, "0");
+  const currentHour = today.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  // Habilita el botón OK si todos los campos están seleccionados
   function checkSelections() {
     okButton.disabled = !(
       fechaInput.value &&
@@ -55,39 +75,42 @@ function getDataFunction(idMovie) {
     );
   }
 
-  // AÃ±adir eventos para verificar si todos los campos estÃ¡n seleccionados
   fechaInput.addEventListener("change", checkSelections);
   horaSelect.addEventListener("change", checkSelections);
   salaSelect.addEventListener("change", checkSelections);
 
-  // Cuando se selecciona la fecha
+  // Al seleccionar la fecha
   fechaInput.addEventListener("change", (event) => {
     const selectedDate = event.target.value;
-    if (selectedDate) {
+    if (selectedDate && selectedDate >= todayDate) {
       horaSelect.innerHTML = `<option value="">Seleccione una hora</option>`;
       horaSelect.disabled = true;
       salaSelect.innerHTML = `<option value="">Seleccione una sala</option>`;
       salaSelect.disabled = true;
       resultadosContainer.innerHTML = "";
 
+      // Llamada a la API para obtener funciones
       objClientAPI.get(
         `/api/${version}/movie-function/all`,
         "",
         (prmResponse) => {
           let horasDisponibles = [];
-          prmResponse.forEach((prmResponse) => {
-            if (prmResponse.movie && prmResponse.movie.idMovie === idMovie) {
-              const functionDate = new Date(
-                prmResponse.idMovieFunction.startDate
-              )
-                .toISOString()
-                .split("T")[0];
+          prmResponse.forEach((funcion) => {
+            if (funcion.movie && funcion.movie.idMovie === idMovie) {
+              const functionDate = funcion.startDate;
               if (functionDate === selectedDate) {
-                horasDisponibles.push(prmResponse.startTime);
+                horasDisponibles.push(funcion.startTime);
               }
             }
           });
-
+          console.log(horasDisponibles[0]);
+          console.log(currentHour);
+          // Filtrar horas futuras si la fecha es hoy
+          if (selectedDate === todayDate) {
+            horasDisponibles = horasDisponibles.filter(
+              (hora) => hora > currentHour
+            );
+          }
           if (horasDisponibles.length > 0) {
             horaSelect.disabled = false;
             horasDisponibles.forEach((hora) => {
@@ -98,36 +121,40 @@ function getDataFunction(idMovie) {
             });
           } else {
             resultadosContainer.innerHTML =
-              "<p>No hay funciones para la fecha seleccionada :(.</p>";
+              "<p>No hay funciones disponibles para la fecha seleccionada.</p>";
           }
         }
       );
+    } else {
+      resultadosContainer.innerHTML = "<p>Seleccione una fecha válida.</p>";
     }
   });
 
+  // Al seleccionar la hora
   horaSelect.addEventListener("change", (event) => {
     const selectedHora = event.target.value;
-    if (selectedHora) {
+    if (
+      selectedHora &&
+      (fechaInput.value > todayDate || selectedHora > currentHour)
+    ) {
       salaSelect.innerHTML = `<option value="">Seleccione una sala</option>`;
       salaSelect.disabled = true;
       resultadosContainer.innerHTML = "";
 
+      // Llamada a la API para obtener salas disponibles para la fecha y hora seleccionadas
       objClientAPI.get(
         `/api/${version}/movie-function/all`,
         "",
         (prmResponse) => {
           let salasDisponibles = [];
-          prmResponse.forEach((prmResponse) => {
-            const functionDate = new Date(prmResponse.idMovieFunction.startDate)
-              .toISOString()
-              .split("T")[0];
+          prmResponse.forEach((funcion) => {
             if (
-              prmResponse.movie &&
-              prmResponse.movie.idMovie === idMovie &&
-              functionDate === fechaInput.value &&
-              prmResponse.startTime === selectedHora
+              funcion.movie &&
+              funcion.movie.idMovie === idMovie &&
+              funcion.startDate === fechaInput.value &&
+              funcion.startTime === selectedHora
             ) {
-              salasDisponibles.push(prmResponse.cinemaRoom.idCinemaRoom);
+              salasDisponibles.push(funcion.cinemaRoom);
             }
           });
 
@@ -145,12 +172,11 @@ function getDataFunction(idMovie) {
           }
         }
       );
+    } else {
+      resultadosContainer.innerHTML = "<p>Seleccione una hora válida.</p>";
     }
   });
-
-  salaSelect.addEventListener("change", checkSelections);
-
-  // Evento del botÃ³n OK para guardar las selecciones en JSON
+  // Evento del botón OK para guardar la selección en JSON
   okButton.addEventListener("click", () => {
     const seleccion = {
       fecha: fechaInput.value,
@@ -158,14 +184,58 @@ function getDataFunction(idMovie) {
       sala: salaSelect.value,
     };
 
-    // Convertir a JSON y mostrar en consola
+    // Mostrar la selección en formato JSON
     const seleccionJSON = JSON.stringify(seleccion);
-    console.log("SelecciÃ³n guardada:", seleccionJSON);
+    console.log("Selección guardada:", seleccionJSON);
 
-    resultadosContainer.innerHTML = `<p>SelecciÃ³n guardada: ${seleccionJSON}</p>`;
+    resultadosContainer.innerHTML = `<p>Selección guardada: ${seleccionJSON}</p>`;
+    objClientAPI.get(
+      `/api/v2/movie-function/seats/${idMovie}/${seleccion.fecha}/${seleccion.hora}`,
+      "",
+      (prmResponse) => {
+        console.log(prmResponse);
+        disponibles = contarDisponibles(prmResponse).disponibles - 2;
+        ocupados = contarDisponibles(prmResponse).reservados;
+        resultado2 = prmResponse;
+        console.log("los asientos disponibles" + disponibles);
+        console.log("los asientos ocupados" + ocupados);
+      }
+    );
+    function contarDisponibles(datosAsientos) {
+      // Inicializamos contadores
+      let reservados = 0;
+      let disponibles = 0;
+
+      // Iteramos sobre cada fila y columna
+      datosAsientos.seats.forEach((fila) => {
+        fila.columns.forEach((asiento) => {
+          asiento.reserved ? reservados++ : disponibles++;
+          // console.log(asiento.reserved)
+          // console.log(`${fila.row}${asiento.numColumn}`);
+        });
+      });
+
+      return {
+        reservados,
+        disponibles,
+      };
+    }
   });
 }
 
+function vericarReserva(datosAsientos) {
+  // Iteramos sobre cada fila y columna
+  datosAsientos.seats.forEach((fila) => {
+    fila.columns.forEach((asiento) => {
+      if (asiento.reserved) {
+        //comentar--------------------------------------------------------
+        asientosOcupados(`${fila.row}${asiento.numColumn}`); //dejar quieto--------------------------
+      } //comentar-----------------------------------------------
+    });
+  });
+  asientosOcupados("B2");
+  asientosOcupados("D8");
+}
 //---FUNCIONES de elegir cuantos asientos se van a escoger------------------------
 // document.addEventListener("DOMContentLoaded", function () {
 const masButton = document.getElementById("mas-btn");
@@ -178,7 +248,7 @@ const totalValueSpan = document.getElementById("total-value");
 var generalCount = 0;
 
 masButton.addEventListener("click", function () {
-  if (generalCount < 10) {
+  if (generalCount < disponibles) {
     //10 es el numero de asientos disponibles
     generalCount++;
     minusGeneralButton.disabled = false;
@@ -189,7 +259,7 @@ masButton.addEventListener("click", function () {
     const varTotal = generalCount * 6000;
     totalChairsSpan.textContent = generalCount;
     totalValueSpan.textContent = `$${varTotal}`;
-    localStorage.setItem("totalPagar", varTotal);
+    totalAPagar= varTotal;
   }
 });
 
@@ -208,7 +278,7 @@ minusGeneralButton.addEventListener("click", function () {
       continueButton.classList.remove("enabled");
       summary.classList.add("hidden");
     }
-    localStorage.setItem("totalPagar", varTotal);
+    totalAPagar= varTotal;
   }
 });
 continueButton.addEventListener("click", function () {
@@ -216,36 +286,26 @@ continueButton.addEventListener("click", function () {
     CinemaRoomContainerChange();
     maxSeats = generalCount;
     generateSeatingMap();
+    vericarReserva(resultado2);
   }
 });
 var maxSeats;
 //----------funciones de la silleteria----------------------------
 const seatingMap = document.getElementById("seating-map");
-
-// Mapa de asientos generado dinámicamente (ejemplo de 4 filas y 10 columnas)
-const rows = 6;
+const rows = 6; // Mapa de asientos generado dinámicamente (ejemplo de 4 filas y 10 columnas)
 const cols = 10;
-
-// Obtener la cantidad de asientos seleccionados (generalCount) de localStorage
-// const maxSeats = parseInt(localStorage.getItem("generalCount"), 10);
-
 const totalValue = document.getElementById("total-a-pagar");
-// Variable para rastrear cuántos asientos han sido seleccionados
-let selectedSeatsCount = 0;
-
-// Recuperar el valor total de localStorage
-const totalPagar = localStorage.getItem("totalPagar");
-// Mostrar el total a pagar en el elemento correspondiente
-document.getElementById("total-a-pagar").textContent = `$${totalPagar}`;
+let selectedSeatsCount = 0; // Variable para rastrear cuántos asientos han sido seleccionados
 
 // Función para generar los asientos en el DOM
 function generateSeatingMap() {
+const totalPagar = Number(totalAPagar) // Recuperar el valor total 
+document.getElementById("total-a-pagar").textContent = `$${totalPagar}`; // Mostrar el total a pagar en el elemento correspondiente
   const titulo = document.createElement("p");
   titulo.innerText = "Escoge " + generalCount + " lugar(es)";
   document.querySelector(".container-ubicacion").appendChild(titulo);
 
   seatingMap.innerHTML = ""; // Limpiar el mapa actual
-
   const rowLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Letras para las filas
   for (let i = 0; i < rows; i++) {
     for (let j = 1; j <= cols; j++) {
@@ -258,7 +318,7 @@ function generateSeatingMap() {
       seatElement.id = seatId;
       seatElement.textContent = seatId; // Mostrar el id dentro del asiento
       console.log(`fila: ${rowLetters[i]} columna: ${j}`);
-      // Hacer que los asientos "libres" sean seleccionables
+      // Hacer que los asiento)s "libres" sean seleccionables
       seatElement.addEventListener("click", function () {
         if (
           this.classList.contains("libre") &&
@@ -275,18 +335,6 @@ function generateSeatingMap() {
       seatingMap.appendChild(seatElement);
     }
   }
-
-  // Marcar algunos asientos como ocupados
-  asientosOcupados("A3"); // Ejemplo de asiento ocupado
-  asientosOcupados("B2");
-  asientosOcupados("B3");
-  asientosOcupados("B4");
-  asientosOcupados("B5");
-  asientosOcupados("B6");
-  asientosOcupados("B7");
-  asientosOcupados("B8");
-  asientosOcupados("B9");
-  asientosOcupados("B10");
 }
 // Inicialización del mapa de asientos
 
@@ -297,7 +345,7 @@ function asientosOcupados(id) {
     seatElement.classList.remove("libre");
     seatElement.classList.add("ocupado");
   } else {
-    console.warn(`El asiento con id ${id} no se encontró.`);
+    console.log(`El asiento con id ${id} no se encontró.`);
   }
 }
 
