@@ -14,8 +14,13 @@ import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.SeatPK;
 import com.filmreserve.api.Services.iSeatService;
 
+/**
+ *  Clase controladora para la gestion de asientos
+ * 
+ *  @author javiersolanop
+ */
 @RestController
-@RequestMapping(path = "/api/v2/seat")
+@RequestMapping(path = "/api/v3/seat")
 public class SeatController {
 
     @Autowired

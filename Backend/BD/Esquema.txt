@@ -30,6 +30,16 @@ CREATE TABLE customer (
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE membership (
+	identification BIGINT NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
+	active BOOLEAN NOT NULL DEFAULT true,
+	CONSTRAINT pk_membership PRIMARY KEY(identification, start_date),
+	CONSTRAINT fk_customer FOREIGN KEY(identification) REFERENCES customer(identification) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE ticket_seller (
 	identification BIGINT NOT NULL,
 	turn VARCHAR(5) NOT NULL,

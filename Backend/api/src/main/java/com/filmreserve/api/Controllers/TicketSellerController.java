@@ -22,7 +22,7 @@ import com.filmreserve.api.Services.iTicketSellerService;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v2/ticket-seller")
+@RequestMapping(path = "/api/v3/ticket-seller")
 public class TicketSellerController {
 
     @Autowired

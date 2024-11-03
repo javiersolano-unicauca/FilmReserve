@@ -10,9 +10,8 @@ import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.Utilities.Arrays.Lists.LinkedList;
 
 @RestController
-@RequestMapping(path = "/api/v2/test")
+@RequestMapping(path = "/api/v3/test")
 public class TestController {
-
 
     @GetMapping
     public ResponseEntity<Object> save() throws Exception

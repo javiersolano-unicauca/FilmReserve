@@ -24,7 +24,7 @@ import java.time.LocalTime;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v2/movie-function")
+@RequestMapping(path = "/api/v3/movie-function")
 public class MovieFuntionController {
 
     @Autowired

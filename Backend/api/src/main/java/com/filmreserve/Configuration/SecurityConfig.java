@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity prmHttp) throws Exception
     {
         prmHttp.authorizeHttpRequests(request -> {
-            request.requestMatchers("/api/v2/**")
+            request.requestMatchers("/api/v3/**")
                    .authenticated();
             request.requestMatchers("/api/posters/**")
                    .permitAll();

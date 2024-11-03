@@ -17,9 +17,8 @@ import java.time.LocalTime;
 public interface iMovieFunctionDao extends CrudRepository<MovieFunctionModel, MovieFunctionPK> {
 
         /**
-         * Metodo para saber si existe una funcion por campo 'cinemaRoom', 'active', que
-         * se
-         * encuentre entre el rango de la fecha de inicio y fin, y hora de inicio y fin
+         * Metodo para encontrar una funcion por campo 'cinemaRoom', 'active', que
+         * se encuentre entre el rango de la fecha de inicio y fin, y hora de inicio y fin
          * 
          * @param prmCinemaRoom Recibe la sala
          * @param prmActive     Recibe el estado de la funcion
@@ -36,9 +35,8 @@ public interface iMovieFunctionDao extends CrudRepository<MovieFunctionModel, Mo
         MovieFunctionModel find(Integer prmCinemaRoom, Boolean prmActive, LocalDate prmDate, LocalTime prmTime);
 
         /**
-         * Metodo para saber si existe una funcion por campo 'cinemaRoom', 'active', y
-         * que se
-         * encuentre entre el rango de la fecha de inicio y fin
+         * Metodo para encontrar una funcion por campo 'cinemaRoom', 'active', y
+         * que se encuentre entre el rango de la fecha de inicio y fin
          * 
          * @param prmIdMovie   Recibe el id de la pelicula
          * @param prmStartDate Recibe la fecha de inicio

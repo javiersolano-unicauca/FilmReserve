@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
-import com.filmreserve.Utilities.Arrays.Lists.LinkedListJSON;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.Utilities.Validations.MovieFunctionValidation;
 import com.filmreserve.api.Dao.iMovieFunctionDao;

@@ -21,7 +21,7 @@ import com.filmreserve.api.Services.iAdministratorService;
  * @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v2/administrator")
+@RequestMapping(path = "/api/v3/administrator")
 public class AdministratorController {
 
     @Autowired

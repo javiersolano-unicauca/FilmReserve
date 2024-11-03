@@ -21,7 +21,7 @@ import com.filmreserve.api.Services.iCustomerService;
  * @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v2/customer")
+@RequestMapping(path = "/api/v3/customer")
 public class CustomerController{
 
     @Autowired
