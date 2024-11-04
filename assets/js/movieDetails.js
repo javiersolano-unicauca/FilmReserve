@@ -296,14 +296,18 @@ const rows = 6; // Mapa de asientos generado dinámicamente (ejemplo de 4 filas 
 const cols = 10;
 const totalValue = document.getElementById("total-a-pagar");
 let selectedSeatsCount = 0; // Variable para rastrear cuántos asientos han sido seleccionados
+const titulo = document.createElement("p");
+const buttonNumChairs=document.createElement("button");
+buttonNumChairs.innerText="<- Cantidad de asientos";
+document.querySelector(".container-ubicacion").appendChild(buttonNumChairs);
+document.querySelector(".container-ubicacion").appendChild(titulo);
 
 // Función para generar los asientos en el DOM
 function generateSeatingMap() {
 const totalPagar = Number(totalAPagar) // Recuperar el valor total 
 document.getElementById("total-a-pagar").textContent = `$${totalPagar}`; // Mostrar el total a pagar en el elemento correspondiente
-  const titulo = document.createElement("p");
   titulo.innerText = "Escoge " + generalCount + " lugar(es)";
-  document.querySelector(".container-ubicacion").appendChild(titulo);
+  buttonNumChairs.addEventListener("click",CinemaRoomContainerChange);
 
   seatingMap.innerHTML = ""; // Limpiar el mapa actual
   const rowLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Letras para las filas
@@ -323,12 +327,17 @@ document.getElementById("total-a-pagar").textContent = `$${totalPagar}`; // Most
         if (
           this.classList.contains("libre") &&
           !this.classList.contains("ocupado")
-        ) {
+        ) {if (this.classList.contains('selected')) {
+                        // Deseleccionar el asiento
+                        this.classList.remove('selected');
+                        selectedSeatsCount--;
+                    } else {
           if (selectedSeatsCount < maxSeats) {
             // Permitir seleccionar hasta el máximo
             this.classList.add("selected");
             selectedSeatsCount++;
           }
+        }
           checkConfirmButtonState();
         }
       });
@@ -385,16 +394,38 @@ payBtn.addEventListener("click", function () {
   }
 });
 
+
 function CinemaRoomContainerChange() {
-  if (
-    document.querySelector(".container-numberChairs").style.display == "none"
-  ) {
-    document.querySelector(".chairs_container").style.display = "none";
-    document.querySelector(".container-numberChairs").style.display = "block";
-    // alert("oculto");
+  const containerNumberChairs = document.querySelector(
+    ".container-numberChairs"
+  );
+  const chairsContainer = document.querySelector(".chairs_container");
+
+  if (containerNumberChairs.style.display == "none") {
+    // Cuando volvemos a seleccionar número de sillas, reiniciamos los contadores
+    generalCount = 0;
+    maxSeats = 0;
+    selectedSeatsCount = 0;
+
+    // Restablece el contador de la interfaz y los valores correspondientes
+    generalCountSpan.textContent = generalCount;
+    totalChairsSpan.textContent = generalCount;
+    totalValueSpan.textContent = `$0`;
+    totalAPagar = 0;
+    minusGeneralButton.disabled = true;
+    continueButton.disabled = true;
+    continueButton.classList.remove("enabled");
+    summary.classList.add("hidden");
+
+    chairsContainer.style.display = "none";
+    containerNumberChairs.style.display = "block";
   } else {
-    document.querySelector(".chairs_container").style.display = "block";
-    document.querySelector(".container-numberChairs").style.display = "none";
-    // alert("mostrado");
+    // Cambiamos al mapa de asientos
+    chairsContainer.style.display = "block";
+    containerNumberChairs.style.display = "none";
+
+    // Volvemos a generar el mapa de asientos y mostrarlo
+    maxSeats = generalCount;
+    generateSeatingMap();
   }
 }

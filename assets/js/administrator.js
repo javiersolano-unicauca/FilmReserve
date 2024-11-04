@@ -348,14 +348,6 @@ function salaRegistration(form, variable) {
     }
   });
 
-  // objClient.post(
-  //   `/api/${version}/cinema-room/save`,
-  //   variable,
-  //   (prmResponse) => {
-  //     console.log(prmResponse);
-  //     validateSalaRegitration(form, prmResponse);
-  //   }
-  // );
 }
 function validateSalaRegitration(form, prmResponse) {
   if (prmResponse.save == true) {
@@ -429,12 +421,14 @@ function optionsAdmimistrator() {
   optionAdmi.innerHTML = `
       <div class="opcion_admi">
       <img src="" alt="">
-      <h1>Formularios</h1>
+      <h2>Panel del Administrador</h2>
         <ul>
         <li><a href="#" data-form="form1">Registrar taquillero</a></li>
         <li><a href="#" data-form="form2">Registrar Pelicula</a></li>
         <li><a href="#" data-form="form3">Registrar Sala</a></li>
         <li><a href="#" data-form="form4">Registrar funcion</a></li>
+        <li><a href="#" data-form="form5">Establecer Descuentos Membresía</a></li>
+        <li><a href="#" data-form="form6">Consultar Clientes Membresia</a></li>
         </ul>
       </div>
     `;
