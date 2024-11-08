@@ -37,6 +37,7 @@ export function showLoginUser() {
   }
 }
 function prueba() {
+  localStorage.clear();
   alert("fin de sesión");
   loginIcon.setAttribute("src", "../assets/img/logoInicioSesion.png");
   showUserBox(userBox);
@@ -45,8 +46,8 @@ function prueba() {
     window.location.href = "/index.html";
   }
   localStorage.removeItem("roleUser");
-
-  showLoginUser();
+  location.reload();
+  // showLoginUser();
 }
 menuIcon?.addEventListener("click", mostrarMenuDesplegable);
 

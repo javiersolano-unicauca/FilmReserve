@@ -1,5 +1,5 @@
 import ClientAPI from "../api/ClientAPI.js";
-export const version = "v2";
+export const version = "v3";
 const userNameRegex = /^[A-Za-z]+$/;
 export const idRegex = /^(?!0$)[0-9]+$/;
 export const passwordRegex = /^[^<>\/\\'";(){}[\]&=+]{8,}$/;
@@ -123,14 +123,14 @@ export function validarCampo(regularExpresion, campo, message) {
     showAlert(campo.parentElement, message);
   }
 }
-function showAlert(referencia, message) {
+export function showAlert(referencia, message) {
   clearAlert(referencia);
   const alertDiv = document.createElement("div");
   alertDiv.classList.add("alerta");
   alertDiv.textContent = message;
   referencia.appendChild(alertDiv);
 }
-function clearAlert(referencia) {
+export function clearAlert(referencia) {
   const alert = referencia.querySelector(".alerta");
   if (alert) {
     alert.remove();

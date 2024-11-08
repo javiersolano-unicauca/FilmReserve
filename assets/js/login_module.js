@@ -8,12 +8,15 @@ import {
   version,
 } from "./register.js";
 import { showLoginUser, showLogin } from "./menuDesplegable.js";
+import crypt from "./crypt.js";
 
 const formLogin = document.querySelector(".form_login");
 const inputUserId = document.querySelector(".form_login input[type='number']");
 const inputUserPassword = document.querySelector(
   ".form_login input[type='password']"
 );
+const cifrado = new crypt();
+export const idClientCrip = cifrado.encrypt_data("idClient");
 
 document.addEventListener("DOMContentLoaded", () => {
   formLogin.addEventListener("submit", (e) => {
@@ -62,14 +65,12 @@ function validateUser(id, password, form) {
     "123",
     "http://localhost:8001"
   );
-
   objClient.post(`/api/${version}/login`, varData, (prmResponse) => {
     console.log(prmResponse);
     validarlogin(prmResponse, form);
   });
   return localStorage.getItem("sesionActiva");
 }
-
 function validarlogin(prmResponse, form) {
   if (prmResponse.login == true) {
     form.reset();
@@ -91,7 +92,9 @@ function validarlogin(prmResponse, form) {
     localStorage.setItem("AvatarImg",prmResponse.user.avatar);
     showLogin();
     showLoginUser();
+    localStorage.setItem(idClientCrip, cifrado.encrypt_data(prmResponse.user.identification));
     console.log(prmResponse.login);
+    location.reload();
   } else {
     localStorage.setItem("sesionActiva", "inactiva");
     console.log(prmResponse.login);

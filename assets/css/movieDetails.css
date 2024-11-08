@@ -1,7 +1,13 @@
 /* estilos para la pagina de la pelicula individual */
+body{
+    width: fit-content;
+}
 .container-primary {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
+}
+.container-primary div{
+    caret-color: transparent;
 }
 
 
@@ -38,6 +44,7 @@
 
 /* Imagen del póster */
 .movie-details img {
+    caret-color: transparent;
     padding: 10px;
     width: 50%;
     /* Imagen cubriendo el ancho del contenedor */
@@ -130,7 +137,7 @@
     /* Suaviza la transición de la sombra */
     padding: 5px;
     border-radius: 15px;
-    height: 28rem;
+    height: 29rem;
     min-height: fit-content;
     margin: 5px 0 5px 0;
 
@@ -138,6 +145,9 @@
 
 #okButton {
     max-height: 25px;
+    margin-right: 30%;
+    margin-left: 10%;
+    cursor: pointer;
 }
 
 .CinemaRoom_container {
@@ -215,4 +225,12 @@
 
 #summary.visible {
     color: black;
+}
+.container-ubicacion button{
+    border:1px groove rgb(141, 141, 228);
+    padding: 5px;
+    border-radius: 25px;
+}
+.container-ubicacion button :hover{
+    pointer-events: visible;
 }

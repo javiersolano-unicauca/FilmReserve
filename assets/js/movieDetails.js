@@ -1,5 +1,8 @@
 import ClientAPI from "../api/ClientAPI.js";
 import { version } from "./register.js";
+import crypt from "./crypt.js";
+import { idClientCrip } from "./login_module.js";
+const cifrado=new crypt();
 const objClientAPI = new ClientAPI(
   "filmreserve",
   "123",
@@ -20,17 +23,17 @@ document.addEventListener("DOMContentLoaded", function () {
     getDataFunction(Number(movieId));
   }
 });
-objClientAPI.get("/api/v2/movie-function/all", "", (prmResponse) =>
+objClientAPI.get(`/api/${version}/movie-function/all`, "", (prmResponse) =>
   console.log(prmResponse)
 );
 
 function fetchMovieDetails(id) {
-  objClientAPI.get(`/api/v2/movie/`, id, (response) => {
+  objClientAPI.get(`/api/${version}/movie/`, id, (response) => {
     const movieDetailsContainer = document.querySelector(
       ".movie-details-container"
     );
 
-    // Mostrar la informaciÃ³n de la pelÃ­cula
+    // Mostrar la información de la pelÃ­cula
     movieDetailsContainer.innerHTML = `
       <div class="movie-details">
       <img src="${response.poster}" alt="${response.posterImage}">
@@ -46,6 +49,10 @@ function fetchMovieDetails(id) {
 }
 //
 // codigo auxiliar
+// 
+
+
+
 function getDataFunction(idMovie) {
   const fechaInput = document.getElementById("fecha");
   const horaSelect = document.getElementById("hora");
@@ -81,6 +88,7 @@ function getDataFunction(idMovie) {
 
   // Al seleccionar la fecha
   fechaInput.addEventListener("change", (event) => {
+    reiniciarSillas();
     const selectedDate = event.target.value;
     if (selectedDate && selectedDate >= todayDate) {
       horaSelect.innerHTML = `<option value="">Seleccione una hora</option>`;
@@ -95,22 +103,34 @@ function getDataFunction(idMovie) {
         "",
         (prmResponse) => {
           let horasDisponibles = [];
+
           prmResponse.forEach((funcion) => {
             if (funcion.movie && funcion.movie.idMovie === idMovie) {
-              const functionDate = funcion.startDate;
-              if (functionDate === selectedDate) {
+              const functionStartDate = new Date(funcion.startDate);
+              const functionEndDate = new Date(funcion.endDate);
+              const selectedDateObj = new Date(selectedDate);
+
+              functionStartDate.setHours(0, 0, 0, 0);
+              functionEndDate.setHours(0, 0, 0, 0);
+              selectedDateObj.setHours(0, 0, 0, 0);
+
+              // Verificar si la fecha seleccionada está en el rango entre startDate y endDate
+              if (
+                functionStartDate <= selectedDateObj &&
+                selectedDateObj <= functionEndDate
+              ) {
                 horasDisponibles.push(funcion.startTime);
               }
             }
           });
-          console.log(horasDisponibles[0]);
-          console.log(currentHour);
-          // Filtrar horas futuras si la fecha es hoy
+
+          // Filtrar horas futuras si la fecha seleccionada es hoy
           if (selectedDate === todayDate) {
             horasDisponibles = horasDisponibles.filter(
               (hora) => hora > currentHour
             );
           }
+
           if (horasDisponibles.length > 0) {
             horaSelect.disabled = false;
             horasDisponibles.forEach((hora) => {
@@ -132,10 +152,13 @@ function getDataFunction(idMovie) {
 
   // Al seleccionar la hora
   horaSelect.addEventListener("change", (event) => {
+    reiniciarSillas();
     const selectedHora = event.target.value;
+    const selectedDate = fechaInput.value;
+
     if (
       selectedHora &&
-      (fechaInput.value > todayDate || selectedHora > currentHour)
+      (selectedDate > todayDate || selectedHora > currentHour)
     ) {
       salaSelect.innerHTML = `<option value="">Seleccione una sala</option>`;
       salaSelect.disabled = true;
@@ -151,7 +174,8 @@ function getDataFunction(idMovie) {
             if (
               funcion.movie &&
               funcion.movie.idMovie === idMovie &&
-              funcion.startDate === fechaInput.value &&
+              new Date(funcion.startDate) <= new Date(selectedDate) &&
+              new Date(funcion.endDate) >= new Date(selectedDate) &&
               funcion.startTime === selectedHora
             ) {
               salasDisponibles.push(funcion.cinemaRoom);
@@ -176,6 +200,7 @@ function getDataFunction(idMovie) {
       resultadosContainer.innerHTML = "<p>Seleccione una hora válida.</p>";
     }
   });
+
   // Evento del botón OK para guardar la selección en JSON
   okButton.addEventListener("click", () => {
     const seleccion = {
@@ -186,11 +211,11 @@ function getDataFunction(idMovie) {
 
     // Mostrar la selección en formato JSON
     const seleccionJSON = JSON.stringify(seleccion);
-    console.log("Selección guardada:", seleccionJSON);
+    console.log("Has elgido:", seleccionJSON);
 
-    resultadosContainer.innerHTML = `<p>Selección guardada: ${seleccionJSON}</p>`;
+    resultadosContainer.innerHTML = `<p>Has elgido: Hora: ${seleccion.hora.substring(0, 5)}  Sala:${seleccion.sala} Fecha:${seleccion.fecha}</p>`;
     objClientAPI.get(
-      `/api/v2/movie-function/seats/${idMovie}/${seleccion.fecha}/${seleccion.hora}`,
+      `/api/${version}/movie-function/seats/${idMovie}/${seleccion.fecha}/${seleccion.hora}`,
       "",
       (prmResponse) => {
         console.log(prmResponse);
@@ -201,27 +226,24 @@ function getDataFunction(idMovie) {
         console.log("los asientos ocupados" + ocupados);
       }
     );
+
     function contarDisponibles(datosAsientos) {
-      // Inicializamos contadores
       let reservados = 0;
       let disponibles = 0;
 
-      // Iteramos sobre cada fila y columna
       datosAsientos.seats.forEach((fila) => {
         fila.columns.forEach((asiento) => {
           asiento.reserved ? reservados++ : disponibles++;
-          // console.log(asiento.reserved)
-          // console.log(`${fila.row}${asiento.numColumn}`);
         });
       });
 
-      return {
-        reservados,
-        disponibles,
-      };
+      return { reservados, disponibles };
     }
   });
 }
+
+
+
 
 function vericarReserva(datosAsientos) {
   // Iteramos sobre cada fila y columna
@@ -259,7 +281,7 @@ masButton.addEventListener("click", function () {
     const varTotal = generalCount * 6000;
     totalChairsSpan.textContent = generalCount;
     totalValueSpan.textContent = `$${varTotal}`;
-    totalAPagar= varTotal;
+    totalAPagar = varTotal;
   }
 });
 
@@ -278,7 +300,7 @@ minusGeneralButton.addEventListener("click", function () {
       continueButton.classList.remove("enabled");
       summary.classList.add("hidden");
     }
-    totalAPagar= varTotal;
+    totalAPagar = varTotal;
   }
 });
 continueButton.addEventListener("click", function () {
@@ -297,17 +319,47 @@ const cols = 10;
 const totalValue = document.getElementById("total-a-pagar");
 let selectedSeatsCount = 0; // Variable para rastrear cuántos asientos han sido seleccionados
 const titulo = document.createElement("p");
-const buttonNumChairs=document.createElement("button");
-buttonNumChairs.innerText="<- Cantidad de asientos";
+const buttonNumChairs = document.createElement("button");
+const flechaAtras = document.createElement("img");
+
+flechaAtras.setAttribute("src", "../assets/img/flechaAtras.png");
+flechaAtras.setAttribute("width", "15px");
+buttonNumChairs.appendChild(flechaAtras);
+
+// Crear un nodo de texto y añadirlo al botón
+const texto = document.createTextNode(" Cantidad de asientos");
+buttonNumChairs.appendChild(texto);
+
 document.querySelector(".container-ubicacion").appendChild(buttonNumChairs);
 document.querySelector(".container-ubicacion").appendChild(titulo);
 
 // Función para generar los asientos en el DOM
 function generateSeatingMap() {
-const totalPagar = Number(totalAPagar) // Recuperar el valor total 
-document.getElementById("total-a-pagar").textContent = `$${totalPagar}`; // Mostrar el total a pagar en el elemento correspondiente
+  const totalPagar = Number(totalAPagar); // Recuperar el valor total
+  document.getElementById("total-a-pagar").textContent = `Total = $${totalPagar}`; // Mostrar el total a pagar en el elemento correspondiente
   titulo.innerText = "Escoge " + generalCount + " lugar(es)";
-  buttonNumChairs.addEventListener("click",CinemaRoomContainerChange);
+  buttonNumChairs.addEventListener("click", CinemaRoomContainerChange);
+  if (localStorage.getItem(idClientCrip)){//valida si el cliente a iniciado sesíon o esta suscripto
+    objClientAPI.get(
+      `/api/${version}/membership/customer/`,
+        cifrado.decrypt_data(localStorage.getItem(idClientCrip))
+      ,
+      (prmResponse) => {
+        console.log("cifrado intento");
+        console.log(prmResponse[0].active);
+        if (prmResponse.getMembershipsOfCustomer != false) {
+          document.querySelector("#descuento").textContent = "Descuento = 10%";
+          document.querySelector("#descuento").classList.add("descuento");
+          document.querySelector(
+            "#total_pagar"
+          ).textContent = `Total a pagar = $${totalPagar - totalAPagar * 0.3}`;
+          document.querySelector("#total_pagar").classList.add("total_pagar");
+        }
+      }
+    );
+  }
+
+
 
   seatingMap.innerHTML = ""; // Limpiar el mapa actual
   const rowLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Letras para las filas
@@ -327,17 +379,18 @@ document.getElementById("total-a-pagar").textContent = `$${totalPagar}`; // Most
         if (
           this.classList.contains("libre") &&
           !this.classList.contains("ocupado")
-        ) {if (this.classList.contains('selected')) {
-                        // Deseleccionar el asiento
-                        this.classList.remove('selected');
-                        selectedSeatsCount--;
-                    } else {
-          if (selectedSeatsCount < maxSeats) {
-            // Permitir seleccionar hasta el máximo
-            this.classList.add("selected");
-            selectedSeatsCount++;
+        ) {
+          if (this.classList.contains("selected")) {
+            // Deseleccionar el asiento
+            this.classList.remove("selected");
+            selectedSeatsCount--;
+          } else {
+            if (selectedSeatsCount < maxSeats) {
+              // Permitir seleccionar hasta el máximo
+              this.classList.add("selected");
+              selectedSeatsCount++;
+            }
           }
-        }
           checkConfirmButtonState();
         }
       });
@@ -393,8 +446,36 @@ payBtn.addEventListener("click", function () {
     window.location.href = "pagina-confirmacion.html";
   }
 });
-
-
+function reiniciarSillas(){
+  try{
+    const containerNumberChairs = document.querySelector(
+      ".container-numberChairs"
+    );
+    const chairsContainer = document.querySelector(".chairs_container");
+    disponibles=0;
+    generalCount = 0;
+    maxSeats = 0;
+    selectedSeatsCount = 0;
+    generalCountSpan.textContent = generalCount;
+    totalChairsSpan.textContent = generalCount;
+    totalValueSpan.textContent = `$0`;
+    totalAPagar = 0;
+    minusGeneralButton.disabled = true;
+    continueButton.disabled = true;
+    continueButton.classList.remove("enabled");
+    summary.classList.add("hidden");
+    
+    if (containerNumberChairs.style.display == "none") {
+      // Cuando volvemos a seleccionar número de sillas, reiniciamos los contadores
+      // Restablece el contador de la interfaz y los valores correspondientes
+      
+      chairsContainer.style.display = "none";
+      containerNumberChairs.style.display = "block";
+    }
+  }catch(error){
+    console.log("error al reiniciar silla");
+  }
+}
 function CinemaRoomContainerChange() {
   const containerNumberChairs = document.querySelector(
     ".container-numberChairs"
@@ -423,7 +504,6 @@ function CinemaRoomContainerChange() {
     // Cambiamos al mapa de asientos
     chairsContainer.style.display = "block";
     containerNumberChairs.style.display = "none";
-
     // Volvemos a generar el mapa de asientos y mostrarlo
     maxSeats = generalCount;
     generateSeatingMap();

@@ -19,7 +19,7 @@ async function sliderChange() {
     "http://localhost:8001"
   );
 
-  objClientAPI.get("/api/v2/movie", "/all", async (response) => {
+  objClientAPI.get("/api/v3/movie", "/all", async (response) => {
     console.log(response);
     let size = response.length;
     // Limpiar el slider antes de agregar nuevas diapositivas

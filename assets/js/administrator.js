@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const datos = new FormData(e.target);
     const data = Object.fromEntries(datos.entries());
-    console.log(data);
+    console.log(data.startDate);
 
     sendFormFunction(formFunction, datos);
   });
@@ -188,8 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 });
-
-export function validarCampo(regularExpresion, campo, message) {
+function validarCampo(regularExpresion, campo, message) {
   const validarCampo = regularExpresion.test(campo.value);
   if (validarCampo) {
     clearAlert(campo.parentElement);
@@ -341,7 +340,7 @@ function salaRegistration(form, variable) {
       varData.append("numColumn", numColumn);
 
       // Llamada al endpoint para crear cada asiento
-      objClient.post("/api/v2/seat/save", varData, (prmResponse) => {
+      objClient.post("/api/v3/seat/save", varData, (prmResponse) => {
         console.log(`Asiento creado: ${fila}${numColumn}`, prmResponse);
         validateSalaRegitration(form, prmResponse);
       });
@@ -382,16 +381,51 @@ function sendFormFunction(form, datos) {
   }
 }
 
+
+
 function functionRegistration(form, variable) {
-  objClient.post(
-    `/api/${version}/movie-function/save`,
-    variable,
-    (prmResponse) => {
-      console.log(prmResponse);
-      validateFunctionRegitration(form, prmResponse);
+  // Convertimos el FormData a un objeto JavaScript para manipular los datos
+  const data = Object.fromEntries(variable.entries());
+
+  const startDate = new Date(data.startDate);
+  const endDate = new Date(data.endDate);
+
+  // Función para formatear las fechas a "YYYY-MM-DD"
+  function formatDate(date) {
+    return date.toISOString().split("T")[0];
+  }
+
+  // Bucle para iterar sobre cada día en el rango de fechas
+  for (
+    let currentDate = new Date(startDate);
+    currentDate <= endDate;
+    currentDate.setDate(currentDate.getDate() + 1)
+  ) {
+    // Crear una copia de `data` con las fechas para el día actual
+    const dataCopy = { ...data };
+    dataCopy.startDate = formatDate(currentDate);
+    dataCopy.endDate = formatDate(currentDate);
+
+    // Convertimos el objeto dataCopy nuevamente a FormData para la solicitud
+    const formDataCopy = new FormData();
+    for (const key in dataCopy) {
+      formDataCopy.append(key, dataCopy[key]);
     }
-  );
+
+    // Llamada POST a la API para el día actual
+    objClient.post(
+      `/api/${version}/movie-function/save`,
+      formDataCopy,
+      (prmResponse) => {
+        console.log(`Registro para ${dataCopy.startDate}:`, prmResponse);
+        validateFunctionRegitration(form, prmResponse);
+      }
+    );
+  }
 }
+
+
+
 function validateFunctionRegitration(form, prmResponse) {
   if (prmResponse.save == true) {
     form.reset();
@@ -427,7 +461,7 @@ function optionsAdmimistrator() {
         <li><a href="#" data-form="form2">Registrar Pelicula</a></li>
         <li><a href="#" data-form="form3">Registrar Sala</a></li>
         <li><a href="#" data-form="form4">Registrar funcion</a></li>
-        <li><a href="#" data-form="form5">Establecer Descuentos Membresía</a></li>
+        <li><a href="#" data-form="form5">Descuento Membresía</a></li>
         <li><a href="#" data-form="form6">Consultar Clientes Membresia</a></li>
         </ul>
       </div>
@@ -482,10 +516,13 @@ function contarAsientos(datosAsientos) {
 // objClient.get("/api/v2/seat/", 1, (prmResponse) =>{
 //          console.log(prmResponse);
 // })
-objClient.get(
-  "/api/v2/movie-function/seats/1/2024-10-29/20:00",
-  "",
-  (prmResponse) => {
-    console.log(prmResponse);
-  }
-);
+
+
+
+// objClient.get(
+//   "/api/v3/movie-function/seats/1/2024-10-29/20:00",
+//   "",
+//   (prmResponse) => {
+//     console.log(prmResponse);
+//   }
+// );

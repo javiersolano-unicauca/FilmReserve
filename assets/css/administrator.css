@@ -43,6 +43,15 @@ body {
     font-size: small;
     color: #fff;
 }
+#data-table{
+    background-color: #ccc;
+}
+#sinbordes{
+   border-style: none; 
+}
+#value-row{
+    background-color: #fff;
+}
 
 #label_checkbox_group {
     display: inline-block;
@@ -50,6 +59,40 @@ body {
 
 .checkbox-group label {
     min-width: 150px;
+}
+#th1{
+    border-top: none;
+    border-right: none;
+}
+#th2{
+    text-align: start;
+    border-top: none;
+border-left: none;
+}
+#form5{
+    align-content:center ;
+    justify-content: center;
+}
+#establecer_descuento{
+    padding: 20px 0;
+    min-height: 200px;
+    border: 1px solid #ccc;
+    justify-self: center;
+    width: 80%;
+    display:flex;
+    justify-content:space-around;
+}
+#establecer_descuento p{
+    padding: 10px;
+    height: 50px;
+    max-width: 180px;
+    min-width: 100px;
+    border:1px solid #ccc;
+    background-color: #ebe6e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 @media (max-width: 1050px) {

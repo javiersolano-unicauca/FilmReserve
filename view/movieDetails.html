@@ -186,27 +186,28 @@
                     <div class="factura-container">
                         <div class="factura" id="factura">
                             <div class="header">
-                                Total a pagar <span class="total-a-pagar" id="total-a-pagar">$0</span>
-
+                                <span class="total-a-pagar" id="total-a-pagar">$0</span>
+                                <div id="descuento"></div>
+                                <div id="total_pagar"></div>
 
                             </div>
 
                         </div>
-                    </div>
+                        <div class="purchase-container">
+                            <div class="purchase-details">
+                                <p><strong>Información de la función</strong></p>
 
-                    <div class="purchase-container">
-                        <div class="purchase-details">
-                            <p><strong>Información de la función</strong></p>
+                            </div>
 
-                        </div>
-
-                        <div class="confirmation-section">
-                            <button class="confirm-btn">Confirmar Compra</button>
-                            <div class="payment-section">
-                                <button class="pay-btn" disabled>PAGAR</button>
+                            <div class="confirmation-section">
+                                <button class="confirm-btn">Confirmar Compra</button>
+                                <div class="payment-section">
+                                    <button class="pay-btn" disabled>PAGAR</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -258,6 +259,7 @@
     <script type="module" src="../assets/js/movieDetails.js"></script>
     <script type="module" src="../assets/js/cartelera.js"></script>
     <script type="module" src="../assets/api/ClientAPI.js"></script>
+    <!-- <script type="module" src="../assets/js/crypt.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 </body>
