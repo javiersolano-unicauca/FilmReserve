@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="../assets/css/loginRegister.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/movieDetails.css">
-    <link rel="stylesheet" href="../assets/css/sala.css">
-    <title>Detalles de la Película</title>
+    <link rel="stylesheet" href="../assets/css/subscription.css">
+    <title>Suscripción</title>
 </head>
 
 <body>
@@ -26,7 +25,7 @@
 
                 <nav class="submenu">
                     <a href="/view/cartelera.html">Cartelera</a>
-                    <a href="/view/subscription.html">Suscripción</a>
+                    <a href="#suscripcion">Suscripción</a>
                     <a href="/view/acerca.html">Acerca de</a>
                 </nav>
             </div>
@@ -115,103 +114,12 @@
         </div>
 
     </header>
-    <main class="container-primary">
-
-        <div class="movie-details-container"></div>
-        <div class="info_function_container">
-            <div id="resultados">
-                <div id="select_function">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" id="fecha" />
-                </div>
-                <div id="select_function">
-                    <label for="hora">Hora:</label>
-                    <select id="hora" disabled>
-                        <option value="">Seleccione una hora</option>
-                    </select>
-                </div>
-                <div id="select_function">
-                    <label for="sala">Sala:</label>
-                    <select id="sala" disabled>
-                        <option value="">Seleccione una sala</option>
-                    </select>
-                </div>
-                <button id="okButton" disabled>OK</button>
-                <div id="resultados2"></div>
-            </div>
-            <div class="CinemaRoom_container">
-                <div class="container-numberChairs">
-
-                    <div class="Selection">
-                        <div class="counter">
-                            <span>General</span>
-                            <button id="menos-btn" class="button">-</button>
-                            <span id="boleta-count">0</span>
-                            <button id="mas-btn" class="button">+</button>
-                        </div>
-                    </div>
-                    <div id="summary" class="hidden">
-                        Compra General: <span id="total-chairs">0</span> sillas<br>
-                        Total valor boletas: <span id="total-value">$0</span> <br>
-                        por favor antes de pagar verifique el valor a pagar <span id="verificar-compra"></span>
-                    </div>
-
-                    <button id="continue-btn" class="button" disabled>CONTINUAR</button>
-                </div>
-                <div class="chairs_container">
-                    <div class="container-ubicacion">
-                    </div>
-                    <div class="container-mapa">
-
-                        <div class="screen"></div>
-                        <p>Pantalla</p>
-                        <div id="seating-map">
-                            <!-- Aquí irán los asientos generados dinámicamente -->
-                        </div>
-                        <div id="legend">
-                            <div class="legend-item">
-                                <span class="seat libre"></span> Disponibles
-                            </div>
-                            <div class="legend-item">
-                                <span class="seat ocupado"></span> No disponible
-                            </div>
-
-                            <div class="legend-item">
-                                <span class="seat reservado"></span> Tus sillas
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="factura-container">
-                        <div class="factura" id="factura">
-                            <div class="header">
-                                <span class="total-a-pagar" id="total-a-pagar">$0</span>
-                                <div id="descuento"></div>
-                                <div id="total_pagar"></div>
-
-                            </div>
-
-                        </div>
-                        <div class="purchase-container">
-                            <div class="purchase-details">
-                                <p><strong>Información de la función</strong></p>
-
-                            </div>
-
-                            <div class="confirmation-section">
-                                <button class="confirm-btn">Confirmar Compra</button>
-                                <div class="payment-section">
-                                    <button class="pay-btn" disabled>PAGAR</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+    <main>
+        <div class="promo-banner">
+            <h1 class="promo-title">30% Off! 🎬</h1>
+            <p class="promo-text">Subscribe Now to Save!</p>
+            <button class="subscribe-button">Get Subscription</button>
         </div>
-
 
     </main>
     <footer>
@@ -255,11 +163,9 @@
     <script type="module" src="../assets/js/login_module.js"></script>
     <script type="module" src="../assets/js/register.js"></script>
     <script type="module" src="../assets/js/menuDesplegable.js"></script>
+    <script type="module" src="../assets/js/subscription.js"></script>
 
-    <script type="module" src="../assets/js/movieDetails.js"></script>
-    <script type="module" src="../assets/js/cartelera.js"></script>
     <script type="module" src="../assets/api/ClientAPI.js"></script>
-    <!-- <script type="module" src="../assets/js/crypt.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 </body>

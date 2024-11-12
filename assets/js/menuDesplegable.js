@@ -6,6 +6,9 @@ const menuHorizontal = document.querySelector(".menu-horizontal");
 const userBox = document.querySelector(".userBox");
 const loginIcon = document.querySelector("#login");
 // Variable que almacena el estado de la sesión
+import crypt from "./crypt.js";
+const cifrado = new crypt();
+const roleUserCrip = cifrado.encrypt_data("roleUser");
 var sesionActiva; //no borrar
 // Llama a la función showLoginUser  para inicializar la interfaz
 showLoginUser();
@@ -25,9 +28,9 @@ export function showLoginUser() {
     document.querySelector(".userBox h1").innerText =
       localStorage.getItem("nameUser");
     document.querySelector(".userBox h2").innerText =
-      localStorage.getItem("roleUser");
+      localStorage.getItem(roleUserCrip);
       loginIcon.setAttribute("src",localStorage.getItem("AvatarImg"));
-    if (localStorage.getItem("roleUser") == "Administrador") {
+    if (localStorage.getItem(roleUserCrip) == "Administrador") {
       document.querySelector(".userBox a").style.display = "block";
     } else {
       document.querySelector(".userBox a").style.display = "none";
@@ -42,10 +45,10 @@ function prueba() {
   loginIcon.setAttribute("src", "../assets/img/logoInicioSesion.png");
   showUserBox(userBox);
   localStorage.setItem("sesionActiva", "inactiva");
-  if (localStorage.getItem("roleUser") == "Administrador") {
+  if (localStorage.getItem(roleUserCrip) == "Administrador") {
     window.location.href = "/index.html";
   }
-  localStorage.removeItem("roleUser");
+  localStorage.removeItem(roleUserCrip);
   location.reload();
   // showLoginUser();
 }

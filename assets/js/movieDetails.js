@@ -348,7 +348,7 @@ function generateSeatingMap() {
         console.log("cifrado intento");
         console.log(prmResponse[0].active);
         if (prmResponse.getMembershipsOfCustomer != false) {
-          document.querySelector("#descuento").textContent = "Descuento = 10%";
+          document.querySelector("#descuento").textContent = "Descuento = 30%";
           document.querySelector("#descuento").classList.add("descuento");
           document.querySelector(
             "#total_pagar"

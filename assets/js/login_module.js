@@ -16,6 +16,7 @@ const inputUserPassword = document.querySelector(
   ".form_login input[type='password']"
 );
 const cifrado = new crypt();
+const roleUserCrip = cifrado.encrypt_data("roleUser");
 export const idClientCrip = cifrado.encrypt_data("idClient");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -84,7 +85,6 @@ function validarlogin(prmResponse, form) {
     validationStatus["userId"] = false;
     validationStatus["userPassword"] = false;
     localStorage.setItem("sesionActiva", "activa");
-    localStorage.setItem("roleUser", prmResponse.user.role);
     localStorage.setItem(
       "nameUser",
       prmResponse.user.firstName + " " + prmResponse.user.firstSurname
@@ -92,6 +92,7 @@ function validarlogin(prmResponse, form) {
     localStorage.setItem("AvatarImg",prmResponse.user.avatar);
     showLogin();
     showLoginUser();
+    localStorage.setItem(roleUserCrip, prmResponse.user.role);
     localStorage.setItem(idClientCrip, cifrado.encrypt_data(prmResponse.user.identification));
     console.log(prmResponse.login);
     location.reload();

@@ -1,6 +1,9 @@
 import ClientAPI from "../api/ClientAPI.js";
 import { idRegex, passwordRegex, version } from "./register.js";
-if (localStorage.getItem("roleUser") != "Administrador") {
+import crypt from "./crypt.js";
+const cifrado = new crypt();
+const roleUserCrip = cifrado.encrypt_data("roleUser");
+if (localStorage.getItem(roleUserCrip) != "Administrador") {
   window.location.href = "/"; // Redirigir a la página principal
 }
 const optionAdmi = document.querySelector(".options_admi");
