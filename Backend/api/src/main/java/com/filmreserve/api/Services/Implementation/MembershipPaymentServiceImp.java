@@ -11,6 +11,7 @@ import com.filmreserve.Utilities.Arrays.Lists.SuperLinkedList;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.api.Models.MembershipModel;
 import com.filmreserve.api.Models.MembershipPK;
+import com.filmreserve.api.Services.iCustomerService;
 import com.filmreserve.api.Services.iMembershipPaymentService;
 import com.filmreserve.api.Services.iMembershipService;
 
@@ -24,6 +25,9 @@ public class MembershipPaymentServiceImp extends PaymentServiceImp implements iM
     private Long atrValue;
 
     @Autowired
+    private iCustomerService customerService;
+
+    @Autowired
     private iMembershipService membershipService;
 
     private SuperLinkedList<String, MembershipModel> listMemberships = new SuperLinkedList<>();
@@ -35,6 +39,12 @@ public class MembershipPaymentServiceImp extends PaymentServiceImp implements iM
         String prmURLback
     ) throws Exception 
     {
+        ServiceResponseException.throwException(
+            (customerService.getUserModel(prmMembershipPK.getIdentification()) == null),
+            "generatePayment",
+            "No existe el cliente con identificacion " + prmMembershipPK.getIdentification()
+        );
+
         MembershipModel objMembership = membershipService.getMembershipModelActive(prmMembershipPK.getIdentification());
 
         ServiceResponseException.throwException(

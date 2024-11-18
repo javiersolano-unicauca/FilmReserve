@@ -122,8 +122,7 @@ CREATE TABLE purchase(
 	CONSTRAINT fk_customer1 FOREIGN KEY(identification) REFERENCES customer(identification) ON DELETE CASCADE,
 	CONSTRAINT fk_reserve FOREIGN KEY(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) REFERENCES reserve(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) ON DELETE CASCADE,
 	CONSTRAINT fk_value CHECK(value > 0),
-	CONSTRAINT ck_payment_id CHECK(payment_id > 0),
-	CONSTRAINT ck_amount_seats CHECK(amount_seats > 0)
+	CONSTRAINT ck_payment_id CHECK(payment_id > 0)
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 	
@@ -142,7 +141,6 @@ CREATE TABLE sell(
 	CONSTRAINT pk_sell PRIMARY KEY(identification, id_movie, start_date, start_time, end_time, cinema_room, row, num_column),
 	CONSTRAINT fk_ticket_seller FOREIGN KEY(identification) REFERENCES ticket_seller(identification) ON DELETE CASCADE,
 	CONSTRAINT fk_reserve1 FOREIGN KEY(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) REFERENCES reserve(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) ON DELETE CASCADE,
-	CONSTRAINT fk_value CHECK(value > 0),
-	CONSTRAINT ck_amount_seats CHECK(amount_seats > 0)
+	CONSTRAINT fk_value CHECK(value > 0)
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
 import com.filmreserve.api.Models.MembershipPK;
-import com.filmreserve.api.Models.PurchasePK;
 import com.filmreserve.api.Services.iMembershipPaymentService;
 import com.filmreserve.api.Services.iPurchasePaymentService;
 
@@ -37,8 +36,6 @@ public class PaymentController {
     @Autowired
     iMembershipPaymentService membershipPaymentService;
 
-    private String atrURLback = "";
-
     private String atrURLsuccess = "";
 
     @RequestMapping(path = "/api/payment/purchase-back", method = RequestMethod.GET)
@@ -47,7 +44,6 @@ public class PaymentController {
         @RequestParam(value = "payment_id") Long prmPaymentId
     ) throws Exception {
         purchasePaymentService.savePurchase(prmPreferenceId, prmPaymentId);
-        atrURLback = "";
         return new ModelAndView("redirect:" + atrURLsuccess);
     }
 
@@ -57,7 +53,6 @@ public class PaymentController {
         @RequestParam(value = "payment_id") Long prmPaymentId
     ) throws Exception {
         membershipPaymentService.saveMembership(prmPreferenceId, prmPaymentId);
-        atrURLback = "";
         return new ModelAndView("redirect:" + atrURLsuccess);
     }
 
@@ -78,7 +73,6 @@ public class PaymentController {
         String URLsuccess
     ){
         try{
-            atrURLback += "http://" + atrAddress + ":" + atrPort + "/api/payment/purchase-back";
             JSON objResponse = purchasePaymentService.generatePayment(
                 identification, 
                 idMovie,
@@ -86,7 +80,7 @@ public class PaymentController {
                 startDate,
                 startTime,
                 listPurchasedSeats, 
-                atrURLback
+                "http://" + atrAddress + ":" + atrPort + "/api/payment/purchase-back"
             );
             validateURL(URLsuccess);
             atrURLsuccess = URLsuccess;
@@ -104,8 +98,11 @@ public class PaymentController {
         String URLsuccess
     ){
         try{
-            atrURLback += "http://" + atrAddress + ":" + atrPort + "/api/payment/membership-back";
-            JSON objResponse = membershipPaymentService.generatePayment(prmMembershipPK, endDate, atrURLback);
+            JSON objResponse = membershipPaymentService.generatePayment(
+                prmMembershipPK,
+                endDate, 
+                "http://" + atrAddress + ":" + atrPort + "/api/payment/membership-back"
+            );
             validateURL(URLsuccess);
             atrURLsuccess = URLsuccess;
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
