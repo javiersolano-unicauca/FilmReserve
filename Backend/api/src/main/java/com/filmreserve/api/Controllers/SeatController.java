@@ -20,7 +20,7 @@ import com.filmreserve.api.Services.iSeatService;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v3/seat")
+@RequestMapping(path = "/api/${api.version}/seat")
 public class SeatController {
 
     @Autowired

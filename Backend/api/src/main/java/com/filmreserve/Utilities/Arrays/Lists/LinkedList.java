@@ -2,8 +2,6 @@ package com.filmreserve.Utilities.Arrays.Lists;
 
 import java.util.Iterator;
 
-import com.filmreserve.Utilities.Arrays.JSON.JSON;
-import com.filmreserve.Utilities.Arrays.JSON.iJSON;
 import com.filmreserve.Utilities.Exceptions.ListException;
 
 /**
@@ -83,7 +81,7 @@ public class LinkedList<T> implements Iterable<T> {
     {
         Node<T> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (ptrNode.getValue() != prmValue))
+        while((ptrNode != null) && (!ptrNode.getValue().equals(prmValue)))
             ptrNode = ptrNode.getRight();
 
         return (ptrNode != null);
@@ -149,7 +147,7 @@ public class LinkedList<T> implements Iterable<T> {
     {
         Node<T> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (ptrNode.getValue() != prmFind))
+        while((ptrNode != null) && (!ptrNode.getValue().equals(prmFind)))
             ptrNode = ptrNode.getRight();
 
         if(ptrNode == null)
@@ -216,12 +214,12 @@ public class LinkedList<T> implements Iterable<T> {
     */
     public boolean remove(T prmValue)
     {
-        if((atrFirst.getValue() == prmValue) || (atrLast.getValue() == prmValue))
+        if((atrFirst.getValue().equals(prmValue)) || (atrLast.getValue().equals(prmValue)))
             return false;
 
         Node<T> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (ptrNode.getValue() != prmValue))
+        while((ptrNode != null) && (!ptrNode.getValue().equals(prmValue)))
             ptrNode = ptrNode.getRight();
 
         if(ptrNode == null)

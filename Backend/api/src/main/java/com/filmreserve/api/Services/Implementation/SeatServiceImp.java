@@ -30,6 +30,12 @@ public class SeatServiceImp implements iSeatService {
     }
 
     @Override
+    public boolean existsCinemaRoom(Integer prmCinemaRoom)
+    {
+        return (seatDao.firstByCinemaRoom(prmCinemaRoom) != null);
+    }
+
+    @Override
     public JSON getSeat(Integer prmCinemaRoom, Character prmRow, Integer prmNumColumn) throws Exception 
     {
         SeatModel objSeat = getSeatModel(prmCinemaRoom, prmRow, prmNumColumn);
@@ -45,6 +51,12 @@ public class SeatServiceImp implements iSeatService {
         objResponse.add("getSeat", true);
         objResponse.add("user", objSeat.toJSON());
         return objResponse;
+    }
+
+    @Override
+    public List<SeatModel> getSeatsModelOfCinemaRoom(Integer prmCinemaRoom) throws Exception 
+    {
+        return seatDao.findByCinemaRoom(prmCinemaRoom);
     }
 
     @Override
@@ -110,7 +122,6 @@ public class SeatServiceImp implements iSeatService {
 
         SeatModel objSeat = new SeatModel();
         objSeat.setIdSeat(prmSeatPK);
-        objSeat.setReserved(false);
         seatDao.save(objSeat);
 
         JSON objJson = new JSON();

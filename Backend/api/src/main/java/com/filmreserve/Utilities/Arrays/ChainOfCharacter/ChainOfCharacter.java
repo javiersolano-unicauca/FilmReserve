@@ -8,32 +8,34 @@ import com.filmreserve.Utilities.Exceptions.ChainOfCharacterException;
 public class ChainOfCharacter {
 
     /**
-     *  Metodo para convertir una cadena de caracteres en arreglo.
+     *  Metodo para convertir una lista de caracteres en arreglo.
      * 
+     *  <p>
      *  Ejemplo del patron permitido:
+     * 
      *  <blockquote>
      *      <pre> [apple, pear, strawberry] </pre>
      *  </blockquote>
      * 
-     *  @param prmChain Recibe la cadena
+     *  @param prmList Recibe la lista
      * 
      *  @return El arreglo o null si la cadena esta vacia
      * 
      *  @throws ChainOfCharacterException Si no tiene el patron permitido
      */
-    public static String[] toArray(String prmChain) throws ChainOfCharacterException
+    public static String[] listToArray(String prmList) throws ChainOfCharacterException
     {
-        if(prmChain.isEmpty() || prmChain.endsWith("[]")) return null;
+        if((prmList == null) || prmList.isEmpty() || prmList.endsWith("[]")) return null;
 
-        int varEnd = prmChain.length() - 1;
+        int varEnd = prmList.length() - 1;
 
         ChainOfCharacterException.throwException(
-            ((prmChain.charAt(0) != '[') || (prmChain.charAt(varEnd) != ']')),
+            ((prmList.charAt(0) != '[') || (prmList.charAt(varEnd) != ']')),
             ChainOfCharacterException.NOT_PATTERN
         );
 
         try{
-            return prmChain.substring(1, varEnd)
+            return prmList.substring(1, varEnd)
                             .replaceAll(" ", "")
                             .split(",");
         }catch(Exception e)
@@ -44,10 +46,46 @@ public class ChainOfCharacter {
     }
 
     /**
+     *  Metodo para contar las veces que se repite un caracter en una cadena
+     *  
+     *  @param prmChain Recibe la cadena
+     *  @param prmCharacter Recibe el caracter a buscar
+     * 
+     *  <p>
+     *  Ejemplo: 
+     * 
+     *  <blockquote><pre>
+     *      amountRepeats("Hello", 'l') returns 2
+     *  </pre></blockquote>
+     *  
+     *  @return La cantidad de repeticiones
+     */
+    public static int amountRepeats(String prmChain, Character prmCharacter)
+    {
+        if((prmChain == null) || prmChain.isEmpty()) return 0;
+
+        int varLenght = prmChain.length(),
+            varCount = 0;
+
+        for(int i = 0; i < varLenght; i++)
+        {
+            if(prmChain.charAt(i) == prmCharacter) varCount++;
+        }
+        return varCount;
+    }
+
+    /**
      *  Metodo para extraer una subcadena de caracteres
      * 
      *  @param prmChain Recibe la cadena
      *  @param prmLimit Recibe el caracter que finaliza la extraccion
+     * 
+     *  <p>
+     *  Ejemplo: 
+     * 
+     *  <blockquote><pre>
+     *      substring("Hello", 'l') returns "Hel"
+     *  </pre></blockquote>
      * 
      *  @return La subcadena o null si la cadena es nula
      */
@@ -58,7 +96,6 @@ public class ChainOfCharacter {
         int varLenght = prmChain.length();
         String varSustring = "";
 
-
         for(int i = 0; i < varLenght; i++)
         {
             if(prmChain.charAt(i) != prmLimit) 
@@ -66,6 +103,35 @@ public class ChainOfCharacter {
             else break;
         }
 
+        return varSustring;
+    }
+
+    /**
+     *  Metodo para extraer una subcadena de caracteres
+     * 
+     *  @param prmChain Recibe la cadena
+     *  @param prmBeginIndex Recibe el indice donde empieza la extraccion
+     *  @param prmEndIndex Recibe el indice donde finaliza la extraccion
+     * 
+     *  <p>
+     *  Ejemplo: 
+     * 
+     *  <blockquote><pre>
+     *      substring("Hello", 1, 3) returns "ell"
+     *  </pre></blockquote>
+     * 
+     *  @return La subcadena. Null si la cadena es nula o los indices no son validos
+     */
+    public static String substring(String prmChain, int prmBeginIndex, int prmEndIndex)
+    {
+        if((prmChain == null) 
+        || ((prmBeginIndex < 0) || (prmBeginIndex > prmEndIndex))
+        || ((prmEndIndex < 0) || (prmEndIndex >= prmChain.length()))) return null;
+
+        String varSustring = "";
+
+        for(int i = prmBeginIndex; i <= prmEndIndex; i++)
+            varSustring += prmChain.charAt(i);
         return varSustring;
     }
 

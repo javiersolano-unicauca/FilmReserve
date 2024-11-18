@@ -25,6 +25,15 @@ public interface iSeatService {
     public SeatModel getSeatModel(Integer prmCinemaRoom, Character prmRow, Integer prmNumColumn) throws Exception;
 
     /**
+     *  Metodo para saber si existe una sala
+     * 
+     *  @param prmCinemaRoom Recibe la sala
+     * 
+     *  @return 'true' si existe. De lo contrario 'false'
+     */
+    public boolean existsCinemaRoom(Integer prmCinemaRoom);
+
+    /**
      *  Metodo para obtener un asiento por 'idSeat'
      *  
      *  @param prmCinemaRoom Recibe la sala
@@ -37,6 +46,15 @@ public interface iSeatService {
      *  @see JSON
      */
     public JSON getSeat(Integer prmCinemaRoom, Character prmRow, Integer prmNumColumn) throws Exception;
+
+    /**
+     *  Metodo para obtener los asientos de una sala
+     * 
+     *  @param prmCinemaRoom Recibe la sala
+     * 
+     *  @return La lista con los asientos si tiene. De lo contrario vacia
+     */
+    public List<SeatModel> getSeatsModelOfCinemaRoom(Integer prmCinemaRoom) throws Exception;
 
     /**
      *  Metodo para obtener los asientos de una sala

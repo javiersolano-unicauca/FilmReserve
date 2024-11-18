@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
-import com.filmreserve.api.Models.MovieFunctionModel;
-import com.filmreserve.api.Models.MovieFunctionPK;
-import com.filmreserve.api.Services.iMovieFunctionService;
+import com.filmreserve.api.Models.FunctionPK;
+import com.filmreserve.api.Services.iFunctionService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,37 +23,23 @@ import java.time.LocalTime;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v3/movie-function")
-public class MovieFuntionController {
+@RequestMapping(path = "/api/${api.version}/function")
+public class FuntionController {
 
     @Autowired
-    iMovieFunctionService movieFunctionService;
+    iFunctionService functionService;
 
-    @GetMapping(path = "/{idMovie}/{cinemaRoom}/{startDate}")
+    @GetMapping(path = "/{idMovie}/{startDate}/{startTime}")
     public ResponseEntity<String> get(
         @PathVariable("idMovie") Long prmIdMovie, 
-        @PathVariable("cinemaRoom") Integer prmCinemaRoom,
-        @PathVariable("startDate") LocalDate prmStartDate
+        @PathVariable("startDate") LocalDate prmStartDate,
+        @PathVariable("startTime") LocalTime prmStartTime
     ){
         try{
-            JSON objResponse = movieFunctionService.getMovieFunction(prmIdMovie, prmCinemaRoom, prmStartDate);
+            JSON objResponse = functionService.getFunction(prmIdMovie, prmStartDate, prmStartTime);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.OK);
         }catch(Exception e)
         {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping(path = "/seats/{idMovie}/{startDate}/{startTime}")
-    public ResponseEntity<String> getSeats(
-            @PathVariable("idMovie") Long prmIdMovie,
-            @PathVariable("startDate") LocalDate prmStartDate,
-            @PathVariable("startTime") LocalTime prmStartTime
-    ){
-        try {
-            JSON objResponse = movieFunctionService.getSeats(prmIdMovie, prmStartDate, prmStartTime);
-            return new ResponseEntity<>(objResponse.toString(), HttpStatus.OK);
-        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -63,7 +48,7 @@ public class MovieFuntionController {
     public ResponseEntity<Object> all() throws Exception
     {
         try{
-            return new ResponseEntity<>(movieFunctionService.all(), HttpStatus.OK);
+            return new ResponseEntity<>(functionService.all(), HttpStatus.OK);
         }catch(Exception e)
         {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -71,10 +56,10 @@ public class MovieFuntionController {
     }
 
     @PostMapping(path = "/save")
-    public ResponseEntity<String> save(MovieFunctionPK prMovieFunctionPK, MovieFunctionModel prmMovieFunction)
+    public ResponseEntity<String> save(FunctionPK prMovieFunctionPK)
     {
         try{
-            JSON objResponse = movieFunctionService.save(prMovieFunctionPK, prmMovieFunction);
+            JSON objResponse = functionService.save(prMovieFunctionPK);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
         }catch(Exception e)
         {
@@ -82,14 +67,14 @@ public class MovieFuntionController {
         }
     }
 
-    @DeleteMapping(path = "/{idMovie}/{cinemaRoom}/{startDate}")
+    @DeleteMapping(path = "/{idMovie}/{startDate}/{startTime}")
     public ResponseEntity<String> delete(
         @PathVariable("idMovie") Long prmIdMovie, 
-        @PathVariable("cinemaRoom") Integer prmCinemaRoom,
-        @PathVariable("startDate") LocalDate prmStartDate
+        @PathVariable("startDate") LocalDate prmStartDate,
+        @PathVariable("startTime") LocalTime prmStartTime
     ){
         try{
-            JSON objResponse = movieFunctionService.delete(prmIdMovie, prmCinemaRoom, prmStartDate);
+            JSON objResponse = functionService.delete(prmIdMovie, prmStartDate, prmStartTime);
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.ACCEPTED);
         }catch(Exception e)
         {

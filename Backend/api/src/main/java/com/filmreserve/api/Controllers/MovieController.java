@@ -22,7 +22,7 @@ import com.filmreserve.api.Services.iMovieService;
  *  @author javiersolanop
  */
 @RestController
-@RequestMapping(path = "/api/v3/movie")
+@RequestMapping(path = "/api/${api.version}/movie")
 public class MovieController {
 
     @Autowired

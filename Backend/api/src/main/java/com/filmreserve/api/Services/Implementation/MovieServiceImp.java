@@ -33,6 +33,12 @@ public class MovieServiceImp  implements iMovieService{
     iGenderDao genderDao;
 
     @Override
+    public String getName(Long prmIdMovie) 
+    {
+        return movieDao.findName(prmIdMovie);
+    }
+
+    @Override
     public MovieModel getMovieModel(Long prmIdMovie) throws Exception 
     {
         MovieModel objMovie = movieDao.findById(prmIdMovie).orElse(null);
@@ -89,7 +95,7 @@ public class MovieServiceImp  implements iMovieService{
     private List<GenderModel> toList(MovieModel prmMovie,  String prmGenders) throws ChainOfCharacterException
     {
         List<GenderModel> listGenders = new LinkedList<>();
-        String[] arrGenders = ChainOfCharacter.toArray(prmGenders);
+        String[] arrGenders = ChainOfCharacter.listToArray(prmGenders);
         GenderModel objGender;
         Long varIdMovie = prmMovie.getIdMovie();
 

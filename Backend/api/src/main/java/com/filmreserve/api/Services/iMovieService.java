@@ -13,6 +13,15 @@ import com.filmreserve.api.Models.MovieModel;
 public interface iMovieService {
 
     /**
+     *  Metodo para obtener el nombre de una pelicula a partir de su id
+     * 
+     * @param prmIdMovie Recibe el id de la pelicula
+     * 
+     * @return El nombre si existe la pelicula. De lo contrario null
+     */
+    public String getName(Long prmIdMovie);
+
+    /**
      *  Metodo para obtener una pelicula por 'idMovie'
      *  
      *  @param prmIdMovie Recibe la identificacion

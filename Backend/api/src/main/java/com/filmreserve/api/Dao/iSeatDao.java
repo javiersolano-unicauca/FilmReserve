@@ -27,4 +27,18 @@ public interface iSeatDao extends CrudRepository<SeatModel, SeatPK> {
         nativeQuery = true
     )
     List<SeatModel> findByCinemaRoom(Integer prmCinemaRoom);
+
+    /**
+     *  Metodo para buscar el primer asiento asociado a la sala
+     * 
+     *  @param prmCinemaRoom Recibe la referencia a la sala
+     * 
+     *  @return 'true' si existe al menos un registro asociado a la sala. 
+     *           De lo contrario 'false'
+     */
+    @Query(
+        value = "SELECT * FROM seat WHERE cinema_room = :prmCinemaRoom LIMIT 1",
+        nativeQuery = true
+    )
+    SeatModel firstByCinemaRoom(Integer prmCinemaRoom);
 }

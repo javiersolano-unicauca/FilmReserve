@@ -5,7 +5,6 @@ import com.filmreserve.Utilities.Arrays.JSON.iJSON;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -15,15 +14,19 @@ import jakarta.persistence.Table;
  */
 @Table
 @Entity(name = "seat")
-public class SeatModel  implements Serializable, iJSON {
+public class SeatModel implements Serializable, iJSON {
 
     @EmbeddedId
     private SeatPK atrIdSeat;
 
-    @Column(name = "reserved")
-    private Boolean atrReserved;
-
     public SeatModel(){}
+
+    public SeatModel(Integer prmCinemaRoom, Character prmRow, Integer prmNumColumn)
+    {
+        atrIdSeat.setCinemaRoom(prmCinemaRoom);
+        atrIdSeat.setRow(prmRow);
+        atrIdSeat.setNumColumn(prmNumColumn);
+    }
 
     public void setIdSeat(SeatPK prmIdSeat)
     {
@@ -35,9 +38,19 @@ public class SeatModel  implements Serializable, iJSON {
         return atrIdSeat.getCinemaRoom();
     }
 
+    public void setCinemaRoom(Integer prmCinemaRoom)
+    {
+        atrIdSeat.setCinemaRoom(prmCinemaRoom);
+    }
+
     public Character getRow()
     {
         return atrIdSeat.getRow();
+    }
+
+    public void setRow(Character prmRow)
+    {
+        atrIdSeat.setRow(prmRow);
     }
 
     public Integer getNumColumn()
@@ -45,14 +58,9 @@ public class SeatModel  implements Serializable, iJSON {
         return atrIdSeat.getNumColumn();
     }
 
-    public Boolean getReserved()
+    public void setNumColumn(Integer prmNumColumn)
     {
-        return atrReserved;
-    }
-
-    public void setReserved(Boolean prmReserved)
-    {
-        atrReserved = prmReserved;
+        atrIdSeat.setNumColumn(prmNumColumn);
     }
 
     /**
@@ -65,12 +73,11 @@ public class SeatModel  implements Serializable, iJSON {
     {
         JSON objJson = new JSON();
         objJson.add("numColumn", atrIdSeat.getNumColumn());
-        objJson.add("reserved", atrReserved);
         return objJson;
     }
 
     @Override
-    public boolean equals(JSON prmJson) throws Exception {
+    public boolean equalsJSON(JSON prmJson) throws Exception {
         return this.toJSON().equals(prmJson);
     }
 }

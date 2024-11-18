@@ -1,5 +1,9 @@
 package com.filmreserve.Utilities.Arrays.JSON;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+
 import com.filmreserve.Utilities.Arrays.ChainOfCharacter.ChainOfCharacter;
 import com.filmreserve.Utilities.Arrays.Lists.ElementContent;
 import com.filmreserve.Utilities.Arrays.Lists.LinkedList;
@@ -195,7 +199,7 @@ public class JSON implements iJSON {
      * 
      *  @return 'true' si tienen el mismo contenido. 'false' si no
      */
-    public boolean equals(JSON prmJson)
+    public boolean equalsJSON(JSON prmJson)
     {
         return atrJSON.equals(prmJson.atrJSON);
     }
@@ -268,7 +272,7 @@ public class JSON implements iJSON {
      *  @throws Libraries.Exceptions.ListException Si no hay claves
      *  @throws Libraries.Exceptions.ChainOfCharacterException Si algun valor de tipo numero no es valido
      */
-    public static LinkedList<JSON> parseJSON(String[] prmJSON) throws JSONException, ListException, ChainOfCharacterException
+    public static LinkedList<JSON> parseLinkedListJSON(String[] prmJSON) throws JSONException, ListException, ChainOfCharacterException
     {
         String[] arrJSON = prmJSON.clone();
         LinkedList<JSON> arrObjJsons = new LinkedList<>();
@@ -279,48 +283,7 @@ public class JSON implements iJSON {
         for(String objJson: arrJSON)
             arrObjJsons.add(JSON.parseJSON(objJson.replace("},", "}")));
         return arrObjJsons;
-    }
- 
-    // /**
-    //  *  Metodo para convertir el arreglo de objetos a de String de 'JSON'
-    //  * 
-    //  *  @param prmJsons Recibe el arreglo de objetos
-    //  *  @return  El arreglo de String de 'JSON'
-    //  * 
-    //  *  @throws Libraries.Exceptions.ListException Si hay un error en la lista de claves
-    //  */
-    // public static String[] toStringJSON(LinkedList<JSON> prmJsons) throws Exception
-    // {   
-    //     String[] arrJson = {};
-                
-    //     if(!prmJsons.isEmpty())
-    //     {
-    //         int varSize = prmJsons.size(), 
-    //         varIterador = varSize - 1;
-
-    //         arrJson = new String[varSize];
-
-    //         if(varSize > 1)
-    //         {
-    //             for (JSON objJson : prmJsons) {
-
-    //                 if(varIterador == 0)
-    //                     arrJson[varIterador] = "["+objJson.toString();
-    //                 else
-    //                     arrJson[varIterador] = objJson.toString();
-
-    //                 if(varIterador < (varSize - 1))
-    //                     arrJson[varIterador] += ",";
-    //                 varIterador--;
-    //             }
-    //         }    
-    //         else
-    //             arrJson[0] = "["+prmJsons.getFirst().toString();
-
-    //         arrJson[varSize - 1] += "]";
-    //     }
-    //     return arrJson;
-    // }
+    } 
 
     /**
      *  Metodo para convertir el arreglo de objetos a de String de 'JSON'

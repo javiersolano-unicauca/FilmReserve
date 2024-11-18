@@ -23,6 +23,12 @@ public class CustomerServiceImp extends UserServiceImp implements iCustomerServi
     private iCustomerDao customerDao;
 
     @Override
+    public UserModel getUserModel(Long prmIdentification) throws Exception 
+    {
+        return customerDao.findById(prmIdentification).orElse(null);
+    }
+
+    @Override
     public JSON getUser(Long prmIdentification) throws Exception
     {
         CustomerModel objCustomer = customerDao.findById(prmIdentification).orElse(null);

@@ -42,6 +42,12 @@ public class MembershipServiceImp implements iMembershipService {
     }
 
     @Override
+    public MembershipModel getMembershipModel(Long prmIdentification, LocalDate prmStartDate) throws Exception
+    {
+        return membershipDao.find(prmIdentification, prmStartDate);
+    }
+
+    @Override
     public List<MembershipModel> getMembershipsOfCustomer(Long prmIdentification) throws Exception 
     {
         List<MembershipModel> listMemberships = membershipDao.findByIdentification(prmIdentification);
@@ -73,39 +79,55 @@ public class MembershipServiceImp implements iMembershipService {
     }
 
     @Override
-    public JSON save(MembershipPK prmMembershipPK, MembershipModel prmMembership) throws Exception 
+    public MembershipModel getMembershipModelActive(Long prmIdentification) 
     {
-        MembershipModel objMembership = membershipDao.findMembershipRecent(prmMembershipPK.getIdentification(), true);
+        MembershipModel objMembershipModel = membershipDao.findMembershipRecent(prmIdentification, true);
+        
+        if((objMembershipModel == null)) return null;
 
-        ServiceResponseException.throwException(
-            (objMembership != null),
-            "save",
-            "Ya se encuentra una membresia activa con la identificacion de cliente " + prmMembershipPK.getIdentification()
-        );
+        if(LocalDate.now().isAfter(objMembershipModel.getEndDate()))
+        {
+            objMembershipModel.setActive(false);
+            membershipDao.save(objMembershipModel);
+            return null;
+        }
+        return objMembershipModel;
+    }
 
-        objMembership = membershipDao.find(prmMembershipPK.getIdentification(), prmMembershipPK.getStartDate());
-
-        ServiceResponseException.throwException(
-            (objMembership != null),
-            "save",
-            "Ya se encuentra una membresia con la identificacion de cliente " + prmMembershipPK.getIdentification()
-            + " entre las fechas " + prmMembershipPK.getStartDate().toString() + " y " + prmMembership.getEndDate().toString()    
-        );
-
-        try{ MembershipValidation.validate(prmMembershipPK, prmMembership); }
-        catch(Exception e) { 
+    @Override
+    public void validateData(Long prmIdentification, LocalDate prmStartDate, LocalDate prmEndDate) throws Exception
+    {
+        try{ 
+            MembershipValidation.validate(new MembershipPK(
+                prmIdentification, 
+                prmStartDate),
+                prmEndDate
+            ); 
+        } catch(Exception e) { 
             ServiceResponseException.throwException(
-                "save", 
+                "data", 
                 e.getMessage()
         ); }
+    }
 
-        prmMembership.setIdMembership(prmMembershipPK);
-        prmMembership.setActive(true);
-        membershipDao.save(prmMembership);
-
-        JSON objJson = new JSON();
-        objJson.add("save", true);
-        return objJson;
+    @Override
+    public boolean save(
+        Long prmIdentification,
+        LocalDate prmStartDate,
+        LocalDate prmEndDate,
+        String prmReferenceId,
+        Long prmPaymentId
+    ) throws Exception 
+    {
+        membershipDao.save(new MembershipModel(
+            prmIdentification, 
+            prmStartDate, 
+            prmEndDate, 
+            true, 
+            prmReferenceId, 
+            prmPaymentId
+        ));
+        return true;
     }
 
     @Override

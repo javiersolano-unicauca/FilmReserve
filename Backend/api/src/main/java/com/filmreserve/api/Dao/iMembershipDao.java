@@ -38,7 +38,7 @@ public interface iMembershipDao extends CrudRepository<MembershipModel, Membersh
      *  @return La membresia si existe
      */
     @Query(
-        value = "SELECT identification, MAX(start_date) as start_date, end_date, active"
+        value = "SELECT identification, MAX(start_date) as start_date, end_date, active, reference_id, payment_id"
         + " FROM membership WHERE (identification = :prmIdentification AND active = :prmActive)",
         nativeQuery = true
     )

@@ -172,7 +172,7 @@ public class MovieValidation {
 
         try{ 
 
-            String[] arrGenders = ChainOfCharacter.toArray(prmGenders);
+            String[] arrGenders = ChainOfCharacter.listToArray(prmGenders);
 
             MovieException.throwException(
                 ((arrGenders == null)

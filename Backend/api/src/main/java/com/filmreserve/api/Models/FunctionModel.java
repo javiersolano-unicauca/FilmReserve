@@ -19,20 +19,11 @@ import com.filmreserve.Utilities.Arrays.JSON.iJSON;
  * @author javiersolanop
  */
 @Table
-@Entity(name = "sea_presents_mov")
-public class MovieFunctionModel implements Serializable, iJSON  {
+@Entity(name = "function")
+public class FunctionModel implements Serializable, iJSON  {
 
     @EmbeddedId
-    private MovieFunctionPK atrIdMovieFunction;
-
-    @Column(name = "end_date")
-    private LocalDate atrEndDate;
-
-    @Column(name = "start_time")
-    private LocalTime atrStartTime;
-
-    @Column(name = "end_time")
-    private LocalTime atrEndTime;
+    private FunctionPK atrIdFunction;
 
     @Column(name = "active")
     private Boolean atrActive;
@@ -42,51 +33,26 @@ public class MovieFunctionModel implements Serializable, iJSON  {
     @MapsId("atrIdMovie")
     private MovieModel atrMovie;
 
-    public MovieFunctionModel(){}
+    public FunctionModel(){ atrIdFunction = new FunctionPK(); }
 
-    public void setIdMovieFunction(MovieFunctionPK prmMovieFunctionPK)
+    public void setIdFunction(FunctionPK prmFunctionPK)
     {
-        atrIdMovieFunction = prmMovieFunctionPK;
-    }
-
-    public Integer getCinemaRoom()
-    {
-        return atrIdMovieFunction.getCinemaRoom();
+        atrIdFunction = prmFunctionPK;
     }
 
     public LocalDate getStartDate()
     {
-        return atrIdMovieFunction.getStartDate();
-    }
-
-    public LocalDate getEndDate()
-    {
-        return atrEndDate;
-    }
-
-    public void setEndDate(LocalDate prmEndDate)
-    {
-        atrEndDate = prmEndDate;
+        return atrIdFunction.getStartDate();
     }
 
     public LocalTime getStartTime()
     {
-        return atrStartTime;
-    }
-
-    public void setStartTime(LocalTime prmStartTime)
-    {
-        atrStartTime = prmStartTime;
+        return atrIdFunction.getStartTime();
     }
 
     public LocalTime getEndTime()
     {
-        return atrEndTime;
-    }
-
-    public void setEndTime(LocalTime prmEndTime)
-    {
-        atrEndTime = prmEndTime;
+        return atrIdFunction.getEndTime();
     }
 
     public Boolean getActive()
@@ -123,16 +89,14 @@ public class MovieFunctionModel implements Serializable, iJSON  {
     @Override
     public JSON toJSON() throws Exception
     {
-        JSON objJson = new JSON();
-        objJson.add("idMovieFunction", atrIdMovieFunction.toJSON());
-        objJson.add("endTime", atrEndTime.toString());
+        JSON objJson = atrIdFunction.toJSON();
         objJson.add("active", atrActive);
         objJson.add("movie", atrMovie.toJSON());
         return objJson;
     }
 
     @Override
-    public boolean equals(JSON prmJson) throws Exception {
+    public boolean equalsJSON(JSON prmJson) throws Exception {
         return this.toJSON().equals(prmJson);
     }
 }

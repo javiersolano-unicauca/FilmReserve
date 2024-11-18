@@ -38,13 +38,13 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
     {
         if(atrLast != null)
         {
-            Element<K, V> ptrNewElement = new Element(prmKey, prmValue);
+            Element<K, V> ptrNewElement = new Element<>(prmKey, prmValue);
             ptrNewElement.setRight(atrFirst);
             atrFirst.setLeft(ptrNewElement);
             atrFirst = ptrNewElement;
         }
         else{
-            atrLast = new Element(prmKey, prmValue);
+            atrLast = new Element<>(prmKey, prmValue);
             atrFirst = atrLast;
         }
         atrSize++;
@@ -60,13 +60,13 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
     {
         if(atrFirst != null)
         {
-            Element<K, V> ptrNewElement = new Element(prmKey, prmValue);
+            Element<K, V> ptrNewElement = new Element<>(prmKey, prmValue);
             ptrNewElement.setLeft(atrLast);
             atrLast.setRight(ptrNewElement);
             atrLast = ptrNewElement;
         }
         else{
-            atrFirst = new Element(prmKey, prmValue);
+            atrFirst = new Element<>(prmKey, prmValue);
             atrLast = atrFirst;
         }
         atrSize++;
@@ -84,7 +84,7 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
     {
         Element<K, V> ptrElement = atrFirst;
 
-        while((ptrElement != null) && (ptrElement.getKey() != prmKey))
+        while((ptrElement != null) && (!ptrElement.getKey().equals(prmKey)))
             ptrElement = ptrElement.getRight();
 
         return (ptrElement != null);
@@ -106,7 +106,7 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
 
         Element<K, V> ptrElement = atrFirst;        
 
-        while((ptrElement != null) && (ptrElement.getKey() != prmKey))
+        while((ptrElement != null) && (!ptrElement.getKey().equals(prmKey)))
             ptrElement = ptrElement.getRight();
 
         if(ptrElement == null) return null;
@@ -147,7 +147,7 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
     {
         Element<K, V> ptrElement = atrFirst;
 
-        while((ptrElement != null) && (ptrElement.getKey() != prmFind))
+        while((ptrElement != null) && (!ptrElement.getKey().equals(prmFind)))
             ptrElement = ptrElement.getRight();
 
         if(ptrElement == null)
@@ -205,30 +205,34 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
     
     /**
     *  Metodo para remover la primera coincidencia de 
-    *  una clave que no se encuentre en algun extremo de la lista
+    *  una clave que se encuentre en la lista
     * 
     *  @param prmKey Recibe la clave a eliminar
     * 
     *  @return 'true' si se elimina el valor.
     *          'false' si no
+    *
+    *  @throws Libraries.Exceptions.ListException Si la lista esta vacia
     */
-    public boolean remove(K prmKey)
+    public boolean remove(K prmKey) throws ListException
     {
-        if((atrFirst.getKey() == prmKey) || (atrLast.getKey() == prmKey))
-            return false;
+        if(atrFirst.getKey().equals(prmKey)) removeFirst();
+        else if(atrLast.getKey().equals(prmKey)) removeLast();
+        else
+        {
+            Element<K, V> ptrElement = atrFirst;
 
-        Element<K, V> ptrElement = atrFirst;
-
-        while((ptrElement != null) && (ptrElement.getKey() != prmKey))
-            ptrElement = ptrElement.getRight();
-
-        if(ptrElement == null)
-            return false;
-
-        ptrElement.getLeft().setRight(ptrElement.getRight());
-        ptrElement.getRight().setLeft(ptrElement.getLeft());
-
-        atrSize--;
+            while((ptrElement != null) && (!ptrElement.getKey().equals(prmKey)))
+                ptrElement = ptrElement.getRight();
+    
+            if(ptrElement == null)
+                return false;
+    
+            ptrElement.getLeft().setRight(ptrElement.getRight());
+            ptrElement.getRight().setLeft(ptrElement.getLeft());
+    
+            atrSize--;
+        }
         return true;
     }
     
@@ -320,7 +324,7 @@ public class SuperLinkedList<K, V> implements Iterable<ElementContent<K, V>> {
 
         while(
             (ptrElement != null) && 
-            ((ptrElement.getKey() == ptrElement2.getKey()) && (ptrElement.getValue() == ptrElement2.getValue()))
+            ((ptrElement.getKey().equals(ptrElement2.getKey())) && (ptrElement.getValue().equals(ptrElement2.getValue())))
         ){
             ptrElement = ptrElement.getRight();
             ptrElement2 = ptrElement2.getRight();

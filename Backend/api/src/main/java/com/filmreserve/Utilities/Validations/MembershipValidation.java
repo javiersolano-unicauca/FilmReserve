@@ -3,11 +3,7 @@ package com.filmreserve.Utilities.Validations;
 import java.time.LocalDate;
 
 import com.filmreserve.Utilities.ModelsException.MembershipException;
-import com.filmreserve.Utilities.ModelsException.MovieFunctionException;
-import com.filmreserve.api.Models.MembershipModel;
 import com.filmreserve.api.Models.MembershipPK;
-import com.filmreserve.api.Models.MovieFunctionModel;
-import com.filmreserve.api.Models.MovieFunctionPK;
 
 /**
  *  @author javiersolanop
@@ -18,14 +14,14 @@ public class MembershipValidation {
      *  Metodo para validar todos los campos
      * 
      *  @param prmMembershipPK Recibe la referencia del id
-     *  @param prmMembership Recibe la referencia de la membresia
+     *  @param prmEndDate Recibe la fecha de finalizacion
      * 
      *  @throws MembershipException Cuando los campos no son validos en su totalidad
      */
-    public static void validate(MembershipPK prmMembershipPK, MembershipModel prmMembership) throws MembershipException
+    public static void validate(MembershipPK prmMembershipPK, LocalDate prmEndDate) throws MembershipException
     {
         validateId(prmMembershipPK);
-        validateEndDate(prmMembershipPK, prmMembership);
+        validateEndDate(prmMembershipPK, prmEndDate);
     }
 
     /**
@@ -72,23 +68,23 @@ public class MembershipValidation {
 
     /**
      *  @param prmMembershipPK Recibe la referencia del id
-     *  @param prmMembership Recibe la referencia a la funcion
+     *  @param prmEndDate Recibe la fecha de finalizacion
      * 
      *  @throws MembershipException Si el campo no es valido
      */
-    public static void validateEndDate(MembershipPK prmMembershipPK, MembershipModel prmMembership) throws MembershipException
+    public static void validateEndDate(MembershipPK prmMembershipPK, LocalDate prmEndDate) throws MembershipException
     {
-        validateNull(prmMembership.getEndDate(), MembershipException.END_DATE);
+        validateNull(prmEndDate, MembershipException.END_DATE);
         LocalDate varNowDate = LocalDate.now();
 
         MembershipException.throwException(
-            (varNowDate.isAfter(prmMembership.getEndDate())),
+            (varNowDate.isAfter(prmEndDate)),
             MembershipException.END_DATE,
             new Exception("Debe ser superior a la fecha actual")
         );
 
         MembershipException.throwException(
-            (prmMembershipPK.getStartDate().isAfter(prmMembership.getEndDate())),
+            (prmMembershipPK.getStartDate().isAfter(prmEndDate)),
             MembershipException.END_DATE,
             new Exception("Debe ser superior a la fecha de inicio")
         );

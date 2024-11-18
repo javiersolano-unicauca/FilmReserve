@@ -56,7 +56,7 @@ public class GenderModelPK implements iJSON {
     }
 
     @Override
-    public boolean equals(JSON prmJson) throws Exception {
+    public boolean equalsJSON(JSON prmJson) throws Exception {
         return this.toJSON().equals(prmJson);
     }
 }

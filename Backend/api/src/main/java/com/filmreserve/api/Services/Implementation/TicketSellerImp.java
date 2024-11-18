@@ -5,9 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.filmreserve.Utilities.Arrays.ChainOfCharacter.ChainOfCharacter;
 import com.filmreserve.Utilities.Arrays.JSON.JSON;
-import com.filmreserve.Utilities.Files.File;
 import com.filmreserve.Utilities.ModelsException.ServiceResponseException;
 import com.filmreserve.Utilities.Validations.TicketSellerValidation;
 import com.filmreserve.api.Dao.iTicketSellerDao;
@@ -23,6 +21,12 @@ public class TicketSellerImp extends UserServiceImp implements iTicketSellerServ
 
     @Autowired
     private iTicketSellerDao ticketSellerDao;
+
+    @Override
+    public UserModel getUserModel(Long prmIdentification) throws Exception 
+    {
+        return ticketSellerDao.findById(prmIdentification).orElse(null);
+    }
 
     @Override
     public JSON getUser(Long prmIdentification) throws Exception

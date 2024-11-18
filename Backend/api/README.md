@@ -7,7 +7,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
 - INICIAR SESION
 
     - Inicio de sesion de cualquier usuario
-        - Enpoint: `/api/v3/login`
+        - Enpoint: `/api/v4/login`
         - Method: `POST`
         - Body:
         ```
@@ -18,7 +18,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
         ```
 
     - Actualizar contraseña
-        - Endpoint: `/api/v3/login`
+        - Endpoint: `/api/v4/login`
         - Method: `PUT`
         - Body:
         ```
@@ -31,11 +31,11 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
 - ADMINISTRADOR
 
     - Obtener por identificacion
-        - Endpoint: `/api/v3/administrator/{identification}`
+        - Endpoint: `/api/v4/administrator/{identification}`
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v3/administrator/save`
+      - Endpoint: `/api/v4/administrator/save`
       - Method: `POST`
       - Body:
       ```
@@ -51,17 +51,17 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
       ```
     
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/administrator/{identification}`
+        - Endpoint: `/api/v4/administrator/{identification}`
         - Method: `DELETE`
 
 - CLIENTE
 
     - Obtener por identificacion
-        - Endpoint: `/api/v3/customer/{identification}`
+        - Endpoint: `/api/v4/customer/{identification}`
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v3/customer/save`
+      - Endpoint: `/api/v4/customer/save`
       - Method: `POST`
       - Body:
       ```
@@ -81,37 +81,25 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
       ```
     
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/customer/{identification}`
+        - Endpoint: `/api/v4/customer/{identification}`
         - Method: `DELETE`
 
 - MEMBRESIAS DE CLIENTE
 
     - Obtener por identificacion
-        - Endpoint: `/api/v3/membership/{identification}/{startDate}`
+        - Endpoint: `/api/v4/membership/{identification}/{startDate}`
         - Method: `GET`
 
     - Obtener membresias de un cliente
-        - Endpoint: `/api/v3/membership/customer/{identification}`
+        - Endpoint: `/api/v4/membership/customer/{identification}`
         - Method: `GET`
 
     - Obtener la membresia activa de un cliente
-        - Endpoint: `/api/v3/membership/active/{identification}`
+        - Endpoint: `/api/v4/membership/active/{identification}`
         - Method: `GET`
-
-    - Registro
-        - Endpoint: `/api/v3/membership/save`
-        - Method: `POST`
-        - Body:
-        ```
-            {
-                "identification": Long -> Identificacion del cliente,
-                "startDate": Date [yyyy-mm-dd],
-                "endDate": Date [yyyy-mm-dd]
-            }
-        ```
     
     - Finalizar membresia
-        - Endpoint: `/api/v3/membership/end`
+        - Endpoint: `/api/v4/membership/end`
         - Method: `PUT`
         - Body:
         ```
@@ -122,17 +110,17 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
         ```
 
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/membership/{identification}/{startDate}`
-        - Method: `DELETE`       
+        - Endpoint: `/api/v4/membership/{identification}/{startDate}`
+        - Method: `DELETE` 
 
 - TAQUILLERO    
 
     - Obtener por identificacion
-        - Endpoint: `/api/v3/ticket-seller/{identification}`
+        - Endpoint: `/api/v4/ticket-seller/{identification}`
         - Method: `GET`
 
     - Registro
-      - Endpoint: `/api/v3/ticket-seller/save`
+      - Endpoint: `/api/v4/ticket-seller/save`
       - Method: `POST`
       - Body:
       ```
@@ -149,11 +137,11 @@ En esta seccion se establecen los 'endpoint' para la gestion de usuarios.
       ```
     
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/ticket-seller/{identification}`
+        - Endpoint: `/api/v4/ticket-seller/{identification}`
         - Method: `DELETE`
 
     - Actualizar turno
-        - Endpoint: `/api/v3/ticket-seller`
+        - Endpoint: `/api/v4/ticket-seller`
         - Method: `PUT`
         - Body:
         ```
@@ -169,15 +157,15 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
 - PELICULAS
 
     - Obtener por identificacion
-        - Enpoint: `/api/v3/movie/{idMovie}`
+        - Enpoint: `/api/v4/movie/{idMovie}`
         - Method: `GET`
 
     - Obtener todo
-        - Enpoint: `/api/v3/movie/all`
+        - Enpoint: `/api/v4/movie/all`
         - Method: `GET`
 
     - Registro
-        - Endpoint: `/api/v3/movie/save`
+        - Endpoint: `/api/v4/movie/save`
         - Method: `POST`
         - Body:
         ```
@@ -190,17 +178,17 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
             }
         ```
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/movie/{idMovie}`
+        - Endpoint: `/api/v4/movie/{idMovie}`
         - Method: `DELETE`
 
 - ASIENTOS
 
     - Obtener por sala de cine
-        - Enpoint: `/api/v3/seat/{cinemaRoom}`
+        - Enpoint: `/api/v4/seat/{cinemaRoom}`
         - Method: `GET`        
 
     - Registro
-        - Endpoint: `/api/v3/seat/save`
+        - Endpoint: `/api/v4/seat/save`
         - Method: `POST`
         - Body:
         ```
@@ -212,38 +200,130 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
         ```
 
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/seat/{cinemaRoom}/{row}/{numColumn}`
+        - Endpoint: `/api/v4/seat/{cinemaRoom}/{row}/{numColumn}`
         - Method: `DELETE`
 
 - FUNCIONES DE CINE
 
     - Obtener por identificacion
-        - Enpoint: `/api/v3/movie-function/{idMovie}/{cinemaRoom}/{startDate}`
-        - Method: `GET`
-
-    - Obtener asientos:
-        - Enpoint: `/api/v3/movie-function/seats/{idMovie}/{startDate}/{startTime}`
+        - Enpoint: `/api/v4/function/{idMovie}/{startDate}/{startTime}`
         - Method: `GET`
 
     - Obtener todo
-        - Enpoint: `/api/v3/movie-function/all`
+        - Enpoint: `/api/v4/function/all`
         - Method: `GET`
 
     - Registro
-        - Endpoint: `/api/v3/movie-function/save`
+        - Endpoint: `/api/v4/function/save`
         - Method: `POST`
         - Body:
         ```
             {
                 "idMovie": Long,
-                "cinemaRoom": Integer,
                 "startDate": Date [yyyy-mm-dd],
-                "endDate": Date [yyyy-mm-dd],
                 "startTime": Time [hh:mm],
                 "endTime": Time [hh:mm]
             }
         ```
 
     - Eliminar por identificacion
-        - Endpoint: `/api/v3/movie-function/{idMovie}/{cinemaRoom}/{startDate}`
+        - Endpoint: `/api/v4/function/{idMovie}/{startDate}/{startTime}`
         - Method: `DELETE`
+
+- RESERVAS DE CINE
+
+    - Obtener una funcion reservada por sala
+        - Enpoint: `/api/v4/function-reserve/{idMovie}/{startDate}/{startTime}/{cinemaRoom}`
+        - Method: `GET`
+
+    - Obtener asientos de la sala reservada en una funcion:
+        - Enpoint: `/api/v4/function-reserve/seats-of-cinemaroom/{idMovie}/{startDate}/{startTime}/{cinemaRoom}`
+        - Method: `GET`
+    
+    - Obtener las salas reservadas en una funcion con sus respectivos asientos:
+        - Enpoint: `/api/v4/function-reserve/seats-of-function/{idMovie}/{startDate}/{startTime}`
+        - Method: `GET`
+
+    - Registro de la reserva de una sala en una funcion
+        - Endpoint: `/api/v4/function-reserve/save`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "idMovie": Long,
+                "startDate": Date [yyyy-mm-dd],
+                "startTime": Time [hh:mm],
+                "endTime": Time [hh:mm],
+                "cinemaRoom": Integer
+            }
+        ```
+
+    - Eliminar la reserva de una sala en una funcion
+        - Endpoint: `/api/v4/function-reserve/{idMovie}/{startDate}/{startTime}/{cinemaRoom}`
+        - Method: `DELETE`  
+
+- COMPRAS DE TIQUETES
+
+    - Obtener por identificacion
+        - Enpoint: `/api/v4/purchase-ticket/{identification}/{idMovie}/{cinemaRoom}/{startDate}/{startTime}/{referenceId}`
+        - Method: `GET`
+
+    - Eliminar por identificacion
+        - Endpoint: `/api/v4/purchase-ticket/{identification}/{idMovie}/{cinemaRoom}/{startDate}/{startTime}/{referenceId}`
+        - Method: `DELETE`
+
+- VENTAS DE TIQUETES
+
+    - Obtener por identificacion
+        - Enpoint: `/api/v4/sell-ticket/{identification}/{idMovie}/{cinemaRoom}/{startDate}/{startTime}`
+        - Method: `GET`
+
+    - Registro de una venta de tiquete
+        - Endpoint: `/api/v4/sell-ticket/save`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "identification": Long -> Identificacion del taquillero,
+                "idMovie": Long,
+                "cinemaRoom": Integer,
+                "startDate": Date [yyyy-mm-dd] -> Fecha de inicio de la funcion,
+                "startTime": Time [hh:mm] -> Hora de inicio de la funcion,
+                "listSelledSeats": String -> [A01, D13, F27, ..., Zn],
+            }
+        ```
+
+    - Eliminar por identificacion
+        - Endpoint: `/api/v4/sell-ticket/{identification}/{idMovie}/{cinemaRoom}/{startDate}/{startTime}`
+        - Method: `DELETE`
+
+- PAGOS WEB
+
+    - Generar referencia de compra para tiquete
+        - Endpoint: `/api/v4/payment/purchase-payment`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "identification": Long -> Identificacion del cliente,
+                "idMovie": Long,
+                "cinemaRoom": Integer,
+                "startDate": Date [yyyy-mm-dd] -> Fecha de inicio de la funcion,
+                "startTime": Time [hh:mm] -> Hora de inicio de la funcion,
+                "listPurchasedSeats": String -> [A01, D13, F27, ..., Zn],
+                "URLsuccess": String -> [http://... | https://...]
+            }
+        ``` 
+
+   - Generar referencia de compra para membresia
+        - Endpoint: `/api/v4/payment/membership-payment`
+        - Method: `POST`
+        - Body:
+        ```
+            {
+                "identification": Long -> Identificacion del cliente,
+                "startDate": Date [yyyy-mm-dd],
+                "endDate": Date [yyyy-mm-dd],
+                "URLsuccess": String -> [http://... | https://...]
+            }
+        ``` 

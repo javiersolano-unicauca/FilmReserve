@@ -22,5 +22,5 @@ public interface iJSON {
      * 
      *  @return 'true' si tienen el mismo contenido. 'false' si no
      */
-    public boolean equals(JSON prmJson) throws Exception;
+    public boolean equalsJSON(JSON prmJson) throws Exception;
 }

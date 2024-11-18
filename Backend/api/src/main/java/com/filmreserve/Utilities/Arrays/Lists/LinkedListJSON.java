@@ -82,7 +82,7 @@ public class LinkedListJSON implements Iterable<iJSON> {
     {
         Node<iJSON> ptrNode = atrFirst;
 
-        while((ptrNode != null) && (!ptrNode.getValue().equals(prmValue)))
+        while((ptrNode != null) && (!ptrNode.getValue().equalsJSON(prmValue.toJSON())))
             ptrNode = ptrNode.getRight();
 
         return (ptrNode != null);

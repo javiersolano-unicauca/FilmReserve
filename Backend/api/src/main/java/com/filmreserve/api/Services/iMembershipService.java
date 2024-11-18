@@ -26,6 +26,16 @@ public interface iMembershipService {
     public JSON getMembership(Long prmIdentification, LocalDate prmStartDate) throws Exception;
 
     /**
+     *  Metodo para obtener una membresia de un cliente
+     * 
+     *  @param prmIdentification Recibe la identificacion del cliente
+     *  @param prmStartDate Recibe la fecha de incio de la membresia
+     * 
+     *  @return La membresia si existe. De lo contrario null
+     */
+    public MembershipModel getMembershipModel(Long prmIdentification, LocalDate prmStartDate) throws Exception;
+
+    /**
      *  Metodo para obtener el historial de membresias de un cliente
      * 
      *  @param prmIdentification Recibe la identificacion del cliente
@@ -50,10 +60,33 @@ public interface iMembershipService {
     public JSON getMembershipActive(Long prmIdentification) throws Exception;
 
     /**
+     *  Metodo para obtener la membresia activa de un cliente
+     *  
+     *  @param prmIdentification Recibe la identificacion del cliente
+     *  
+     *  @return La membresia si existe. De lo contrario null
+     */
+    public MembershipModel getMembershipModelActive(Long prmIdentification);
+
+    /**
+     *  Metodo para validar los datos que ingresa el usuario
+     * 
+     *  @param prmIdentification Recibe la identificacion del cliente
+     *  @param prmStartDate      Recibe la fecha de inicio de la membresia
+     *  @param prmEndDate        Recibe la fecha de finalizacion
+     * 
+     *  @throws Exception
+     */
+    public void validateData(Long prmIdentification, LocalDate prmStartDate, LocalDate prmEndDate) throws Exception;
+
+    /**
      *  Metodo para guardar una membresia
      * 
-     *  @param prmMembershipPK Recibe la referencia al id
-     *  @param prmMembership Recibe la informacion de la membresia
+     *  @param prmIdentification Recibe la identificacion del cliente
+     *  @param prmStartDate      Recibe la fecha de inicio de la membresia
+     *  @param prmEndDate        Recibe la fecha de finalizacion
+     *  @param prmReferenceId    Recibe la referencia de compra
+     *  @param prmPaymentId      Recibe la referecnia de pago
      * 
      *  @return Una instancia JSON con la clave 'save' en 'true'. De lo contrario en 'false'
      *          con su respectiva causa
@@ -61,7 +94,13 @@ public interface iMembershipService {
      *  @see JSON
      *  @throws Exception Si no se puede guardar la membresia
      */
-    public JSON save(MembershipPK prmMembershipPK, MembershipModel prmMembership) throws Exception;
+    public boolean save(
+        Long prmIdentification,
+        LocalDate prmStartDate,
+        LocalDate prmEndDate,
+        String prmReferenceId,
+        Long prmPaymentId
+    ) throws Exception;
 
     /**
      *  Metodo para finalizar una membresia

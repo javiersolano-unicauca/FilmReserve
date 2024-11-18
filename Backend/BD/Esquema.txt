@@ -35,6 +35,8 @@ CREATE TABLE membership (
 	start_date DATE NOT NULL,
 	end_date DATE NOT NULL,
 	active BOOLEAN NOT NULL DEFAULT true,
+	reference_id VARCHAR(100) NOT NULL,
+	payment_id BIGINT NOT NULL,
 	CONSTRAINT pk_membership PRIMARY KEY(identification, start_date),
 	CONSTRAINT fk_customer FOREIGN KEY(identification) REFERENCES customer(identification) ON DELETE CASCADE
 
@@ -72,23 +74,75 @@ CREATE TABLE seat(
 	cinema_room INT(2) NOT NULL,
 	row CHAR(1) NOT NULL,
 	num_column INT(2) NOT NULL,
-	reserved BOOLEAN NOT NULL DEFAULT false,
 	CONSTRAINT pk_seat PRIMARY KEY(cinema_room, row, num_column)
 	
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE sea_presents_mov(
+CREATE TABLE function(
 	id_movie BIGINT NOT NULL,
-	cinema_room INT(2) NOT NULL,
 	start_date DATE NOT NULL,
-	end_date DATE NOT NULL,
 	start_time TIME NOT NULL,
 	end_time TIME NOT NULL,
 	active BOOLEAN NOT NULL DEFAULT true,
-	CONSTRAINT pk_sea_presents_mov PRIMARY KEY(id_movie, cinema_room, start_date),
-	CONSTRAINT fk_movie1 FOREIGN KEY(id_movie) REFERENCES movie(id_movie) ON DELETE CASCADE,
-	CONSTRAINT fk_seat FOREIGN KEY(cinema_room) REFERENCES seat(cinema_room) ON DELETE CASCADE
+	CONSTRAINT pk_function PRIMARY KEY(id_movie, start_date, start_time, end_time),
+	CONSTRAINT fk_movie1 FOREIGN KEY(id_movie) REFERENCES movie(id_movie) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE reserve(
+	id_movie BIGINT NOT NULL,
+	start_date DATE NOT NULL,
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+	cinema_room INT(2) NOT NULL,
+	row CHAR(1) NOT NULL,
+	num_column INT(2) NOT NULL,
+	reserved BOOLEAN NOT NULL DEFAULT false,
+	CONSTRAINT pk_reserve PRIMARY KEY(id_movie, start_date, start_time, end_time, cinema_room, row, num_column),
+	CONSTRAINT fk_function FOREIGN KEY(id_movie, start_date, start_time, end_time) REFERENCES function(id_movie, start_date, start_time, end_time) ON DELETE CASCADE,
+	CONSTRAINT fk_seat FOREIGN KEY(cinema_room, row, num_column) REFERENCES seat(cinema_room, row, num_column) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Compras
+
+CREATE TABLE purchase(
+	identification BIGINT NOT NULL,
+	id_movie BIGINT NOT NULL,
+	start_date DATE NOT NULL,
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+	cinema_room INT(2) NOT NULL,
+	row CHAR(1) NOT NULL,
+	num_column INT(2) NOT NULL,
+	reference_id VARCHAR(100) NOT NULL,
+	payment_id BIGINT NOT NULL,
+	value BIGINT NOT NULL,
+	CONSTRAINT pk_purchase PRIMARY KEY(identification, id_movie, start_date, start_time, end_time, cinema_room, row, num_column, reference_id),
+	CONSTRAINT fk_customer1 FOREIGN KEY(identification) REFERENCES customer(identification) ON DELETE CASCADE,
+	CONSTRAINT fk_reserve FOREIGN KEY(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) REFERENCES reserve(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) ON DELETE CASCADE,
+	CONSTRAINT fk_value CHECK(value > 0),
+	CONSTRAINT ck_payment_id CHECK(payment_id > 0),
+	CONSTRAINT ck_amount_seats CHECK(amount_seats > 0)
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 	
- 
+-- Ventas
+
+CREATE TABLE sell(
+	identification BIGINT NOT NULL,
+	id_movie BIGINT NOT NULL,
+	start_date DATE NOT NULL,
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+	cinema_room INT(2) NOT NULL,
+	row CHAR(1) NOT NULL,
+	num_column INT(2) NOT NULL,
+	value BIGINT NOT NULL,
+	CONSTRAINT pk_sell PRIMARY KEY(identification, id_movie, start_date, start_time, end_time, cinema_room, row, num_column),
+	CONSTRAINT fk_ticket_seller FOREIGN KEY(identification) REFERENCES ticket_seller(identification) ON DELETE CASCADE,
+	CONSTRAINT fk_reserve1 FOREIGN KEY(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) REFERENCES reserve(id_movie, start_date, start_time, end_time, cinema_room, row, num_column) ON DELETE CASCADE,
+	CONSTRAINT fk_value CHECK(value > 0),
+	CONSTRAINT ck_amount_seats CHECK(amount_seats > 0)
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -26,11 +26,43 @@ public class MembershipModel implements iJSON  {
     @Column(name = "active")
     private Boolean atrActive;
 
-    public MembershipModel(){}
+    @Column(name = "reference_id")
+    private String atrReferenceId;
+
+    @Column(name = "payment_id")
+    private Long atrPaymentId;
+
+    public MembershipModel(){ atrIdMembership = new MembershipPK(); }
+
+    public MembershipModel(
+        Long prmIdentification,
+        LocalDate prmStartDate,
+        LocalDate prmEndDate,
+        Boolean prmActive,
+        String prmReferenceId,
+        Long prmPaymentId
+    )
+    {
+        atrIdMembership = new MembershipPK(prmIdentification, prmStartDate);
+        atrEndDate = prmEndDate;
+        atrActive = prmActive;
+        atrReferenceId = prmReferenceId;
+        atrPaymentId = prmPaymentId;
+    }
+
+    public void setIdMembership(MembershipPK prmMembershipPK)
+    {
+        atrIdMembership = prmMembershipPK;
+    }
 
     public Long getIdentification()
     {
         return atrIdMembership.getIdentification();
+    }
+
+    public void setIdentification(Long prmIdentification)
+    {
+        atrIdMembership.setIdentification(prmIdentification);
     }
 
     public LocalDate getStartDate()
@@ -38,9 +70,9 @@ public class MembershipModel implements iJSON  {
         return atrIdMembership.getStartDate();
     }
 
-    public void setIdMembership(MembershipPK prmMembershipPK)
+    public void setStartDate(LocalDate prmStartDate)
     {
-        atrIdMembership = prmMembershipPK;
+        atrIdMembership.setStartDate(prmStartDate);
     }
 
     public LocalDate getEndDate()
@@ -63,6 +95,26 @@ public class MembershipModel implements iJSON  {
         atrActive = prmActive;
     }
 
+    public String getReferenceId()
+    {
+        return atrReferenceId;
+    }
+
+    public void setReferenceId(String prmReferenceId)
+    {
+        atrReferenceId = prmReferenceId;
+    }
+
+    public Long getPaymentId()
+    {
+        return atrPaymentId;
+    }
+
+    public void setPaymentId(Long prmPaymentId)
+    {
+        atrPaymentId = prmPaymentId;
+    }
+
     @Override
     public JSON toJSON() throws Exception {
         JSON objJson = new JSON();
@@ -74,7 +126,7 @@ public class MembershipModel implements iJSON  {
     }
 
     @Override
-    public boolean equals(JSON prmJson) throws Exception {
+    public boolean equalsJSON(JSON prmJson) throws Exception {
         return this.toJSON().equals(prmJson);
     }
 }

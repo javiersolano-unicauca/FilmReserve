@@ -1,5 +1,6 @@
 package com.filmreserve.Configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -18,12 +19,25 @@ import org.springframework.security.core.userdetails.User;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Value("${api.version}")
+    private String atrVersion;
+
+    @Value("${basic_authentication.username}")
+    private String atrUsername;
+
+    @Value("${basic_authentication.password}")
+    private String atrPassword;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity prmHttp) throws Exception
     {
         prmHttp.authorizeHttpRequests(request -> {
-            request.requestMatchers("/api/v3/**")
+            request.requestMatchers("/api/" + atrVersion + "/**")
                    .authenticated();
+            request.requestMatchers("/api/payment/purchase-back")
+                   .permitAll();
+            request.requestMatchers("/api/payment/membership-back")
+                   .permitAll();
             request.requestMatchers("/api/posters/**")
                    .permitAll();
             request.requestMatchers("/api/avatars/**")
@@ -39,8 +53,8 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(PasswordEncoder prmPasswordEncoder) throws Exception {
         // ensure the passwords are encoded properly
         User.UserBuilder varUser = User.builder();
-        UserDetails varUserDetails = varUser.username("filmreserve")
-                                            .password(prmPasswordEncoder.encode("123"))
+        UserDetails varUserDetails = varUser.username(atrUsername)
+                                            .password(prmPasswordEncoder.encode(atrPassword))
                                             .roles()
                                             .build();
         return new InMemoryUserDetailsManager(varUserDetails);
