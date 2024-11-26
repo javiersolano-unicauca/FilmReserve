@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/loginRegister.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/subscription.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Suscripción</title>
 </head>
 
@@ -63,47 +63,47 @@
                 <div class="container_login_register">
                     <form action="" class="form_login">
                         <h2>Iniciar sesión</h2>
-                        <label for="">
+                        <label for="loginId">
                             <input type="number" placeholder="Identificacion" id="loginId" name="identification"
                                 required>
                         </label>
-                        <label for="">
-                            <input type="password" placeholder="Contraseña" id="loginPassWord" name="password" required>
+                        <label for="loginPassWord">
+                            <input type="password" placeholder="Contraseña" id="loginPassWord" name="password" autocomplete="contraseña" required>
                         </label>
                         <button id="boton_registro">Entrar</button>
                     </form>
                     <form action="" class="form_register">
                         <h2>Regístrarse</h2>
-                        <label for="">
-                            <input type="number" placeholder=" (*) Identificacion" min="1" name="identification"
+                        <label for="numberID">
+                            <input type="number" id="numberID" placeholder=" (*) Identificacion" min="1" name="identification"
                                 required>
                         </label>
-                        <label for="">
+                        <label for="FRprimerNomber">
                             <input type="text" placeholder=" (*) Primer Nombre" id="FRprimerNomber" name="firstName"
                                 required>
                         </label>
-                        <label for="">
+                        <label for="secondName">
                             <input type="text" placeholder="Segundo nombre" id="secondName" name="secondName">
                         </label>
-                        <label for="">
+                        <label for="FRprimerApellido">
                             <input type="text" placeholder=" (*) Primer apellido" id="FRprimerApellido"
                                 name="firstSurname" required>
                         </label>
-                        <label for="">
+                        <label for="FRsegundoApellido">
                             <input type="text" placeholder="Segundo apellido" id="FRsegundoApellido"
                                 name="secondSurname">
                         </label>
-                        <label for="">
-                            <input type="password" placeholder=" (*) Contraseña" name="password" required>
+                        <label for="togglePassword">
+                            <input type="password" placeholder=" (*) Contraseña" name="password" autocomplete="contraseña" required>
                             Mostrar contraseña<input type="checkbox" id="togglePassword">
                         </label>
-                        <label for="">
+                        <label for="date">
                             <input type="date" id="date" name="date" required>
                         </label>
-                        <label for="">
-                            <input type="tel" placeholder=" (*) Celular" name="phone" required>
+                        <label for="tel">
+                            <input type="tel" id="tel" placeholder=" (*) Celular" name="phone" required>
                         </label>
-                        <label class="custom-file-label" for="">
+                        <label class="custom-file-label" for="avatarImage">
                             Subir foto (opcional)
                             <input type="file" name="avatarImage" id="avatarImage" accept=".jpeg, .jpg">
                         </label>
@@ -114,11 +114,13 @@
         </div>
 
     </header>
-    <main>
+    <main class="main_susb">
         <div class="promo-banner">
-            <h1 class="promo-title">30% Off! 🎬</h1>
-            <p class="promo-text">Subscribe Now to Save!</p>
-            <button class="subscribe-button">Get Subscription</button>
+            <h2 id="promo_disfr">disfruta</h2>
+            <div id="promo_enum">
+                <h1 class="promo-title">¡🎬 30% ! </h1>
+                <h5>de descuento en tus boletos de cine</h5>
+            </div>
         </div>
 
     </main>
@@ -159,11 +161,11 @@
             <p>© 2024 Cine Col</p>
         </div>
     </footer>
+    <script type="module" src="../assets/js/subscription.js"></script>
     <script src="../assets/js/loginRegister.js"></script>
     <script type="module" src="../assets/js/login_module.js"></script>
     <script type="module" src="../assets/js/register.js"></script>
     <script type="module" src="../assets/js/menuDesplegable.js"></script>
-    <script type="module" src="../assets/js/subscription.js"></script>
 
     <script type="module" src="../assets/api/ClientAPI.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

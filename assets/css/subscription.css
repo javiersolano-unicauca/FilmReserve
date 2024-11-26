@@ -2,17 +2,27 @@
     --colorBotonesHorizontal: #1c508d;
     /* Variable para el color de los botones */
 }
+
+.main_susb {
+    display: contents;
+}
+
 /* General layout for the promo banner */
 .promo-banner {
-    display: flex;
+    min-height: 600px;
+    height: auto;
+    display: block;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background: radial-gradient(#F9F9F9 0%, transparent 0%, #000 50%);
-    color: var(--colorBotonesHorizontal);
+    /* background: radial-gradient(#F9F9F9 0%, transparent 0%, #000 50%); */
+    /* color: var(--colorBotonesHorizontal); */
+    color: #fff;
     text-align: center;
     position: relative;
     overflow: hidden;
+    background-image: url("../img/cyes3d.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -35,26 +45,28 @@
     animation: glow 2s infinite alternate;
 }
 
+
 @keyframes glow {
     from {
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     to {
-        text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.8);
+        /* text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.8); */
+        text-shadow: 4px 4px 20px red;
     }
 }
 
 /* Text styling */
 .promo-text {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin: 10px 0 25px;
-    color: var(--colorBotonesHorizontal);
+    color: #fff;
 }
 
 /* Styling for the subscription button */
 .subscribe-button {
-    background:  var(--colorBotonesHorizontal);
+    background: var(--colorBotonesHorizontal);
     color: #fff;
     font-size: 1.2rem;
     padding: 15px 35px;
@@ -63,7 +75,10 @@
     cursor: pointer;
     animation: glow2 2s infinite alternate;
     transition: transform 0.2s, background 0.3s;
+    margin: 50px 0;
+    -webkit-text-stroke: 0px black;
 }
+
 @keyframes glow2 {
     from {
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
@@ -71,6 +86,7 @@
 
     to {
         box-shadow: 4px 4px 20px rgba(255, 255, 255, 0.8);
+        /* box-shadow: 4px 4px 20px var(--colorBotonesHorizontal); */
     }
 }
 
@@ -78,4 +94,70 @@
     color: #000;
     background: #fff;
     transform: scale(1.05);
+}
+
+#promo_disfr {
+    background-color: rgb(0, 0, 0, 0.4);
+    -webkit-text-stroke: 1px var(--colorBotonesHorizontal);
+    text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
+    padding-left: 10%;
+    text-align: left;
+}
+
+#promo_enum {
+    background-color: rgb(0, 0, 0, 0.4);
+    font-size: 30px;
+    margin-left: 1vh;
+    display: flex;
+    padding-left: 10%;
+    /* justify-content:space-around; */
+}
+
+#promo_enum h5 {
+    -webkit-text-stroke: 1px var(--colorBotonesHorizontal);
+    text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
+    padding-left: 15px;
+    align-content: center;
+}
+
+.non_client {
+    background-color: rgb(0, 0, 0, 0.4);
+    -webkit-text-stroke: 1px var(--colorBotonesHorizontal);
+    margin: 0 10px;
+}
+
+.non_client h1 {
+    font-size: 32px;
+    text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
+    margin: 1vh 0;
+}
+
+.non_client h2 {
+    text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
+    margin: 19px 0;
+}
+
+/* con suscripcion estilos */
+#dates_sus {
+    padding-left: 15px;
+    text-align: left;
+    margin: 10px 0;
+}
+
+#text_sus {
+    text-wrap-style: balance;
+}
+
+@media (min-width: 1400px) {
+    .promo-banner {
+    height: 43rem;
+    }
+    .non_client h1 {
+        font-size: 34px;
+        margin: 2vh 0;
+    }
+        #promo_disfr {
+            padding-top: 50px;
+        }
+    
 }

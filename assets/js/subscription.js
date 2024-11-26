@@ -22,55 +22,61 @@ const objClientAPI = new ClientAPI(
 //   }
 // });
 if (localStorage.getItem(roleUserCrip) != "Cliente") {
-  const mensaje = document.createElement("div");
-  mensaje.classList.add("non_client_message");
-  mensaje.innerHTML = `
-      <div class="">
-      <img src="" alt="">
-      <h1>registrate o inicia sesion para disfrutar de nuestros beneficios como cliente</h1>
-      <p><strong></strong> ;)</p>
-      <p><strong></strong> :)</p>
-      </div>
-    `;
-  document.querySelector("main").appendChild(mensaje);
+  showSuscription();
 } else if (localStorage.getItem(idClientCrip)) {
   //valida si el cliente a iniciado sesíon o esta suscripto
   objClientAPI.get(
     `/api/${version}/membership/customer/`,
     cifrado.decrypt_data(localStorage.getItem(idClientCrip)),
     (prmResponse) => {
-      console.log("cifrado intento subs");
       console.log(prmResponse[0]);
       if (prmResponse.getMembershipsOfCustomer != false) {
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("non_client_message");
-        mensaje.textContent = "tienes una membresia";
-        document.querySelector("main").appendChild(mensaje);
-        document
-          .querySelector(".subscribe-button")
-          .addEventListener("click", function () {
-            alert("You have successfully subscribed! Enjoy your 30% discount!");
-          });
+        showSuscription2(); 
       } else {
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("non_client_message");
-        mensaje.innerHTML = `
-      <div class="">
-      <img src="" alt="">
-      <h1>adquiere tu membresia y disfrutar de nuestros beneficios</h1>
-      <p><strong></strong> ;)</p>
-      <p><strong></strong> :)</p>
-      </div>
-    `;
-        document.querySelector("main").appendChild(mensaje);
+        showSuscription();
       }
     }
   );
 }
-Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Tu suscripción fue exitosa",
-  showConfirmButton: true,
-  //   timer: 1500,
-});
+
+function showSuscription(){
+  const mensaje = document.createElement("div");
+  mensaje.classList.add("non_client_message");
+  mensaje.innerHTML = `
+      <div class="non_client">
+      <img src="" alt="">
+      <h1>¡Súmate a nuestra comunidad de cinéfilos y disfruta del cine como nunca antes!</h1>
+      <h2>¡No esperes más! Suscríbete ahora y comienza a disfrutar de todos los beneficios.</h2>
+      <p></p>
+      <h1>🎬 Por solo [Precio de la Suscripción],</h1>
+      <h1> ¡Ahorra 30% cada vez que compres!</h1>
+      <button class="subscribe-button">Get Subscription</button>
+      </div>
+    `;
+  document.querySelector(".promo-banner").appendChild(mensaje);
+}
+function showSuscription2() {
+  const mensaje = document.createElement("div");
+  mensaje.classList.add("non_client_message");
+  mensaje.innerHTML = `
+      <div class="non_client">
+      <img src="" alt="">
+      <h1 id="text_sus">¡Ya perteneces a nuestra comunidad de cinéfilos, disfruta del cine como nunca antes!</h1>
+      <h2 id="dates_sus">Fecha inicio:</h2>
+      <h2 id="dates_sus">Fecha expiración:</h2>
+      <h1> ¡Ahorraras 30% cada vez que compres!</h1>
+      <p></p>
+      <h1>🎬¡No esperes más para vivir una gran experiencia en el cine! 🎬</h1>
+      <h1>Explora nuestra cartelera y elige tu próxima aventura. </h1>
+      <h1>Desde estrenos imperdibles hasta tus clásicos favoritos, ¡tenemos algo para cada emoción!</h1>
+      </div>
+    `;
+  document.querySelector(".promo-banner").appendChild(mensaje);
+}
+// Swal.fire({
+//   position: "top-end",
+//   icon: "success",
+//   title: "Tu suscripción fue exitosa",
+//   showConfirmButton: true,
+//   //   timer: 1500,
+// });

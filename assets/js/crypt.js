@@ -60,7 +60,3 @@ export default class crypt {
     return newString;
   }
 }
-const prueba=new crypt();
-
-const cifrada = prueba.encrypt_data("12");
-console.log(cifrada + "es =" + prueba.decrypt_data(cifrada));
