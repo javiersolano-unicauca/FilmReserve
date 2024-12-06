@@ -49,6 +49,8 @@ public class PaymentServiceImp implements iPaymentService {
             PreferenceBackUrlsRequest objPreferenceBackUrls = PreferenceBackUrlsRequest
             .builder()
             .success(prmURLback)
+            .pending(prmURLback)
+            .failure(prmURLback)
             .build();
 
             PreferenceRequest objPreferenceRequest = PreferenceRequest

@@ -36,24 +36,28 @@ public class PaymentController {
     @Autowired
     iMembershipPaymentService membershipPaymentService;
 
-    private String atrURLsuccess = "";
+    private String atrURLredirect = "";
 
     @RequestMapping(path = "/api/payment/purchase-back", method = RequestMethod.GET)
     public ModelAndView savePurchseAndRedirect(
         @RequestParam(value = "preference_id") String prmPreferenceId,
-        @RequestParam(value = "payment_id") Long prmPaymentId
+        @RequestParam(value = "payment_id") Long prmPaymentId,
+        @RequestParam(value = "status") String prmStatus
     ) throws Exception {
-        purchasePaymentService.savePurchase(prmPreferenceId, prmPaymentId);
-        return new ModelAndView("redirect:" + atrURLsuccess);
+        if(prmStatus.equals("approved"))
+            purchasePaymentService.savePurchase(prmPreferenceId, prmPaymentId);
+        return new ModelAndView("redirect:" + atrURLredirect);
     }
 
     @RequestMapping(path = "/api/payment/membership-back", method = RequestMethod.GET)
     public ModelAndView saveMembershipAndRedirect(
         @RequestParam(value = "preference_id") String prmPreferenceId,
-        @RequestParam(value = "payment_id") Long prmPaymentId
+        @RequestParam(value = "payment_id") Long prmPaymentId,
+        @RequestParam(value = "status") String prmStatus
     ) throws Exception {
-        membershipPaymentService.saveMembership(prmPreferenceId, prmPaymentId);
-        return new ModelAndView("redirect:" + atrURLsuccess);
+        if(prmStatus.equals("approved"))
+            membershipPaymentService.saveMembership(prmPreferenceId, prmPaymentId);
+        return new ModelAndView("redirect:" + atrURLredirect);
     }
 
     private void validateURL(String prmURL) throws Exception
@@ -70,7 +74,7 @@ public class PaymentController {
         LocalDate startDate,
         LocalTime startTime,
         String listPurchasedSeats,
-        String URLsuccess
+        String URLredirect
     ){
         try{
             JSON objResponse = purchasePaymentService.generatePayment(
@@ -82,8 +86,8 @@ public class PaymentController {
                 listPurchasedSeats, 
                 "http://" + atrAddress + ":" + atrPort + "/api/payment/purchase-back"
             );
-            validateURL(URLsuccess);
-            atrURLsuccess = URLsuccess;
+            validateURL(URLredirect);
+            atrURLredirect = URLredirect;
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
         }catch(Exception e)
         {
@@ -95,7 +99,7 @@ public class PaymentController {
     public ResponseEntity<String> generateMembershipReference(
         MembershipPK prmMembershipPK, 
         LocalDate endDate,
-        String URLsuccess
+        String URLredirect
     ){
         try{
             JSON objResponse = membershipPaymentService.generatePayment(
@@ -103,8 +107,8 @@ public class PaymentController {
                 endDate, 
                 "http://" + atrAddress + ":" + atrPort + "/api/payment/membership-back"
             );
-            validateURL(URLsuccess);
-            atrURLsuccess = URLsuccess;
+            validateURL(URLredirect);
+            atrURLredirect = URLredirect;
             return new ResponseEntity<>(objResponse.toString(), HttpStatus.CREATED);
         }catch(Exception e)
         {

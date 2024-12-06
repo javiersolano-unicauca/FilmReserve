@@ -311,7 +311,7 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
                 "startDate": Date [yyyy-mm-dd] -> Fecha de inicio de la funcion,
                 "startTime": Time [hh:mm] -> Hora de inicio de la funcion,
                 "listPurchasedSeats": String -> [A01, D13, F27, ..., Zn],
-                "URLsuccess": String -> [http://... | https://...]
+                "URLredirect": String -> [http://... | https://...]
             }
         ``` 
 
@@ -324,6 +324,6 @@ En esta seccion se establecen los 'endpoint' para la gestion de cartelera.
                 "identification": Long -> Identificacion del cliente,
                 "startDate": Date [yyyy-mm-dd],
                 "endDate": Date [yyyy-mm-dd],
-                "URLsuccess": String -> [http://... | https://...]
+                "URLredirect": String -> [http://... | https://...]
             }
         ``` 
