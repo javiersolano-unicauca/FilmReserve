@@ -1,4 +1,5 @@
 import ClientAPI from "../api/ClientAPI.js";
+import {version } from "./register.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   generateMovieList(); // Genera la lista de películas
@@ -12,12 +13,12 @@ async function generateMovieList() {
     "http://localhost:8001"
   );
 
-  objClientAPI.get("/api/v3/movie", "/all", async (response) => {
-    console.log(response);
+  objClientAPI.get(`/api/${version}/movie`, "/all", async (response) => {
+    // console.log(response);
 
     let size = response.length;
     // Limpiar el contenedor antes de agregar nuevas películas
-    objContainer.innerHTML = "";
+    objContainer.innerHTML = ``;
 
     if (response.getMovies == false) {
       // Mostrar un mensaje cuando no hay películas
@@ -48,7 +49,7 @@ async function generateMovieList() {
         const movie = document.createElement("div");
         movie.className = "movie-item"; // Clase para cada película
         movie.innerHTML = `  
-                <div class="movie">
+                <div class="movie" title="Click para mas detalles">
                     <div class="movie-img">
                         <img src="${response[i].poster}" alt="${response[i].posterImage}">
                     </div>

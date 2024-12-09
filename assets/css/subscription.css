@@ -9,6 +9,7 @@
 
 /* General layout for the promo banner */
 .promo-banner {
+    caret-color: transparent;
     min-height: 600px;
     height: auto;
     display: block;
@@ -66,16 +67,26 @@
 
 /* Styling for the subscription button */
 .subscribe-button {
+    width: min-content;
+    justify-self: center;
+    margin: 50px 0;
+}
+
+.subscribe-button p {
+    color: #fff;
+    -webkit-text-stroke:  #FFFFFA;
+        text-shadow: 2px 3px 20px var(--colorBotonesHorizontal);
+}
+
+.subscribe-button button {
     background: var(--colorBotonesHorizontal);
     color: #fff;
     font-size: 1.2rem;
-    padding: 15px 35px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     animation: glow2 2s infinite alternate;
     transition: transform 0.2s, background 0.3s;
-    margin: 50px 0;
     -webkit-text-stroke: 0px black;
 }
 
@@ -92,12 +103,12 @@
 
 .subscribe-button:hover {
     color: #000;
-    background: #fff;
+    /* background: var(--colorBotonesHorizontal); */
     transform: scale(1.05);
 }
 
 #promo_disfr {
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgb(0, 0, 0, 0.5);
     -webkit-text-stroke: 1px var(--colorBotonesHorizontal);
     text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
     padding-left: 10%;
@@ -105,7 +116,7 @@
 }
 
 #promo_enum {
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgb(0, 0, 0, 0.5);
     font-size: 30px;
     margin-left: 1vh;
     display: flex;
@@ -121,22 +132,38 @@
 }
 
 .non_client {
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgb(0, 0, 0, 0.5);
     -webkit-text-stroke: 1px var(--colorBotonesHorizontal);
     margin: 0 10px;
 }
 
 .non_client h1 {
-    font-size: 32px;
+    font-size: 30px;
     text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
-    margin: 1vh 0;
+    margin: 1.5vh 0;
 }
 
 .non_client h2 {
     text-shadow: 2px 3px 15px var(--colorBotonesHorizontal);
-    margin: 19px 0;
+    margin: 19px 0px;
 }
-
+.non_client #advertDate {
+    display: flex;
+}
+.non_client #advertDate h3{
+    height: fit-content;
+    background-color: #000;
+    border-radius: 50px;
+    margin-left: 20px;
+    align-content: center;
+    align-self: center;
+    animation: glow 2s infinite alternate;
+}
+.non_client #advertDate  .subscribe-button{
+    margin: auto;
+    background-color: none;
+    height: fit-content;
+}
 /* con suscripcion estilos */
 #dates_sus {
     padding-left: 15px;
@@ -150,14 +177,16 @@
 
 @media (min-width: 1400px) {
     .promo-banner {
-    height: 43rem;
+        height: auto;
     }
+
     .non_client h1 {
         font-size: 34px;
         margin: 2vh 0;
     }
-        #promo_disfr {
-            padding-top: 50px;
-        }
-    
+
+    #promo_disfr {
+        padding-top: 50px;
+    }
+
 }

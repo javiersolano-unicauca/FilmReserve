@@ -1,16 +1,16 @@
-:root{
-            --colorBotonesHorizontal: #1c508d;
-            /* Variable para el color de los botones */
+:root {
+    --colorBotonesHorizontal: #1c508d;
+    /* Variable para el color de los botones */
 }
 
 .main_loginRegister {
     position: absolute;
-        height: -webkit-fill-available;
-        width: -webkit-fill-available;
-        width: 95vw;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    width: 95vw;
     padding: 20px;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 .main_loginRegister .container {
@@ -21,6 +21,18 @@
     position: relative;
 }
 
+.container span {
+    padding: 0px 12px;
+    border-radius: 50px;
+    background-color:rgba(0, 0, 0, 0.5);
+    font-size: xx-large;
+    font-weight: bolder;
+    color: #fff;
+    caret-color: transparent;
+}
+.container span:hover{
+    cursor: pointer;
+}
 .backBox {
     width: 100%;
     padding: 10px 20px;
@@ -31,12 +43,14 @@
     backdrop-filter: blue(10px);
     background-color: var(--colorBotonesHorizontal);
 }
+
 .backBox:hover {
     background-color: #112844;
 }
 
+
 .backBox div {
-    margin: 100px 40px;
+    margin: 80px 40px;
     color: white;
     transition: all 500ms;
 }
@@ -50,6 +64,7 @@
     font-weight: 400;
     font-size: 26px;
 }
+
 .blacBox div p {
     font-size: 16px;
     font-weight: 300;
@@ -70,14 +85,15 @@
     background: white;
     color: var(--colorBotonesHorizontal);
 }
+
 .container_form_register_seller {
     display: flex;
-        align-items: center;
-        width: 50vw;
-        max-width: 380px;
-        top: -200px;
-        left: 10px;
-        transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    align-items: center;
+    width: 50vw;
+    max-width: 380px;
+    top: -200px;
+    left: 10px;
+    transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
 }
 
 /*Formularios*/
@@ -92,7 +108,7 @@
     transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
 }
 
-.container_login_register form{
+.container_login_register form {
     width: 100%;
     padding: 20px 20px;
     background: #fff;
@@ -100,7 +116,8 @@
     border-radius: 20px;
 }
 
-.container_login_register form h2 ,.container_form_register_seller form h2{
+.container_login_register form h2,
+.container_form_register_seller form h2 {
     font-size: 26px;
     text-align: center;
     margin-bottom: 20px;
@@ -115,20 +132,23 @@
     background: #f2f2f2;
     font-size: 14px;
 }
-.container_form_register_seller form input{
+
+.container_form_register_seller form input {
     width: 100%;
-        margin-top: 10px;
-        padding: 8px;
-        border: none;
-        background: #f2f2f2;
-        font-size: 12px;
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    background: #f2f2f2;
+    font-size: 12px;
 }
-#togglePassword{
+
+#togglePassword {
     margin: auto 15px;
     width: 10px;
 }
 
-.container_login_register form button,.container_form_register_seller form button {
+.container_login_register form button,
+.container_form_register_seller form button {
     padding: 10px 40px;
     margin-top: 40px;
     border: none;
@@ -145,13 +165,16 @@
 }
 
 .form_register {
+    margin-top: 10px;
     display: none;
 }
-.headerlogin{
+
+.headerlogin {
     position: absolute;
-width: 100%;
-height: 100%;
+    width: 100%;
+    height: 100%;
 }
+
 form .alerta {
     /* outline: solid 2px #9d2222; */
     color: #9d2222;
@@ -167,14 +190,15 @@ form .alerta {
     cursor: pointer;
     text-align: center;
 }
-#avatarImage{
+
+#avatarImage {
     margin: 0 auto;
 }
 
 
 /* Responsive desing*/
 @media screen and (max-width: 900px) {
-    .main_loginRegister{
+    .main_loginRegister {
         margin-top: 20px;
     }
 
@@ -191,19 +215,21 @@ form .alerta {
         margin: 0px;
         position: absolute;
     }
-        .backBox div h3 {
-            font-weight: 400;
-            font-size: 26px;
-            font-family: system-ui;
-        }
+
+    .backBox div h3 {
+        font-weight: 400;
+        font-size: 26px;
+        font-family: system-ui;
+    }
 
     /*forms*/
-        .container_login_register {
+    .container_login_register {
         top: -50px;
         left: -5px;
         margin: auto;
     }
-    .container_login_register form{
-        position:relative;
+
+    .container_login_register form {
+        position: relative;
     }
 }

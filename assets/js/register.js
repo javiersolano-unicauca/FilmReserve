@@ -1,5 +1,5 @@
 import ClientAPI from "../api/ClientAPI.js";
-export const version = "v3";
+export const version = "v4";
 const userNameRegex = /^[A-Za-z]+$/;
 export const idRegex = /^(?!0$)[0-9]+$/;
 export const passwordRegex = /^[^<>\/\\'";(){}[\]&=+]{8,}$/;
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //verica si el usuario eligio una foto
     if (inputUserAvatar.files.length === 0) {
       datos.delete("avatarImage"); // elimina avatar image del formulario de envio
-      alert("No has seleccionado ninguna imagen. Se enviará un valor vacío.");
+      // alert("No has seleccionado ninguna imagen. Se enviará un valor vacío.");
     }
 
     const date1 = inputUserDate.value;

@@ -1,5 +1,5 @@
 import ClientAPI from "../api/ClientAPI.js";
-
+import { version } from "./register.js";
 // Inicialización del Slider usando Swiper.js
 document.addEventListener("DOMContentLoaded", function () {
   sliderChange(); // Cambia dinámicamente el contenido del slider y luego inicializa Swiper
@@ -19,12 +19,12 @@ async function sliderChange() {
     "http://localhost:8001"
   );
 
-  objClientAPI.get("/api/v3/movie", "/all", async (response) => {
-    console.log(response);
+  objClientAPI.get(`/api/${version}/movie`, "/all", async (response) => {
+    // console.log(response);
     let size = response.length;
     // Limpiar el slider antes de agregar nuevas diapositivas
     objSlider.innerHTML = "";
-    if (response.getMovies==false) {
+    if (response.getMovies == false) {
       const slide = document.createElement("div");
       // slide.className = "swiper-slide";
       slide.innerHTML = `  
@@ -56,6 +56,9 @@ async function sliderChange() {
                 </div>
             `;
         objSlider.appendChild(slide); // Añade la diapositiva al contenedor
+        slide.addEventListener("click", function () {
+          window.location.href = `/view/movieDetails.html?id=${response[i].idMovie}`;
+        });
       }
 
       // Inicializa el Swiper después de que todas las diapositivas estén en el DOM

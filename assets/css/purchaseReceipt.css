@@ -1,0 +1,37 @@
+body{
+    background-color: #1c508d;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.receipt_container, .receiptSub_container{
+    background-color: aliceblue;
+    padding: 10px;
+    border: 1px solid #000;
+    grid-column: 2;
+}
+button{
+    width: 100px;
+    animation: glow2 2s infinite alternate;
+}
+button:hover{
+    color: #000;
+    background: #1c508d;
+    transform: scale(1.05);
+}
+a{  
+    font-size: large;
+    font-weight: bolder;
+    vertical-align: top;
+    margin-left: 10px;
+    
+}
+@keyframes glow2 {
+    from {
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    to {
+        box-shadow: 4px 4px 20px #1c508d;
+        /* box-shadow: 4px 4px 20px var(--colorBotonesHorizontal); */
+    }
+}

@@ -13,8 +13,8 @@ const textRegex = /^[^<>\/\\'";(){}[\]=+]+$/;
 const synopsisRegex = /^[^<>\/\\'";(){}[\]=+]{1,300}$/;
 const objClient = new ClientAPI("filmreserve", "123", "http://localhost:8001");
 // elementos del dom taquillero
-var formRegister = document.querySelector(".form_register_seller");
-var formMovie = document.querySelector(".form_register_movie");
+const formRegister = document.querySelector(".form_register_seller");
+const formMovie = document.querySelector(".form_register_movie");
 var inputUserFirstName = document.getElementById("TprimerNomber");
 var inputUserSecondName = document.getElementById("TsegundoNombre");
 var inputUserFirstLName = document.getElementById("TprimerApellido");
@@ -34,16 +34,27 @@ var inputMovieName = document.querySelector("#MName");
 var inputMovieSypnosis = document.querySelector("#MSypnosis");
 var contadorCaracteres = document.getElementById("contadorCaracteres");
 //elementos del dom sala
-var formSala = document.querySelector(".form_register_sala");
+const formSala = document.querySelector(".form_register_sala");
 var inputIdSala = document.querySelector(".form_register_sala #cinemaRoom");
 //elementos del dom funcion
-var formFunction = document.querySelector(".form_register_function");
+const formFunction = document.querySelector(".form_register_function");
 var inputFunctionId = document.querySelector(
   ".form_register_function #idMovie"
 );
-var inputSalaFunction = document.querySelector(
-  ".form_register_function #cinemaRoom"
+//elementos del dom reserva-funcion
+const formReserveFunc = document.querySelector(".form_reserve_function");
+var inputReserveFuncId = document.querySelector(
+  ".form_reserve_function #idMovie"
 );
+var inputSalaReserveFunc = document.querySelector(
+  ".form_reserve_function #cinemaRoom"
+);
+document.querySelector(".form_register_function #startDate").min =
+  getTodayDate();
+document.querySelector(".form_register_function #endDate").min = getTodayDate();
+document.querySelector(".form_register_function #startTime").min ="14:00";
+  document.querySelector(".form_reserve_function #startDate").min =getTodayDate();
+document.querySelector(".form_reserve_function #endDate").min = getTodayDate();
 
 const validationStatus = {
   firstName: false,
@@ -183,10 +194,30 @@ document.addEventListener("DOMContentLoaded", () => {
       "Debe ingresar una identificacion, solo numeros"
     );
   });
-  inputSalaFunction.addEventListener("input", () => {
+});
+// //listener formulario reservar_funcion
+document.addEventListener("DOMContentLoaded", () => {
+  formReserveFunc.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const datos = new FormData(e.target);
+    const data = Object.fromEntries(datos.entries());
+    console.log(data.startDate);
+
+    sendFormReserFunction(formReserveFunc, datos);
+  });
+
+  inputReserveFuncId.addEventListener("input", () => {
     validarCampo(
       idRegex,
-      inputSalaFunction,
+      inputReserveFuncId,
+      "Debe ingresar una identificacion, solo numeros"
+    );
+  });
+  inputSalaReserveFunc.addEventListener("input", () => {
+    validarCampo(
+      idRegex,
+      inputSalaReserveFunc,
       "Debe ingresar una identificacion, solo numeros"
     );
   });
@@ -343,13 +374,12 @@ function salaRegistration(form, variable) {
       varData.append("numColumn", numColumn);
 
       // Llamada al endpoint para crear cada asiento
-      objClient.post("/api/v3/seat/save", varData, (prmResponse) => {
+      objClient.post(`/api/${version}/seat/save`, varData, (prmResponse) => {
         console.log(`Asiento creado: ${fila}${numColumn}`, prmResponse);
         validateSalaRegitration(form, prmResponse);
       });
     }
   });
-
 }
 function validateSalaRegitration(form, prmResponse) {
   if (prmResponse.save == true) {
@@ -371,9 +401,10 @@ function validateSalaRegitration(form, prmResponse) {
   }
 }
 
+//envia formulario funcion
 function sendFormFunction(form, datos) {
   //validamos el envio del formulario
-  if (validationStatus.cinemaRoom && validationStatus.idMovie) {
+  if (validationStatus.idMovie) {
     functionRegistration(form, datos);
   } else {
     Swal.fire({
@@ -383,9 +414,6 @@ function sendFormFunction(form, datos) {
     });
   }
 }
-
-
-
 function functionRegistration(form, variable) {
   // Convertimos el FormData a un objeto JavaScript para manipular los datos
   const data = Object.fromEntries(variable.entries());
@@ -407,7 +435,7 @@ function functionRegistration(form, variable) {
     // Crear una copia de `data` con las fechas para el día actual
     const dataCopy = { ...data };
     dataCopy.startDate = formatDate(currentDate);
-    dataCopy.endDate = formatDate(currentDate);
+    // dataCopy.endDate = formatDate(currentDate);
 
     // Convertimos el objeto dataCopy nuevamente a FormData para la solicitud
     const formDataCopy = new FormData();
@@ -417,18 +445,16 @@ function functionRegistration(form, variable) {
 
     // Llamada POST a la API para el día actual
     objClient.post(
-      `/api/${version}/movie-function/save`,
+      `/api/${version}/function/save`,
       formDataCopy,
       (prmResponse) => {
         console.log(`Registro para ${dataCopy.startDate}:`, prmResponse);
         validateFunctionRegitration(form, prmResponse);
+        // reserSalaFunc();
       }
     );
   }
 }
-
-
-
 function validateFunctionRegitration(form, prmResponse) {
   if (prmResponse.save == true) {
     form.reset();
@@ -436,6 +462,82 @@ function validateFunctionRegitration(form, prmResponse) {
       position: "top-end",
       icon: "success",
       title: "funcion registrada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    validationStatus["idMovie"] = false;
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: prmResponse.cause,
+    });
+  }
+}
+// envia formulario reserva funcion
+function sendFormReserFunction(form, datos) {
+  //validamos el envio del formulario
+   console.log(validationStatus.cinemaRoom);
+  if (validationStatus.cinemaRoom && validationStatus.idMovie) {
+    reserFunctionRegistration(form, datos);
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "los campos marcados con * son obligatorios o rellena los campos correctamente",
+    });
+  }
+}
+function reserFunctionRegistration(form, variable) {
+  // Convertimos el FormData a un objeto JavaScript para manipular los datos
+  const data = Object.fromEntries(variable.entries());
+
+  const startDate = new Date(data.startDate);
+  const endDate = new Date(data.endDate);
+
+  // Función para formatear las fechas a "YYYY-MM-DD"
+  function formatDate(date) {
+    return date.toISOString().split("T")[0];
+  }
+
+  // Bucle para iterar sobre cada día en el rango de fechas
+  for (
+    let currentDate = new Date(startDate);
+    currentDate <= endDate;
+    currentDate.setDate(currentDate.getDate() + 1)
+  ) {
+    // Crear una copia de `data` con las fechas para el día actual
+    const dataCopy = { ...data };
+    dataCopy.startDate = formatDate(currentDate);
+    // dataCopy.endDate = formatDate(currentDate);
+
+    // Convertimos el objeto dataCopy nuevamente a FormData para la solicitud
+    const formDataCopy = new FormData();
+    for (const key in dataCopy) {
+      formDataCopy.append(key, dataCopy[key]);
+    }
+
+    // Llamada POST a la API para el día actual
+    console.log(formDataCopy);
+      objClient.post(
+        `/api/${version}/function-reserve/save`,
+        formDataCopy,
+        (prmResponse) => {
+          console.log(prmResponse);
+          console.log(`Registro para ${dataCopy.startDate}:`, prmResponse);
+          validateReserFunctionRegitration(form, prmResponse);
+        }
+      );
+    
+  }
+}
+function validateReserFunctionRegitration(form, prmResponse) {
+  if (prmResponse.save == true) {
+    form.reset();
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "funcion reservada",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -449,6 +551,7 @@ function validateFunctionRegitration(form, prmResponse) {
     });
   }
 }
+
 
 function mostrarCaracteres(textareaElement, contadorElement) {
   contadorElement.innerText = textareaElement.value.length;
@@ -464,8 +567,9 @@ function optionsAdmimistrator() {
         <li><a href="#" data-form="form2">Registrar Pelicula</a></li>
         <li><a href="#" data-form="form3">Registrar Sala</a></li>
         <li><a href="#" data-form="form4">Registrar funcion</a></li>
+        <li><a href="#" data-form="form6">Registrar reserva funcion</a></li>
         <li><a href="#" data-form="form5">Descuento Membresía</a></li>
-        <li><a href="#" data-form="form6">Consultar Clientes Membresia</a></li>
+        <li><a href="#" data-form="form7">Consultar Clientes Membresia</a></li>
         </ul>
       </div>
     `;
@@ -479,7 +583,12 @@ function optionsAdmimistrator() {
 
       // Mostrar el formulario seleccionado
       const formId = this.getAttribute("data-form");
-      document.getElementById(formId).style.display = "block";
+      // document.getElementById(formId).style.display = "block";
+      
+        const element = document.getElementById(formId);
+        if (element) {
+          element.style.display = "block";
+        }
     });
   });
 }
@@ -511,21 +620,12 @@ function contarAsientos(datosAsientos) {
     disponibles,
   };
 }
-// createSeats(1);
 
-// objClient.get("/api/v2/movie-function/all", "", (prmResponse) =>{
-//          console.log(prmResponse);
-// })
-// objClient.get("/api/v2/seat/", 1, (prmResponse) =>{
-//          console.log(prmResponse);
-// })
-
-
-
-// objClient.get(
-//   "/api/v3/movie-function/seats/1/2024-10-29/20:00",
-//   "",
-//   (prmResponse) => {
-//     console.log(prmResponse);
-//   }
-// );
+function getTodayDate() {
+  let date = new Date();
+  let day = String(date.getDate()).padStart(2, "0");
+  let month = String(date.getMonth() + 1).padStart(2, "0");
+  let year = date.getFullYear();
+  console.log(`${year}-${month}-${day}`);
+  return `${year}-${month}-${day}`;
+}

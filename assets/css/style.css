@@ -13,7 +13,7 @@
 
 /* Estilos del cuerpo de la página */
 body {
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
   font-family: "Poppins", sans-serif;
 }
 
@@ -26,7 +26,7 @@ body {
   width: 100%;
   background-color: #000000;
   color: white;
-  padding: 1.5rem 0;
+  padding: 15px 0;
   height: auto;
   display: flex;
   align-items: center;
@@ -99,7 +99,7 @@ caret-color: transparent;
   color: #FFFFFF;
   background-color: var(--colorBotonesHorizontal);
   border-radius: 30px; /* Bordes redondeados */
-  padding: 12px 25px; /* Tamaño del botón ajustado */
+  padding: 10px 23px; /* Tamaño del botón ajustado */
   margin-right: 20px; /* Espaciado entre botones */
   font-size: 15px; /* Tamaño del texto */
   transition: background-color 0.3s ease, transform 0.3s ease;
@@ -211,6 +211,9 @@ caret-color: transparent;
 .main_loginRegister {
   z-index: 100;
   display: none;
+}
+.movies-container{
+  background-color: silver;
 }
 .movies-container div{
   caret-color: transparent;
@@ -427,6 +430,7 @@ caret-color: transparent;
 
 /* Estilos generales para el footer */
 footer {
+  display: block;
   caret-color: transparent;
   background-color: #f9f9f9;
   padding: 20px 0;
@@ -436,7 +440,6 @@ footer {
   text-align: right;
   position: relative;
   bottom: 0;
-  display: block;
   width: 100%;
   clear: both; /* Esto asegura que el footer no se superponga con otro contenido */
 }

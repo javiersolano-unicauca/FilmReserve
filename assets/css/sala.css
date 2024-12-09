@@ -18,6 +18,18 @@ h1 {
     text-align: center;
     margin: 0 auto;
 }
+.container-ubicacion button{
+    width: auto;
+    height: auto;
+    margin: 0 10px 0 40px;
+    cursor:pointer;
+}
+.container-ubicacion p{
+    font-weight:600;
+    align-content: center;
+    margin-right: auto;
+    animation: glow 2s infinite alternate;
+}
 .container-mapa {
     box-sizing: content-box;
     position: relative;
@@ -104,7 +116,7 @@ h1 {
 
 
 .purchase-container {
-    display: none;
+    display: grid;
     top: 50px;
     /* display: flex; */
     justify-content: space-between;
@@ -118,7 +130,22 @@ h1 {
 }
 
 .purchase-details {
-    max-width: 60%;
+    padding: 8px;
+    border-radius: 10px;
+    min-width: 280px;
+    min-height:250px ;
+    position: absolute;
+    top: -300px;
+    display: none;
+    /* position-area:center; */
+    border: 3px solid #000;
+    color: #fff;
+    background-color: var(--colorBotonesHorizontal);
+    max-width: 300px;
+}
+.purchase-details button{
+    margin-bottom: 8px;
+    justify-self: center;
 }
 
 .confirmation-section {
@@ -140,25 +167,10 @@ h1 {
 
 .confirm-btn.active {
     background-color: var(--colorBotonesHorizontal);
+    border: solid 1px silver;
     color: #fff;
 }
 
-.pay-btn {
-    margin-top: 20px;
-    background-color: #e1e1e1;
-    border: none;
-    padding: 15px 30px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: not-allowed;
-    transition: background-color 0.3s ease;
-}
-
-.pay-btn.active {
-    background-color: #007BFF;
-    color: #fff;
-    cursor: pointer;
-}
 
 .location-icon {
     font-size: 18px;
@@ -216,12 +228,15 @@ h1 {
     background-color:var(--colorBotonesHorizontal) ;
     color: #fff;
 }
-.container-ubicacion button{
-    width: auto;
-    height: auto;
-    margin: 0 auto 0 40px;
-    cursor:pointer;
+@keyframes glow {
+    from {
+        /* text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8); */
+        text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.8);
+    }
+
+    to {
+        /* text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.8); */
+        text-shadow: 2px 2px 3px var(--colorBotonesHorizontal);
+    }
 }
-.container-ubicacion p{
-    margin-right: 148px;
-}
+
