@@ -605,8 +605,11 @@ async function subscriptionRegistration() {
     const baseUrl = new URL(currentUrl).origin;
 
     varData.append("listPurchasedSeats", `[${selectedSeats}]`);
-    varData.append("URLsuccess", `${baseUrl}/view/purchaseReceipt`);
-    varData.append("URLredirect",location.href);
+    varData.append("URLredirect", `${baseUrl}/view/purchaseReceipt.html`);
+    console.log("Contenido de FormData:");
+    // for (var pair of varData.entries()) {
+    //   console.log(pair[0] + ": " + pair[1]);
+    // }
     objClientAPI.post(
       `/api/${version}/payment/purchase-payment`,
       varData,
@@ -619,6 +622,8 @@ async function subscriptionRegistration() {
         localStorage.setItem("fecha", document.getElementById("fecha").value);
         localStorage.setItem("hora", document.getElementById("hora").value);
         localStorage.setItem("refereceId", prmResponse.referenceId);
+        localStorage.setItem("sala", document.getElementById("sala").value);
+        localStorage.setItem("movie", urlParams.get("id"));
         mercadoPagoFunct(prmResponse.referenceId);
       }
     );
@@ -690,22 +695,27 @@ async function generarPdf(valor) {
   // Añadir líneas de texto con posiciones diferentes
   doc.text(`Vendedor: ${localStorage.getItem("nameUser")}`, startX, startY);
   doc.text(
-    `Fecha función: ${document.getElementById("fecha").value}`,
+    `Pelicula: ${await getMovieName(urlParams)}`,
     startX,
     startY + lineHeight
   );
   doc.text(
-    `Fecha función: ${await getMovieName(urlParams)}`,
+    `Fecha función: ${document.getElementById("fecha").value}`,
     startX,
-    startY + lineHeight
+    startY + 2*lineHeight
   );
   doc.text(
     `Hora función: ${document.getElementById("hora").value}`,
     startX,
-    startY + 2 * lineHeight
+    startY + 3 * lineHeight
   );
-  doc.text(`Asientos: ${selectedSeats}`, startX, startY + 3 * lineHeight);
-  doc.text(`Total a pagar: $${valor}`, startX, startY + 4 * lineHeight);
+  doc.text(
+    `Sala: ${document.getElementById("sala").value}`,
+    startX,
+    startY + 4*lineHeight
+  );
+  doc.text(`Asientos: ${selectedSeats}`, startX, startY + 5 * lineHeight);
+  doc.text(`Total a pagar: $${valor}`, startX, startY + 6 * lineHeight);
 
   // Guardar el archivo PDF
   doc.save("pdfFilm.pdf");

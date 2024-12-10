@@ -1,11 +1,37 @@
+import ClientAPI from "../api/ClientAPI.js";
+const version = "v4";
 import crypt from "./crypt.js";
 const cifrado = new crypt();
 const idClientCrip = cifrado.encrypt_data("idClient");
+const objClientAPI = new ClientAPI(
+  "filmreserve",
+  "123",
+  "http://localhost:8001"
+);
 
-if (localStorage.getItem("refereceId")) {
+objClientAPI.get(
+  `/api/${version}/purchase-ticket/`,
+  `${cifrado.decrypt_data(
+    localStorage.getItem(idClientCrip)
+  )}/${localStorage.getItem("movie")}/${localStorage.getItem(
+    "sala"
+  )}/${localStorage.getItem("fecha")}/${localStorage.getItem(
+    "hora"
+  )}/${localStorage.getItem("refereceId")}`,
+  (response) => {
+    console.log(response);
+    if (response.getPurchasedSeatsAndPurchase == true) {
+      messageOK();
+      showticket();
+    } else {
+      showError();
+    }
+  }
+);
+function showticket() {
+  if (localStorage.getItem("refereceId")) {
     const roleUserCrip = cifrado.encrypt_data("roleUser");
-  console.log("mi mensaje");
-  document.querySelector(".receipt_container").innerHTML = `
+    document.querySelector(".receipt_container").innerHTML = `
   <h2>Cinecol</h2>
   <h3>I.D cliente :</h3>
   <p>${cifrado.decrypt_data(localStorage.getItem(idClientCrip))}</p>
@@ -23,13 +49,33 @@ if (localStorage.getItem("refereceId")) {
   <button>Descargar recibo</button>
   <a href="../index.html">volver a cinecol</a>
   `;
-  document.querySelector(".receipt_container button").addEventListener("click",downPdf);
-  document
-    .querySelector(".receipt_container a")
-    .addEventListener("click", cleanStorage);
+    document
+      .querySelector(".receipt_container button")
+      .addEventListener("click", downPdf);
+    document
+      .querySelector(".receipt_container a")
+      .addEventListener("click", cleanStorage);
+  }
 }
-function downPdf(){
-     const doc = new jsPDF("p", "mm", [150, 160]);
+function showError(){
+     Swal.fire({
+       icon: "error",
+       title: "Error de pago",
+       showConfirmButton: true,
+       //   timer: 1500,
+     });
+       document.querySelector(".receipt_container").innerHTML = `
+  <h2>Cinecol</h2>
+  <h3>Algo ocurrió al intentar realizar tu pago. Vuelve a la página e inténtalo nuevamente. Si el error persiste, comunícate con tu entidad bancaria</h3>
+  
+  <a href="../index.html">volver a cinecol</a>
+  `;
+    document
+      .querySelector(".receipt_container a")
+      .addEventListener("click", cleanStorage);
+  }
+function downPdf() {
+  const doc = new jsPDF("p", "mm", [150, 160]);
 
   // Variables para manejar la posición inicial y el espaciado
   let startX = 10;
@@ -39,7 +85,7 @@ function downPdf(){
   // Añadir líneas de texto con posiciones diferentes
   doc.text(`CINECOL`, startX * 6, startY);
   doc.text(`RECIBO FUNCIÓN`, startX, startY + lineHeight);
-  
+
   doc.text(
     `I.D cliente: ${cifrado.decrypt_data(localStorage.getItem(idClientCrip))}`,
     startX,
@@ -48,28 +94,24 @@ function downPdf(){
   doc.text(
     `Pelicula: ${localStorage.getItem("name")}`,
     startX,
-    startY + 5*lineHeight
+    startY + 5 * lineHeight
   );
-   doc.text(
-     `Fecha función: ${localStorage.getItem("fecha")}`,
-     startX,
-     startY + 7*lineHeight
-   );
+  doc.text(
+    `Fecha función: ${localStorage.getItem("fecha")}`,
+    startX,
+    startY + 7 * lineHeight
+  );
   doc.text(
     `Hora función: ${localStorage.getItem("hora")}`,
     startX,
     startY + 8 * lineHeight
   );
-  doc.text(
-    `Referencia de pago : `,
-    startX,
-    startY + 10 * lineHeight
-  );
+  doc.text(`Referencia de pago : `, startX, startY + 10 * lineHeight);
   doc.text(
     `${localStorage.getItem("refereceId")}`,
     startX,
     startY + 11 * lineHeight
-  );    
+  );
 
   // Guardar el archivo PDF
   doc.save("Ticket.pdf");
@@ -82,12 +124,11 @@ function cleanStorage() {
   localStorage.removeItem("refereceId");
   localStorage.removeItem("miDato");
 }
-function messageOK(){
-    Swal.fire({
-      icon: "success",
-      title: "Tu compra fue exitosa",
-      showConfirmButton: true,
+function messageOK() {
+  Swal.fire({
+    icon: "success",
+    title: "Tu compra fue exitosa",
+    showConfirmButton: true,
     //   timer: 1500,
-    });
+  });
 }
-messageOK();

@@ -1,5 +1,5 @@
 import ClientAPI from "../api/ClientAPI.js";
-import {version } from "./register.js";
+import { version } from "./register.js";
 import crypt from "./crypt.js";
 const currentUrl = window.location.href;
 const cifrado = new crypt();
@@ -48,32 +48,32 @@ function showSuscription() {
       </div>
     `;
   document.querySelector(".promo-banner").appendChild(mensaje);
-  subscriptionRegistration(); 
+  subscriptionRegistration();
   // mercadoPagoFunct();
 }
-function showActSusb(startDate,endDate) {
-  let advertencia="";
+function showActSusb(startDate, endDate) {
+  let advertencia = "";
   const today = new Date();
   const targetDate = new Date(endDate);
   const nextWeek = new Date();
   today.setHours(0, 0, 0, 0);
   targetDate.setHours(0, 0, 0, 0);
   nextWeek.setHours(0, 0, 0, 0);
-nextWeek.setDate(today.getDate() + 7);
-targetDate.setDate(targetDate.getDate()+1)
-console.log(targetDate);
-console.log(`EndDate: ${targetDate}, Hoy: ${today}, NextWeek: ${nextWeek}`);
+  nextWeek.setDate(today.getDate() + 7);
+  targetDate.setDate(targetDate.getDate() + 1);
+  // console.log(targetDate);
+  // console.log(`EndDate: ${targetDate}, Hoy: ${today}, NextWeek: ${nextWeek}`);
   if (targetDate >= today && targetDate <= nextWeek) {
     console.log("La fecha está dentro de la próxima semana.");
-    advertencia=" tu membresia esta proxima a vencer"
-  } else if(targetDate<= today) {
-    console.log("La fecha esta vencida.");
-    advertencia=`Tu sucripción venció <div class="subscribe-button" id="wallet_container"></div>`;
-    subscriptionRegistration(); 
-  }else  {
-    console.log("La fecha no está dentro de la próxima semana.");
+    advertencia = " Tu membresía está próxima a vencer";
+  } else if (targetDate <= today) {
+    // console.log("La fecha esta vencida.");
+    advertencia = `Tu sucripción venció <div class="subscribe-button" id="wallet_container"></div>`;
+    subscriptionRegistration();
+  } else {
+    // console.log("La fecha no está dentro de la próxima semana.");
   }
-  
+
   const mensaje = document.createElement("div");
   mensaje.classList.add("non_client_message");
   mensaje.innerHTML = `
@@ -85,7 +85,7 @@ console.log(`EndDate: ${targetDate}, Hoy: ${today}, NextWeek: ${nextWeek}`);
       <h2 id="dates_sus">Fecha expiración membresía : ${endDate}</h2>
       <h3>${advertencia}</h3>
       </div>
-      <h1> ¡Ahorraras 30% cada vez que compres!</h1>
+      <h1> ¡Ahorrarás 30% cada vez que compres!</h1>
       <p></p>
       <h1>🎬¡No esperes más para vivir una gran experiencia en el cine! 🎬</h1>
       <h1>Explora nuestra cartelera y elige tu próxima aventura. </h1>
@@ -93,9 +93,9 @@ console.log(`EndDate: ${targetDate}, Hoy: ${today}, NextWeek: ${nextWeek}`);
       </div>
     `;
   document.querySelector(".promo-banner").appendChild(mensaje);
-  if(document.querySelector(".non_client #advertDate h3 button")){
+  if (document.querySelector(".non_client #advertDate h3 button")) {
     console.log("si existe el boton");
-  }else{
+  } else {
     console.log("no existe el boton");
   }
 }
@@ -110,7 +110,7 @@ function showSuscription3() {
       <p></p>
       <h1>🎬 Por solo $ 50.000</h1>
       <h1> ¡Ahorra 30% cada vez que compres!</h1>
-      <div > <h1>Inicia sesion o suscribete ahora mismo</h1>
+      <div > <h1>Inicia sesión o suscribete ahora mismo</h1>
       <h1>:)</h1> </div>
       </div>
     `;
@@ -136,8 +136,8 @@ function mercadoPagoFunct(referenceId) {
 function subscriptionRegistration() {
   var varData = new FormData();
   const baseUrl = new URL(currentUrl).origin;
-  varData.append("URLsuccess", `${baseUrl}/view/purchaseReceSub.html`);
-  varData.append("URLredirect", location.href);
+  varData.append("URLredirect", `${baseUrl}/view/purchaseReceSub.html`);
+  // varData.append("URLredirect", location.href);
   varData.append(
     "identification",
     cifrado.decrypt_data(localStorage.getItem(idClientCrip))
@@ -145,14 +145,17 @@ function subscriptionRegistration() {
   varData.append("startDate", getTodayDate());
   varData.append("endDate", getEndDate());
   // varData.append("URLsuccess", currentUrl);
-
+  console.log("Contenido de FormData:");
+  for (var pair of varData.entries()) {
+    console.log(pair[0] + ": " + pair[1]);
+  }
   objClientAPI.post(
     `/api/${version}/payment/membership-payment`,
     varData,
     (prmResponse) => {
       console.log(prmResponse);
-      localStorage.setItem("fechIni",getTodayDate());
-      localStorage.setItem("fechFin",getEndDate());
+      localStorage.setItem("fechIni", getTodayDate());
+      localStorage.setItem("fechFin", getEndDate());
       // localStorage.setItem("");
       // localStorage.setItem("");
       // localStorage.setItem("");
@@ -163,15 +166,15 @@ function subscriptionRegistration() {
   );
 }
 
-function getTodayDate(){
-  let date = new Date(); 
+function getTodayDate() {
+  let date = new Date();
   let day = String(date.getDate()).padStart(2, "0");
   let month = String(date.getMonth() + 1).padStart(2, "0");
   let year = date.getFullYear();
   console.log(`${year}-${month}-${day}`);
-  return`${year}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 }
-function getEndDate(){
+function getEndDate() {
   let date = new Date();
   let day = String(date.getDate()).padStart(2, "0");
   let month = String(date.getMonth() + 1).padStart(2, "0");
